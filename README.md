@@ -3,10 +3,27 @@ Geocalc
 
 Helper classes to calculate Earth distances, bearing, etc.
 
-This library is being used on [www.rentbarometer.com](http://www.rentbarometer.com).
+This library is being used on [rentbarometer.com](http://rentbarometer.com).
 
 How to use
 -
+
+### Creating a Point, and converting between systems
+
+    //Kew, London
+    Coordinate lat = new DegreeCoordinate(51.4843774);
+    Coordinate lng = new DegreeCoordinate(-0.2912044);
+    Point kew = new Point(lat, lng);
+    
+    double radians = degreeCoordinate.getRadianCoordinate().getRadians();
+    
+    double minutes = degreeCoordinate.getDMSCoordinate().getMinutes();
+    double seconds = degreeCoordinate.getDMSCoordinate().getSeconds();
+    double wholeDegrees = degreeCoordinate.getDMSCoordinate().getWholeDegrees();
+    
+    minutes = degreeCoordinate.getGPSCoordinate().getMinutes();
+    seconds = degreeCoordinate.getGPSCoordinate().getSeconds(); // always 0
+    wholeDegrees = degreeCoordinate.getGPSCoordinate().getWholeDegrees();
 
 ### Distance between 2 coordinates
 
