@@ -25,7 +25,7 @@ How to use
     seconds = degreeCoordinate.getGPSCoordinate().getSeconds(); // always 0
     wholeDegrees = degreeCoordinate.getGPSCoordinate().getWholeDegrees();
 
-### Distance between 2 coordinates
+### Distance between 2 points
 
 The result is given in meters.
 
