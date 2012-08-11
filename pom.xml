@@ -7,7 +7,7 @@
     <groupId>com.grum</groupId>
     <artifactId>geocalc</artifactId>
     <packaging>jar</packaging>
-    <version>1.0</version>
+    <version>0.1</version>
     <name>A custom project using myfaces</name>
     <url>http://www.grumlimited.co.uk</url>
 
