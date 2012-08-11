@@ -3,7 +3,7 @@ Geocalc
 
 Helper classes to calculate Earth distances, bearing, etc.
 
-This library is being used on [rentbarometer.com](http://rentbarometer.com).
+This library is being used on [www.rentbarometer.com](http://www.rentbarometer.com).
 
 How to use
 -
