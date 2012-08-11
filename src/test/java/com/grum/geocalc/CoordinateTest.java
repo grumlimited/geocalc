@@ -6,6 +6,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(JUnit4.class)
 /**
@@ -78,5 +80,59 @@ public class CoordinateTest {
         RadianCoordinate radianCoordinate = new RadianCoordinate(Math.PI * 3 / 2);
         gpsCoordinate = new GPSCoordinate(270, 0);
         assertEquals(radianCoordinate.getDMSCoordinate().getDecimalDegrees(), gpsCoordinate.getDecimalDegrees(), 1E-4);
+    }
+
+    @Test
+    public void testIsContainedWithin() {
+        Point northEast = new Point(new DegreeCoordinate(70), new DegreeCoordinate(145));
+        Point southWest = new Point(new DegreeCoordinate(50), new DegreeCoordinate(110));
+        BoundingArea boundingArea = new BoundingArea(northEast, southWest);
+
+        Point point1 = new Point(new DegreeCoordinate(60), new DegreeCoordinate(120));
+        assertTrue(boundingArea.isContainedWithin(point1));
+
+        Point point2 = new Point(new DegreeCoordinate(45), new DegreeCoordinate(120));
+        assertFalse(boundingArea.isContainedWithin(point2));
+
+        Point point3 = new Point(new DegreeCoordinate(85), new DegreeCoordinate(120));
+        assertFalse(boundingArea.isContainedWithin(point3));
+
+        Point point4 = new Point(new DegreeCoordinate(60), new DegreeCoordinate(100));
+        assertFalse(boundingArea.isContainedWithin(point4));
+
+        Point point5 = new Point(new DegreeCoordinate(60), new DegreeCoordinate(150));
+        assertFalse(boundingArea.isContainedWithin(point5));
+
+        Point point6 = new Point(new DegreeCoordinate(80), new DegreeCoordinate(150));
+        assertFalse(boundingArea.isContainedWithin(point5));
+
+        Point point7 = new Point(new DegreeCoordinate(35), new DegreeCoordinate(100));
+        assertFalse(boundingArea.isContainedWithin(point7));
+
+        northEast = new Point(new DegreeCoordinate(10), new DegreeCoordinate(45));
+        southWest = new Point(new DegreeCoordinate(-30), new DegreeCoordinate(-35));
+        boundingArea = new BoundingArea(northEast, southWest);
+
+        Point point8 = new Point(new DegreeCoordinate(0), new DegreeCoordinate(0));
+        assertTrue(boundingArea.isContainedWithin(point8));
+
+        Point point9 = new Point(new DegreeCoordinate(-5), new DegreeCoordinate(-30));
+        assertTrue(boundingArea.isContainedWithin(point9));
+
+        Point point10 = new Point(new DegreeCoordinate(5), new DegreeCoordinate(30));
+        assertTrue(boundingArea.isContainedWithin(point10));
+
+        Point point11 = new Point(new DegreeCoordinate(-35), new DegreeCoordinate(30));
+        assertFalse(boundingArea.isContainedWithin(point11));
+
+        northEast = new Point(new DegreeCoordinate(10), new DegreeCoordinate(-165));
+        southWest = new Point(new DegreeCoordinate(-30), new DegreeCoordinate(170));
+        boundingArea = new BoundingArea(northEast, southWest);
+
+        Point point12 = new Point(new DegreeCoordinate(0), new DegreeCoordinate(180));
+        assertTrue(boundingArea.isContainedWithin(point12));
+
+        Point point13 = new Point(new DegreeCoordinate(0), new DegreeCoordinate(-179));
+        assertTrue(boundingArea.isContainedWithin(point13));
     }
 }
