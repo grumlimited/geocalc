@@ -66,6 +66,21 @@ than calculating the distances from each point in the set to the reference point
       
 Now, given that rectangle delimited by 'nw' and 'se', you can determine which points in your set are within these boundaries.
 
+### Determine whether a Point is contained within an BoundingArea
+
+Now say you have a BoundingArea:
+
+      //somewhere in Europe, not sure where ;-)
+      Point northEast = new Point(new DegreeCoordinate(70), new DegreeCoordinate(145));
+      Point southWest = new Point(new DegreeCoordinate(50), new DegreeCoordinate(110));
+      BoundingArea boundingArea = new BoundingArea(northEast, southWest);
+      
+      Point point1 = new Point(new DegreeCoordinate(60), new DegreeCoordinate(120));
+      assertTrue(boundingArea.isContainedWithin(point1)); //true
+      
+      Point point2 = new Point(new DegreeCoordinate(45), new DegreeCoordinate(120));
+      assertFalse(boundingArea.isContainedWithin(point2)); //false
+
 ### Calculate bearing between two points
 
     //Kew
