@@ -3,6 +3,8 @@ Geocalc
 
 Helper classes to calculate Earth distances, bearing, etc.
 
+This library is being used on [rentbarometer.com](http://rentbarometer.com).
+
 How to use
 -
 
@@ -38,11 +40,25 @@ The result is given in meters.
 This is useful when, having a reference point, and a large set of 
 other points, you need to figure out which ones are, say, 3000 meters away.
 
-While this only gives an approximation but is several order of magnitude faster
+While this only gives an approximation, it is several order of magnitude faster
 than calculating the distances from each point in the set to the reference point.
 
       BoundingArea area = EarthCalc.getBoundingArea(kew, 3000);
       Point nw = area.getNorthWest();
       Point se = area.getSouthEast();
       
-Now, given that rectangle delimited by nw and se, you can determine which points in your set are within these boundaries.
+Now, given that rectangle delimited by 'nw' and 'se', you can determine which points in your set are within these boundaries.
+
+### Calculate bearing between two points
+
+    //Kew
+    Coordinate lat = new DegreeCoordinate(51.4843774);
+    Coordinate lng = new DegreeCoordinate(-0.2912044);
+    Point kew = new Point(lat, lng);
+    
+    //Richmond, London
+    lat = new DegreeCoordinate(51.4613418);
+    lng = new DegreeCoordinate(-0.3035466);
+    Point richmond = new Point(lat, lng);
+    
+    double bearing = EarthCalc.getBearing(kew, richmond); //in decimal degrees
