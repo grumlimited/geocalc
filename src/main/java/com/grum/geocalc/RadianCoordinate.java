@@ -14,4 +14,8 @@ public class RadianCoordinate extends Coordinate {
         this.decimalDegrees = Math.toDegrees(radians);
         this.radians = radians;
     }
+
+    public double getRadians() {
+        return radians;
+    }
 }
