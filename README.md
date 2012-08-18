@@ -1,12 +1,32 @@
-Geocalc
+Java Geocalc
 =======
 
-Helper classes to calculate Earth distances, bearing, etc.
+Geocalc is a simple java library aimed at doing arithmetics with
+Earth coordinates. 
+It is designed to be simple to embed in your existing applications and easy to use. Geocalc can
 
-This library is being used on [rentbarometer.com](http://rentbarometer.com).
+1. Calculate the distance between to coordinates
+2. Find a point at X distance from a standpoint, given a bearing
+3. Calculate a rectangular area around a point
+4. Determine whether a Point is contained within that area
+5. Calculate the bearing between two points
+
+This library is being used on [www.rentbarometer.com](http://www.rentbarometer.com).
 
 How to use
 -
+
+### Installing
+
+##### Download
+
+    git clone git@github.com:grumlimited/geocalc.git
+    
+##### Compile
+
+You need a JDK 1.6 and maven.
+    
+    mvn clean install -DskipTests=true
 
 ### Creating a Point, and converting between systems
 
@@ -42,7 +62,7 @@ The result is given in meters.
     double distance = EarthCalc.getDistance(richmond, kew); //in meters
     
     
-### Find a point at 'distance in meters away' from a standpoint, given a bearing
+### Finding a point at 'distance in meters away' from a standpoint, given a bearing
 
     //Kew
     Coordinate lat = new DegreeCoordinate(51.4843774);
@@ -52,7 +72,7 @@ The result is given in meters.
     //Distance away point, bearing is 45deg
     Point otherPoint = EarthCalc.pointRadialDistance(kew, 45, 0);
     
-### Draw a rectangular area around a point
+### Calculating a rectangular area around a point
 
 This is useful when, having a reference point, and a large set of 
 other points, you need to figure out which ones are, say, 3000 meters away.
@@ -66,7 +86,7 @@ than calculating the distances from each point in the set to the reference point
       
 Now, given that rectangle delimited by 'nw' and 'se', you can determine which points in your set are within these boundaries.
 
-### Determine whether a Point is contained within a BoundingArea
+### Determining whether a Point is contained within a BoundingArea
 
 Now say you have a BoundingArea:
 
@@ -81,7 +101,7 @@ Now say you have a BoundingArea:
       Point point2 = new Point(new DegreeCoordinate(45), new DegreeCoordinate(120));
       assertFalse(boundingArea.isContainedWithin(point2)); //false
 
-### Calculate bearing between two points
+### Calculating bearing between two points
 
     //Kew
     Coordinate lat = new DegreeCoordinate(51.4843774);
