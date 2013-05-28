@@ -40,7 +40,37 @@ public class DistanceTest {
     }
 
     @Test
-    public void testSymetricDistance() {
+    public void testDistanceBnaToLax() {
+        Coordinate lat = new DegreeCoordinate(36.12);
+        Coordinate lng = new DegreeCoordinate(-86.97);
+        Point BNA = new Point(lat, lng);
+
+        lat = new DegreeCoordinate(33.94);
+        lng = new DegreeCoordinate(-118.40);
+        Point LAX = new Point(lat, lng);
+
+        assertEquals(2859586.477757082, EarthCalc.getDistance(LAX, BNA), 10E-3);
+    }
+
+    @Test
+    public void testDistanceToBuenosAires() {
+        //Kew
+        Coordinate lat = new DMSCoordinate(51, 29, 3.7572);
+        Coordinate lng = new DMSCoordinate(0, 17, 28.3338);
+
+        Point kew = new Point(lat, lng);
+
+        //Buenos Aires
+        lat = new DMSCoordinate(-34, 36, 35.9994);
+        lng = new DMSCoordinate(-58, 22, 11.9994);
+
+        Point buenosAires = new Point(lat, lng);
+
+        assertEquals(11146, (int) (EarthCalc.getDistance(buenosAires, kew) / 1000)); //km
+    }
+
+    @Test
+    public void testSymmetricDistance() {
         //Kew
         Coordinate lat = new DegreeCoordinate(51.4843774);
         Coordinate lng = new DegreeCoordinate(-0.2912044);

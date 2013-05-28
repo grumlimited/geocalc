@@ -13,6 +13,8 @@
 package com.grum.geocalc;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /**
  * Represent a coordinate decimalDegrees, in degrees
@@ -38,11 +40,11 @@ abstract public class Coordinate implements Serializable {
     }
 
     DMSCoordinate getDMSCoordinate() {
-        double _wholeDegrees = Math.floor(decimalDegrees);
-        double remaining = decimalDegrees - _wholeDegrees;
-        double _minutes = Math.floor(remaining * 60);
+        double _wholeDegrees = (int) decimalDegrees;
+        double remaining = Math.abs(decimalDegrees - _wholeDegrees);
+        double _minutes = (int) (remaining * 60);
         remaining = remaining * 60 - _minutes;
-        double _seconds = Math.floor(remaining * 3600);
+        double _seconds = new BigDecimal(remaining * 60).setScale(4, RoundingMode.HALF_UP).doubleValue();
 
         return new DMSCoordinate(_wholeDegrees, _minutes, _seconds);
     }

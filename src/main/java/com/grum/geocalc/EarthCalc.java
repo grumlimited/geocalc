@@ -32,21 +32,17 @@ public class EarthCalc {
      */
     public static double getDistance(Point standPoint, Point forePoint) {
 
-        double diffLongitudes = toRadians(forePoint.getLongitude() - standPoint.getLongitude());
-
-        //spherical law of cosines
-//        double c = Math.acos(
-//                    Math.sin(Math.toRadians(forePoint.getLatitude())) * Math.sin(Math.toRadians(standPoint.getLatitude()))
-//                    + Math.cos(Math.toRadians(forePoint.getLatitude())) * Math.cos(Math.toRadians(standPoint.getLatitude())) * Math.cos(diffLongitudes)
-//                );
-
+        double diffLongitudes = toRadians(abs(forePoint.getLongitude() - standPoint.getLongitude()));
         double slat = toRadians(standPoint.getLatitude());
         double flat = toRadians(forePoint.getLatitude());
 
+        //spherical law of cosines
+        double c = acos((sin(slat) * sin(flat)) + (cos(slat) * cos(flat) * cos(diffLongitudes)));
+
         //Vincenty formula
-        double c = sqrt(pow(cos(flat) * sin(diffLongitudes), 2d) + pow(cos(slat) * sin(flat) - sin(slat) * cos(flat) * cos(diffLongitudes), 2d));
-        c = c / (sin(slat) * sin(flat) + cos(slat) * cos(flat) * cos(diffLongitudes));
-        c = atan(c);
+//        double c = sqrt(pow(cos(flat) * sin(diffLongitudes), 2d) + pow(cos(slat) * sin(flat) - sin(slat) * cos(flat) * cos(diffLongitudes), 2d));
+//        c = c / (sin(slat) * sin(flat) + cos(slat) * cos(flat) * cos(diffLongitudes));
+//        c = atan(c);
 
         return EARTH_DIAMETER * c;
     }
@@ -78,7 +74,6 @@ public class EarthCalc {
 
         if (cos(rlat) == 0.0 || abs(cos(rlat)) < epsilon) { // Endpoint a pole
             rlon = rlon1;
-
         } else {
             rlon = ((rlon1 - asin(sin(rbearing) * sin(rdistance) / cos(rlat)) + PI) % (2 * PI)) - PI;
         }

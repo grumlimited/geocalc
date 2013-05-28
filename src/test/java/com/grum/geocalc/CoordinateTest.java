@@ -77,6 +77,18 @@ public class CoordinateTest {
     }
 
     @Test
+    public void testDMSCoordinateNegativeValue() {
+        DMSCoordinate dmsCoordinate = new DMSCoordinate(-46, 32, 44.16);
+        assertEquals(-46.5456, dmsCoordinate.getDecimalDegrees(), 0);
+
+        DegreeCoordinate degreeCoordinate = new DegreeCoordinate(-46.5456);
+        dmsCoordinate = degreeCoordinate.getDMSCoordinate();
+        assertEquals(-46, dmsCoordinate.getWholeDegrees(), 0);
+        assertEquals(32, dmsCoordinate.getMinutes(), 0);
+        assertEquals(44.16, dmsCoordinate.getSeconds(), 0);
+    }
+
+    @Test
     public void testGPSCoordinate() {
         GPSCoordinate gpsCoordinate = new GPSCoordinate(89, 60);
         Coordinate coordinate = gpsCoordinate.getDegreeCoordinate();

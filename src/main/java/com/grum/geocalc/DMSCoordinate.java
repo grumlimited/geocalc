@@ -12,6 +12,8 @@
 
 package com.grum.geocalc;
 
+import static java.lang.Math.*;
+
 /**
  * Represents coordinates given in
  * Degrees Minutes decimal-seconds (D M s) format
@@ -26,7 +28,11 @@ public class DMSCoordinate extends Coordinate {
         this.wholeDegrees = wholeDegrees;
         this.minutes = minutes;
         this.seconds = seconds;
-        this.decimalDegrees = wholeDegrees + minutes / 60 + seconds / 3600;
+        this.decimalDegrees = abs(this.wholeDegrees) + minutes / 60 + seconds / 3600;
+
+        if(wholeDegrees < 0) {
+            this.decimalDegrees = -this.decimalDegrees;
+        }
     }
 
     public double getMinutes() {
