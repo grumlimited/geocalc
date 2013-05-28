@@ -33,7 +33,7 @@ You need a JDK 1.6 and maven.
     <dependency>
         <groupId>com.grum</groupId>
         <artifactId>geocalc</artifactId>
-        <version>0.1</version>
+        <version>0.1.2</version>
     </dependency>
 
 ### Creating a Point, and converting between systems
