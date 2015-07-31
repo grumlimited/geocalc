@@ -24,7 +24,7 @@ How to use
     
 ##### Compile
 
-You need a JDK 1.6 and maven.
+You need a JDK 1.8 and maven.
     
     mvn clean install -DskipTests=true
     
@@ -33,7 +33,7 @@ You need a JDK 1.6 and maven.
     <dependency>
         <groupId>com.grum</groupId>
         <artifactId>geocalc</artifactId>
-        <version>0.1.2</version>
+        <version>0.1.3</version>
     </dependency>
 
 ### Creating a Point, and converting between systems
@@ -83,7 +83,7 @@ The result is given in meters.
 ### Calculating a rectangular area around a point
 
 This is useful when, having a reference point, and a large set of 
-other points, you need to figure out which ones are, say, 3000 meters away.
+other points, you need to figure out which ones are at most, say, 3000 meters away.
 
 While this only gives an approximation, it is several order of magnitude faster
 than calculating the distances from each point in the set to the reference point.

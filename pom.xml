@@ -7,7 +7,7 @@
     <groupId>com.grum</groupId>
     <artifactId>geocalc</artifactId>
     <packaging>jar</packaging>
-    <version>0.2</version>
+    <version>0.3</version>
     <name>Geocalc</name>
     <url>http://www.grumlimited.co.uk</url>
 
