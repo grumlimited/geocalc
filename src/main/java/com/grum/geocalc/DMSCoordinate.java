@@ -42,7 +42,7 @@ import static java.lang.Math.*;
  */
 public class DMSCoordinate extends Coordinate {
 
-    double wholeDegrees, minutes, seconds;
+    private double wholeDegrees, minutes, seconds;
 
     public DMSCoordinate(double wholeDegrees, double minutes, double seconds) {
         this.wholeDegrees = wholeDegrees;

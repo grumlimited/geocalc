@@ -104,8 +104,8 @@ public class EarthCalc {
     /**
      * Returns the bearing, in decimal degrees, from standPoint to forePoint
      *
-     * @param standPoint
-     * @param forePoint
+     * @param standPoint Origin point
+     * @param forePoint Destination point
      * @return bearing, in decimal degrees
      */
     public static double getBearing(Point standPoint, Point forePoint) {

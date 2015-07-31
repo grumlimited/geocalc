@@ -42,7 +42,7 @@ import org.apache.log4j.Logger;
  * @author rgallet
  */
 public class BoundingArea {
-    Logger logger = Logger.getLogger(getClass());
+    private Logger logger = Logger.getLogger(getClass());
     private Point northEast, southWest;
     private Point southEast, northWest;
 
@@ -106,7 +106,7 @@ public class BoundingArea {
             predicate2 = point.longitude >= southWest.longitude && point.longitude <= northEast.longitude;
         }
 
-        return predicate1 && predicate2;
+        return predicate2;
     }
 
     @Override
@@ -121,10 +121,7 @@ public class BoundingArea {
         if (this.northEast != other.northEast && (this.northEast == null || !this.northEast.equals(other.northEast))) {
             return false;
         }
-        if (this.southWest != other.southWest && (this.southWest == null || !this.southWest.equals(other.southWest))) {
-            return false;
-        }
-        return true;
+        return !(this.southWest != other.southWest && (this.southWest == null || !this.southWest.equals(other.southWest)));
     }
 
     @Override

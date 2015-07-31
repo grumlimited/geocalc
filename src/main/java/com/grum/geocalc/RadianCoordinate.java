@@ -40,7 +40,7 @@ package com.grum.geocalc;
  */
 public class RadianCoordinate extends Coordinate {
 
-    double radians;
+    private double radians;
 
     public RadianCoordinate(double radians) {
         this.decimalDegrees = Math.toDegrees(radians);

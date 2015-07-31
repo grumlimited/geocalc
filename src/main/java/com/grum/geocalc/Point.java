@@ -60,7 +60,7 @@ public class Point implements Serializable {
     /**
      * Returns longitude in decimal degrees
      *
-     * @return
+     * @return longitude
      */
     public double getLongitude() {
         return longitude;
