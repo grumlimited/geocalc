@@ -59,10 +59,10 @@ public class EarthCalc {
         //spherical law of cosines
         double c = acos((sin(slat) * sin(flat)) + (cos(slat) * cos(flat) * cos(diffLongitudes)));
 
-        //Vincenty formula
-//        double c = sqrt(pow(cos(flat) * sin(diffLongitudes), 2d) + pow(cos(slat) * sin(flat) - sin(slat) * cos(flat) * cos(diffLongitudes), 2d));
-//        c = c / (sin(slat) * sin(flat) + cos(slat) * cos(flat) * cos(diffLongitudes));
-//        c = atan(c);
+        // haversine formula
+//        double diffLatitudes = toRadians(abs(forePoint.getLatitude() - standPoint.getLatitude()));
+//        double a = sin(diffLatitudes / 2) * sin(diffLatitudes / 2) + cos(slat) * cos(flat) * sin(diffLongitudes / 2) * sin(diffLongitudes / 2);
+//        double c = 2 * atan2(sqrt(a), sqrt(1 - a)); //angular distance in radians
 
         return EARTH_DIAMETER * c;
     }
@@ -70,7 +70,7 @@ public class EarthCalc {
     /**
      * Returns the coordinates of a point which is "distance" away
      * from standPoint in the direction of "bearing"
-     * <p/>
+     * <p>
      * Note: North is equal to 0 for bearing value
      *
      * @param standPoint Origin
@@ -105,7 +105,7 @@ public class EarthCalc {
      * Returns the bearing, in decimal degrees, from standPoint to forePoint
      *
      * @param standPoint Origin point
-     * @param forePoint Destination point
+     * @param forePoint  Destination point
      * @return bearing, in decimal degrees
      */
     public static double getBearing(Point standPoint, Point forePoint) {
