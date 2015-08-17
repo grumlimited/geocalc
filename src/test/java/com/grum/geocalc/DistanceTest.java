@@ -229,12 +229,10 @@ public class DistanceTest {
          * but the correct result is 19.213575108209017
          */
 
-        //Kew
         Coordinate lat = new DegreeCoordinate(31.194326398628462);
         Coordinate lng = new DegreeCoordinate(121.42127048962534);
         Point standpoint = new Point(lat, lng);
 
-        //Richmond, London
         lat = new DegreeCoordinate(31.194353394639606);
         lng = new DegreeCoordinate(121.4212814985147);
         Point forepoint = new Point(lat, lng);
