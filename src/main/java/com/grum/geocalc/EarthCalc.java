@@ -77,28 +77,23 @@ public class EarthCalc {
      * @param bearing    Direction in degrees
      * @param distance   distance in meters
      * @return forepoint coordinates
-     * @see http://stackoverflow.com/questions/877524/calculating-coordinates-given-a-bearing-and-a-distance
+     * @see http://www.movable-type.co.uk/scripts/latlong.html
      */
     public static Point pointRadialDistance(Point standPoint, double bearing, double distance) {
+        /**
+         var φ2 = Math.asin( Math.sin(φ1)*Math.cos(d/R) + Math.cos(φ1)*Math.sin(d/R)*Math.cos(brng) );
+         var λ2 = λ1 + Math.atan2(Math.sin(brng)*Math.sin(d/R)*Math.cos(φ1), Math.cos(d/R)-Math.sin(φ1)*Math.sin(φ2));
+         */
 
         double rlat1 = toRadians(standPoint.getLatitude());
         double rlon1 = toRadians(standPoint.getLongitude());
         double rbearing = toRadians(bearing);
         double rdistance = distance / EARTH_DIAMETER; // normalize linear distance to radian angle
 
-        double rlat = asin(sin(rlat1) * cos(rdistance) + cos(rlat1) * sin(rdistance) * cos(rbearing));
+        double lat2 = asin(sin(rlat1) * cos(rdistance) + cos(rlat1) * sin(rdistance) * cos(rbearing));
+        double lon2 = rlon1 + atan2(Math.sin(rbearing) * sin(rdistance) * cos(rlat1), cos(rdistance) - sin(rlat1) * sin(lat2));
 
-        double epsilon = 0.000001;
-
-        double rlon;
-
-        if (cos(rlat) == 0.0 || abs(cos(rlat)) < epsilon) { // Endpoint a pole
-            rlon = rlon1;
-        } else {
-            rlon = ((rlon1 - asin(sin(rbearing) * sin(rdistance) / cos(rlat)) + PI) % (2 * PI)) - PI;
-        }
-
-        return new Point(new RadianCoordinate(rlat), new RadianCoordinate(rlon));
+        return new Point(new RadianCoordinate(lat2), new RadianCoordinate(lon2));
     }
 
     /**
@@ -109,24 +104,19 @@ public class EarthCalc {
      * @return bearing, in decimal degrees
      */
     public static double getBearing(Point standPoint, Point forePoint) {
-        double latitude1 = toRadians(standPoint.getLatitude());
-        double longitude1 = standPoint.getLongitude();
 
-        double latitude2 = toRadians(forePoint.getLatitude());
-        double longitude2 = forePoint.getLongitude();
+        /**
+         * Formula: θ = atan2( 	sin(Δlong).cos(lat2), cos(lat1).sin(lat2) − sin(lat1).cos(lat2).cos(Δlong) )
+         */
 
-        double longDiff = toRadians(longitude2 - longitude1);
+        double y = sin(toRadians(forePoint.getLongitude() - standPoint.getLongitude())) * cos(toRadians(forePoint.getLatitude()));
+        double x = cos(toRadians(standPoint.getLatitude())) * sin(toRadians(forePoint.getLatitude()))
+                - sin(toRadians(standPoint.getLatitude())) * cos(toRadians(forePoint.getLatitude())) * cos(toRadians(forePoint.getLongitude() - standPoint.getLongitude()));
 
-        //invertedBearing because it represents the angle, in radians, of standPoint from forePoint's point of view
-        //we want the opposite
-        double invertedBearing = ((atan2(sin(longDiff) * cos(latitude2),
-                cos(latitude1) * sin(latitude2) - sin(latitude1) * cos(latitude2) * cos(longDiff))));
+        double bearing = (atan2(y, x) + 2 * PI) % (2 * PI);
 
-        double rbearing = (-invertedBearing + 2 * PI) % (2 * PI);
-
-        return toDegrees(rbearing);
+        return toDegrees(bearing);
     }
-
 
     /**
      * Returns an area around standPoint

@@ -179,21 +179,6 @@ public class DistanceTest {
     }
 
     @Test
-    public void testBearing() {
-        //Kew
-        Coordinate lat = new DegreeCoordinate(51.4843774);
-        Coordinate lng = new DegreeCoordinate(-0.2912044);
-        Point kew = new Point(lat, lng);
-
-        for (int i = 0; i <= 360; i = i + 1) {
-            Point test = EarthCalc.pointRadialDistance(kew, i, 10000);
-            double bearing = EarthCalc.getBearing(kew, test);
-            //modulo 360 to care for when i == 360, which rightly returns a bearing of 0
-            assertEquals((i % 360), bearing, 1E-10);
-        }
-    }
-
-    @Test
     public void testPointRadialDistance() {
         //Kew
         Coordinate lat = new DegreeCoordinate(51.4843774);
@@ -213,5 +198,55 @@ public class DistanceTest {
         assertEquals(richmond.getLatitude(), allegedRichmond.getLatitude(), 10E-5);
         assertEquals(richmond.getLongitude(), allegedRichmond.getLongitude(), 10E-5);
 
+    }
+
+    @Test
+    public void testBearing() {
+        //Kew
+        Coordinate lat = new DegreeCoordinate(51.4843774);
+        Coordinate lng = new DegreeCoordinate(-0.2912044);
+        Point kew = new Point(lat, lng);
+
+        //Richmond, London
+        lat = new DegreeCoordinate(51.4613418);
+        lng = new DegreeCoordinate(-0.3035466);
+        Point richmond = new Point(lat, lng);
+
+        System.out.println(EarthCalc.getBearing(kew, richmond));
+        assertEquals(EarthCalc.getBearing(kew, richmond), 198.4604614570758D, 10E-5);
+    }
+
+    @Test
+    public void testBearingGitHubIssue3() {
+        /**
+         *
+         * https://github.com/grumlimited/geocalc/issues/3
+         * standpoint is 31.194326398628462:121.42127048962534
+         * forepoint is 31.194353394639606:121.4212814985147
+         *
+         * bearing is 340.76940494442715
+         *
+         * but the correct result is 19.213575108209017
+         */
+
+        //Kew
+        Coordinate lat = new DegreeCoordinate(31.194326398628462);
+        Coordinate lng = new DegreeCoordinate(121.42127048962534);
+        Point standpoint = new Point(lat, lng);
+
+        //Richmond, London
+        lat = new DegreeCoordinate(31.194353394639606);
+        lng = new DegreeCoordinate(121.4212814985147);
+        Point forepoint = new Point(lat, lng);
+
+        assertEquals(EarthCalc.getBearing(standpoint, forepoint), 19.230595055572852D, 10E-5);
+
+        /**
+         * http://www.movable-type.co.uk/scripts/latlong.html
+         * returns a bearing of 019°13′50″ which is == 19.230595055572852D
+         * and not 19.213575108209017
+         */
+        DMSCoordinate d = new DMSCoordinate(19, 13, 50);
+        assertEquals(d.getDegreeCoordinate().getDecimalDegrees(), 19.230595055572852D, 10E-5);
     }
 }
