@@ -67,6 +67,53 @@ public class EarthCalc {
         return EARTH_DIAMETER * c;
     }
 
+    public static double getVicentyDistance(Point standPoint, Point forePoint) {
+
+        double λ1 = toRadians(standPoint.getLongitude());
+        double λ2 = toRadians(forePoint.getLongitude());
+
+        double φ1 = toRadians(standPoint.getLatitude());
+        double φ2 = toRadians(forePoint.getLatitude());
+
+        double a = 6_378_137;
+        double b = 6_356_752.314245;
+        double f = 1 / 298.257223563;
+
+        double L = λ2 - λ1;
+        double tanU1 = (1 - f) * tan(φ1), cosU1 = 1 / sqrt((1 + tanU1 * tanU1)), sinU1 = tanU1 * cosU1;
+        double tanU2 = (1 - f) * tan(φ2), cosU2 = 1 / sqrt((1 + tanU2 * tanU2)), sinU2 = tanU2 * cosU2;
+
+        double λ = L, λʹ, iterationLimit = 100, cosSqα, σ, cos2σM, cosσ, sinσ;
+        do {
+            double sinλ = sin(λ), cosλ = cos(λ);
+            double sinSqσ = (cosU2 * sinλ) * (cosU2 * sinλ) + (cosU1 * sinU2 - sinU1 * cosU2 * cosλ) * (cosU1 * sinU2 - sinU1 * cosU2 * cosλ);
+            sinσ = sqrt(sinSqσ);
+            if (sinσ == 0) return 0;  // co-incident points
+            cosσ = sinU1 * sinU2 + cosU1 * cosU2 * cosλ;
+            σ = atan2(sinσ, cosσ);
+            double sinα = cosU1 * cosU2 * sinλ / sinσ;
+            cosSqα = 1 - sinα * sinα;
+            cos2σM = cosσ - 2 * sinU1 * sinU2 / cosSqα;
+
+            if (Double.isNaN(cos2σM)) cos2σM = 0;  // equatorial line: cosSqα=0 (§6)
+            double C = f / 16 * cosSqα * (4 + f * (4 - 3 * cosSqα));
+            λʹ = λ;
+            λ = L + (1 - C) * f * sinα * (σ + C * sinσ * (cos2σM + C * cosσ * (-1 + 2 * cos2σM * cos2σM)));
+        } while (abs(λ - λʹ) > 1e-12 && --iterationLimit > 0);
+        if (iterationLimit == 0) throw new IllegalStateException("Formula failed to converge");
+
+        double uSq = cosSqα * (a * a - b * b) / (b * b);
+        double A = 1 + uSq / 16384 * (4096 + uSq * (-768 + uSq * (320 - 175 * uSq)));
+        double B = uSq / 1024 * (256 + uSq * (-128 + uSq * (74 - 47 * uSq)));
+        double Δσ = B * sinσ * (cos2σM + B / 4 * (cosσ * (-1 + 2 * cos2σM * cos2σM) -
+                B / 6 * cos2σM * (-3 + 4 * sinσ * sinσ) * (-3 + 4 * cos2σM * cos2σM)));
+
+        double s = b * A * (σ - Δσ);
+
+        return s;
+
+    }
+
     /**
      * Returns the coordinates of a point which is "distance" away
      * from standPoint in the direction of "bearing"
@@ -81,8 +128,8 @@ public class EarthCalc {
      */
     public static Point pointRadialDistance(Point standPoint, double bearing, double distance) {
         /**
-         var φ2 = Math.asin( Math.sin(φ1)*Math.cos(d/R) + Math.cos(φ1)*Math.sin(d/R)*Math.cos(brng) );
-         var λ2 = λ1 + Math.atan2(Math.sin(brng)*Math.sin(d/R)*Math.cos(φ1), Math.cos(d/R)-Math.sin(φ1)*Math.sin(φ2));
+         var φ2 = asin( sin(φ1)*cos(d/R) + cos(φ1)*sin(d/R)*cos(brng) );
+         var λ2 = λ1 + atan2(sin(brng)*sin(d/R)*cos(φ1), cos(d/R)-sin(φ1)*sin(φ2));
          */
 
         double rlat1 = toRadians(standPoint.getLatitude());
@@ -91,7 +138,7 @@ public class EarthCalc {
         double rdistance = distance / EARTH_DIAMETER; // normalize linear distance to radian angle
 
         double lat2 = asin(sin(rlat1) * cos(rdistance) + cos(rlat1) * sin(rdistance) * cos(rbearing));
-        double lon2 = rlon1 + atan2(Math.sin(rbearing) * sin(rdistance) * cos(rlat1), cos(rdistance) - sin(rlat1) * sin(lat2));
+        double lon2 = rlon1 + atan2(sin(rbearing) * sin(rdistance) * cos(rlat1), cos(rdistance) - sin(rlat1) * sin(lat2));
 
         return new Point(new RadianCoordinate(lat2), new RadianCoordinate(lon2));
     }

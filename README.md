@@ -1,8 +1,7 @@
 Java Geocalc
 =======
 
-Geocalc is a simple java library aimed at doing arithmetics with
-Earth coordinates. 
+Geocalc is a simple java library aimed at doing arithmetics with Earth coordinates. 
 It is designed to be simple to embed in your existing applications and easy to use. Geocalc can:
 
 1. Calculate the distance between to coordinates
@@ -12,6 +11,8 @@ It is designed to be simple to embed in your existing applications and easy to u
 5. Calculate the bearing between two points
 
 This library is being used on [www.rentbarometer.com](http://www.rentbarometer.com).
+
+This library implements in Java lots of ideas from [Movable-Type](http://www.movable-type.co.uk/scripts/latlong.html). Many thanks.
 
 How to use
 -
@@ -33,7 +34,7 @@ You need a JDK 1.8 and maven.
     <dependency>
         <groupId>com.grum</groupId>
         <artifactId>geocalc</artifactId>
-        <version>0.3.1</version>
+        <version>0.4</version>
     </dependency>
 
 ### Creating a Point, and converting between systems
@@ -55,7 +56,7 @@ You need a JDK 1.8 and maven.
 
 ### Distance between 2 points
 
-The result is given in meters.
+The result is given in meters using spherical law of cosines.
 
     //Kew, London
     Coordinate lat = new DegreeCoordinate(51.4843774);
@@ -68,6 +69,20 @@ The result is given in meters.
     Point richmond = new Point(lat, lng);
 
     double distance = EarthCalc.getDistance(richmond, kew); //in meters
+    
+The result is given in meters using Vicenty formula.
+    
+    //Kew, London
+    Coordinate lat = new DegreeCoordinate(51.4843774);
+    Coordinate lng = new DegreeCoordinate(-0.2912044);
+    Point kew = new Point(lat, lng);
+
+    //Richmond, London
+    lat = new DegreeCoordinate(51.4613418);
+    lng = new DegreeCoordinate(-0.3035466);
+    Point richmond = new Point(lat, lng);
+
+    double distance = EarthCalc.getVicentyDistance(richmond, kew); //in meters
     
     
 ### Finding a point at 'distance in meters away' from a standpoint, given a bearing

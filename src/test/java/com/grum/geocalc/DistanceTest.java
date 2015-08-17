@@ -70,6 +70,23 @@ public class DistanceTest {
     }
 
     @Test
+    public void testVicentyDistanceToBuenosAires() {
+        //Kew
+        Coordinate lat = new DMSCoordinate(51, 29, 3.7572);
+        Coordinate lng = new DMSCoordinate(0, 17, 28.3338);
+
+        Point kew = new Point(lat, lng);
+
+        //Buenos Aires
+        lat = new DMSCoordinate(-34, 36, 35.9994);
+        lng = new DMSCoordinate(-58, 22, 11.9994);
+
+        Point buenosAires = new Point(lat, lng);
+
+        assertEquals(11120, (int) (EarthCalc.getVicentyDistance(buenosAires, kew) / 1000)); //km
+    }
+
+    @Test
     public void testSymmetricDistance() {
         //Kew
         Coordinate lat = new DegreeCoordinate(51.4843774);
