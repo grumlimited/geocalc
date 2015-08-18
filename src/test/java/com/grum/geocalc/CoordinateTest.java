@@ -55,11 +55,11 @@ public class CoordinateTest {
 
     @Test
     public void testDMSCoordinate() {
-        DMSCoordinate dmsCoordinate = new DMSCoordinate(89, 59, 60, 45);
+        DMSCoordinate dmsCoordinate = new DMSCoordinate(89, 59, 60.45);
         Coordinate coordinate = dmsCoordinate.getDegreeCoordinate();
         assertEquals(dmsCoordinate.decimalDegrees, coordinate.decimalDegrees, 1E-5);
 
-        dmsCoordinate = new DMSCoordinate(175, 8, 55, 45);
+        dmsCoordinate = new DMSCoordinate(175, 8, 55.45);
         DegreeCoordinate degreeCoordinate = new DegreeCoordinate(175.14873);
         assertEquals(degreeCoordinate.decimalDegrees, dmsCoordinate.decimalDegrees, 1E-5);
 
@@ -67,7 +67,7 @@ public class CoordinateTest {
         assertEquals(degreeCoordinate.decimalDegrees, convertedBackDegreeCoordinate.decimalDegrees, 1E-5);
 
         RadianCoordinate radianCoordinate = new RadianCoordinate(Math.PI * 3 / 2);
-        dmsCoordinate = new DMSCoordinate(270, 0, 0, 0);
+        dmsCoordinate = new DMSCoordinate(270, 0, 0);
         assertEquals(radianCoordinate.getDMSCoordinate().decimalDegrees, dmsCoordinate.decimalDegrees, 1E-5);
     }
 

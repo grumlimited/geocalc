@@ -292,7 +292,7 @@ public class DistanceTest {
         Point richmond = new Point(lat, lng);
 
         //comparing to results from ttp://www.movable-type.co.uk/scripts/latlong.html
-        assertEquals(EarthCalc.getVicentyBearing(kew, richmond), new DMSCoordinate(198, 30, 19, 58).decimalDegrees, 10E-5);
-        assertEquals(EarthCalc.getVicentyFinalBearing(kew, richmond), new DMSCoordinate(198, 29, 44, 82).decimalDegrees, 10E-5);
+        assertEquals(EarthCalc.getVicentyBearing(kew, richmond), new DMSCoordinate(198, 30, 19.58).decimalDegrees, 10E-5);
+        assertEquals(EarthCalc.getVicentyFinalBearing(kew, richmond), new DMSCoordinate(198, 29, 44.82).decimalDegrees, 10E-5);
     }
 }
