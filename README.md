@@ -8,7 +8,7 @@ It is designed to be simple to embed in your existing applications and easy to u
 2. Find a point at X distance from a standpoint, given a bearing
 3. Calculate a rectangular area around a point
 4. Determine whether a Point is contained within that area
-5. Calculate the azimuth and final bearing between two points
+5. Calculate the azimuth and final bearings between two points
 
 This library is being used on [www.rentbarometer.com](http://www.rentbarometer.com).
 
