@@ -84,7 +84,7 @@ public class EarthCalc {
     }
 
     /**
-     * Calculate distance, (azimith) bearing and final bearing between standPoint and forePoint.
+     * Calculate distance, (azimuth) bearing and final bearing between standPoint and forePoint.
      *
      * @param standPoint The stand point
      * @param forePoint  The fore point
@@ -154,19 +154,21 @@ public class EarthCalc {
      * @param standPoint The stand point
      * @param forePoint  The fore point
      * @return (azimuth) bearing in degrees to the North
-     * @see http://www.movable-type.co.uk/scripts/latlong.html
+     *
+     * @link http://www.movable-type.co.uk/scripts/latlong.html
      */
     public static double getVicentyBearing(Point standPoint, Point forePoint) {
         return getVicenty(standPoint, forePoint).initialBearing;
     }
 
     /**
-     * Returns final bearing uin direction standPoint→forePoint using Vicenty formula.
+     * Returns final bearing in direction of standPoint→forePoint using Vicenty formula.
      *
      * @param standPoint The stand point
      * @param forePoint  The fore point
      * @return (azimuth) bearing in degrees to the North
-     * @see http://www.movable-type.co.uk/scripts/latlong.html
+     *
+     * @link http://www.movable-type.co.uk/scripts/latlong.html
      */
     public static double getVicentyFinalBearing(Point standPoint, Point forePoint) {
         return getVicenty(standPoint, forePoint).finalBearing;
@@ -182,7 +184,8 @@ public class EarthCalc {
      * @param bearing    Direction in degrees
      * @param distance   distance in meters
      * @return forePoint coordinates
-     * @see http://www.movable-type.co.uk/scripts/latlong.html
+     *
+     * @link http://www.movable-type.co.uk/scripts/latlong.html
      */
     public static Point pointRadialDistance(Point standPoint, double bearing, double distance) {
         /**
@@ -228,14 +231,15 @@ public class EarthCalc {
      * @param standPoint The centre of the area
      * @param distance   Distance around standPoint, im meters
      * @return The area
-     * @see http://www.movable-type.co.uk/scripts/latlong.html
+     * 
+     * @link http://www.movable-type.co.uk/scripts/latlong.html
      */
     public static BoundingArea getBoundingArea(Point standPoint, double distance) {
 
-        //45 degrees is going north-west
+        //45 degrees going north-west
         Point northWest = pointRadialDistance(standPoint, 45, distance);
 
-        //225 degrees is going south-east
+        //225 degrees going south-east
         Point southEast = pointRadialDistance(standPoint, 225, distance);
 
         return new BoundingArea(northWest, southEast);
