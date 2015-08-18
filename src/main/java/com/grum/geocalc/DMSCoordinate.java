@@ -32,7 +32,7 @@
 
 package com.grum.geocalc;
 
-import static java.lang.Math.*;
+import static java.lang.Math.abs;
 
 /**
  * Represents coordinates given in

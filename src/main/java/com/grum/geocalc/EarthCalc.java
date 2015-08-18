@@ -52,9 +52,9 @@ public class EarthCalc {
      */
     public static double getDistance(Point standPoint, Point forePoint) {
 
-        double diffLongitudes = toRadians(abs(forePoint.getLongitude() - standPoint.getLongitude()));
-        double slat = toRadians(standPoint.getLatitude());
-        double flat = toRadians(forePoint.getLatitude());
+        double diffLongitudes = toRadians(abs(forePoint.longitude - standPoint.longitude));
+        double slat = toRadians(standPoint.latitude);
+        double flat = toRadians(forePoint.latitude);
 
         //spherical law of cosines
         double c = acos((sin(slat) * sin(flat)) + (cos(slat) * cos(flat) * cos(diffLongitudes)));
@@ -71,24 +71,31 @@ public class EarthCalc {
      */
     public static double getHarvesineDistance(Point standPoint, Point forePoint) {
 
-        double diffLongitudes = toRadians(abs(forePoint.getLongitude() - standPoint.getLongitude()));
-        double slat = toRadians(standPoint.getLatitude());
-        double flat = toRadians(forePoint.getLatitude());
+        double diffLongitudes = toRadians(abs(forePoint.longitude - standPoint.longitude));
+        double slat = toRadians(standPoint.latitude);
+        double flat = toRadians(forePoint.latitude);
 
         // haversine formula
-        double diffLatitudes = toRadians(abs(forePoint.getLatitude() - standPoint.getLatitude()));
+        double diffLatitudes = toRadians(abs(forePoint.latitude - standPoint.latitude));
         double a = sin(diffLatitudes / 2) * sin(diffLatitudes / 2) + cos(slat) * cos(flat) * sin(diffLongitudes / 2) * sin(diffLongitudes / 2);
         double c = 2 * atan2(sqrt(a), sqrt(1 - a)); //angular distance in radians
 
         return EARTH_DIAMETER * c;
     }
 
+    /**
+     * Calculate distance, (azimith) bearing and final bearing between standPoint and forePoint.
+     *
+     * @param standPoint The stand point
+     * @param forePoint  The fore point
+     * @return Vicenty object which holds all 3 values
+     */
     private static Vicenty getVicenty(Point standPoint, Point forePoint) {
-        double λ1 = toRadians(standPoint.getLongitude());
-        double λ2 = toRadians(forePoint.getLongitude());
+        double λ1 = toRadians(standPoint.longitude);
+        double λ2 = toRadians(forePoint.longitude);
 
-        double φ1 = toRadians(standPoint.getLatitude());
-        double φ2 = toRadians(forePoint.getLatitude());
+        double φ1 = toRadians(standPoint.latitude);
+        double φ2 = toRadians(forePoint.latitude);
 
         double a = 6_378_137;
         double b = 6_356_752.314245;
@@ -141,10 +148,26 @@ public class EarthCalc {
         return getVicenty(standPoint, forePoint).distance;
     }
 
+    /**
+     * Returns (azimuth) bearing using Vicenty formula.
+     *
+     * @param standPoint The stand point
+     * @param forePoint  The fore point
+     * @return (azimuth) bearing in degrees to the North
+     * @see http://www.movable-type.co.uk/scripts/latlong.html
+     */
     public static double getVicentyBearing(Point standPoint, Point forePoint) {
         return getVicenty(standPoint, forePoint).initialBearing;
     }
 
+    /**
+     * Returns final bearing uin direction standPoint→forePoint using Vicenty formula.
+     *
+     * @param standPoint The stand point
+     * @param forePoint  The fore point
+     * @return (azimuth) bearing in degrees to the North
+     * @see http://www.movable-type.co.uk/scripts/latlong.html
+     */
     public static double getVicentyFinalBearing(Point standPoint, Point forePoint) {
         return getVicenty(standPoint, forePoint).finalBearing;
     }
@@ -158,7 +181,7 @@ public class EarthCalc {
      * @param standPoint Origin
      * @param bearing    Direction in degrees
      * @param distance   distance in meters
-     * @return forepoint coordinates
+     * @return forePoint coordinates
      * @see http://www.movable-type.co.uk/scripts/latlong.html
      */
     public static Point pointRadialDistance(Point standPoint, double bearing, double distance) {
@@ -167,8 +190,8 @@ public class EarthCalc {
          var λ2 = λ1 + atan2(sin(brng)*sin(d/R)*cos(φ1), cos(d/R)-sin(φ1)*sin(φ2));
          */
 
-        double rlat1 = toRadians(standPoint.getLatitude());
-        double rlon1 = toRadians(standPoint.getLongitude());
+        double rlat1 = toRadians(standPoint.latitude);
+        double rlon1 = toRadians(standPoint.longitude);
         double rbearing = toRadians(bearing);
         double rdistance = distance / EARTH_DIAMETER; // normalize linear distance to radian angle
 
@@ -179,21 +202,20 @@ public class EarthCalc {
     }
 
     /**
-     * Returns the bearing, in decimal degrees, from standPoint to forePoint
+     * Returns the (azimuth) bearing, in decimal degrees, from standPoint to forePoint
      *
      * @param standPoint Origin point
      * @param forePoint  Destination point
-     * @return bearing, in decimal degrees
+     * @return (azimuth) bearing, in decimal degrees
      */
     public static double getBearing(Point standPoint, Point forePoint) {
-
         /**
          * Formula: θ = atan2( 	sin(Δlong).cos(lat2), cos(lat1).sin(lat2) − sin(lat1).cos(lat2).cos(Δlong) )
          */
 
-        double y = sin(toRadians(forePoint.getLongitude() - standPoint.getLongitude())) * cos(toRadians(forePoint.getLatitude()));
-        double x = cos(toRadians(standPoint.getLatitude())) * sin(toRadians(forePoint.getLatitude()))
-                - sin(toRadians(standPoint.getLatitude())) * cos(toRadians(forePoint.getLatitude())) * cos(toRadians(forePoint.getLongitude() - standPoint.getLongitude()));
+        double y = sin(toRadians(forePoint.longitude - standPoint.longitude)) * cos(toRadians(forePoint.latitude));
+        double x = cos(toRadians(standPoint.latitude)) * sin(toRadians(forePoint.latitude))
+                - sin(toRadians(standPoint.latitude)) * cos(toRadians(forePoint.latitude)) * cos(toRadians(forePoint.longitude - standPoint.longitude));
 
         double bearing = (atan2(y, x) + 2 * PI) % (2 * PI);
 
