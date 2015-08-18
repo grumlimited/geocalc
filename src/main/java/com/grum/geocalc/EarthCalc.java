@@ -44,7 +44,7 @@ public class EarthCalc {
     public static final double EARTH_DIAMETER = 6371.01 * 1000; //meters
 
     /**
-     * Returns the distance between two points
+     * Returns the distance between two points using spherical law of cosines.
      *
      * @param standPoint The stand point
      * @param forePoint  The fore point
@@ -59,16 +59,31 @@ public class EarthCalc {
         //spherical law of cosines
         double c = acos((sin(slat) * sin(flat)) + (cos(slat) * cos(flat) * cos(diffLongitudes)));
 
+        return EARTH_DIAMETER * c;
+    }
+
+    /**
+     * Returns the distance between two points using Harvesine formula.
+     *
+     * @param standPoint The stand point
+     * @param forePoint  The fore point
+     * @return The distance, in meters
+     */
+    public static double getHarvesineDistance(Point standPoint, Point forePoint) {
+
+        double diffLongitudes = toRadians(abs(forePoint.getLongitude() - standPoint.getLongitude()));
+        double slat = toRadians(standPoint.getLatitude());
+        double flat = toRadians(forePoint.getLatitude());
+
         // haversine formula
-//        double diffLatitudes = toRadians(abs(forePoint.getLatitude() - standPoint.getLatitude()));
-//        double a = sin(diffLatitudes / 2) * sin(diffLatitudes / 2) + cos(slat) * cos(flat) * sin(diffLongitudes / 2) * sin(diffLongitudes / 2);
-//        double c = 2 * atan2(sqrt(a), sqrt(1 - a)); //angular distance in radians
+        double diffLatitudes = toRadians(abs(forePoint.getLatitude() - standPoint.getLatitude()));
+        double a = sin(diffLatitudes / 2) * sin(diffLatitudes / 2) + cos(slat) * cos(flat) * sin(diffLongitudes / 2) * sin(diffLongitudes / 2);
+        double c = 2 * atan2(sqrt(a), sqrt(1 - a)); //angular distance in radians
 
         return EARTH_DIAMETER * c;
     }
 
-    public static double getVicentyDistance(Point standPoint, Point forePoint) {
-
+    private static Vicenty getVicenty(Point standPoint, Point forePoint) {
         double λ1 = toRadians(standPoint.getLongitude());
         double λ2 = toRadians(forePoint.getLongitude());
 
@@ -83,12 +98,13 @@ public class EarthCalc {
         double tanU1 = (1 - f) * tan(φ1), cosU1 = 1 / sqrt((1 + tanU1 * tanU1)), sinU1 = tanU1 * cosU1;
         double tanU2 = (1 - f) * tan(φ2), cosU2 = 1 / sqrt((1 + tanU2 * tanU2)), sinU2 = tanU2 * cosU2;
 
-        double λ = L, λʹ, iterationLimit = 100, cosSqα, σ, cos2σM, cosσ, sinσ;
+        double λ = L, λʹ, iterationLimit = 100, cosSqα, σ, cos2σM, cosσ, sinσ, sinλ, cosλ;
         do {
-            double sinλ = sin(λ), cosλ = cos(λ);
+            sinλ = sin(λ);
+            cosλ = cos(λ);
             double sinSqσ = (cosU2 * sinλ) * (cosU2 * sinλ) + (cosU1 * sinU2 - sinU1 * cosU2 * cosλ) * (cosU1 * sinU2 - sinU1 * cosU2 * cosλ);
             sinσ = sqrt(sinSqσ);
-            if (sinσ == 0) return 0;  // co-incident points
+            if (sinσ == 0) return new Vicenty(0, 0, 0);  // co-incident points
             cosσ = sinU1 * sinU2 + cosU1 * cosU2 * cosλ;
             σ = atan2(sinσ, cosσ);
             double sinα = cosU1 * cosU2 * sinλ / sinσ;
@@ -100,6 +116,7 @@ public class EarthCalc {
             λʹ = λ;
             λ = L + (1 - C) * f * sinα * (σ + C * sinσ * (cos2σM + C * cosσ * (-1 + 2 * cos2σM * cos2σM)));
         } while (abs(λ - λʹ) > 1e-12 && --iterationLimit > 0);
+
         if (iterationLimit == 0) throw new IllegalStateException("Formula failed to converge");
 
         double uSq = cosSqα * (a * a - b * b) / (b * b);
@@ -108,10 +125,28 @@ public class EarthCalc {
         double Δσ = B * sinσ * (cos2σM + B / 4 * (cosσ * (-1 + 2 * cos2σM * cos2σM) -
                 B / 6 * cos2σM * (-3 + 4 * sinσ * sinσ) * (-3 + 4 * cos2σM * cos2σM)));
 
-        double s = b * A * (σ - Δσ);
+        double distance = b * A * (σ - Δσ);
 
-        return s;
+        double initialBearing = atan2(cosU2 * sinλ, cosU1 * sinU2 - sinU1 * cosU2 * cosλ);
+        initialBearing = (initialBearing + 2 * PI) % (2 * PI); //turning value to trigonometric direction
 
+        double finalBearing = atan2(cosU1 * sinλ, -sinU1 * cosU2 + cosU1 * sinU2 * cosλ);
+        finalBearing = (finalBearing + 2 * PI) % (2 * PI);  //turning value to trigonometric direction
+
+        return new Vicenty(distance, toDegrees(initialBearing), toDegrees(finalBearing));
+
+    }
+
+    public static double getVicentyDistance(Point standPoint, Point forePoint) {
+        return getVicenty(standPoint, forePoint).distance;
+    }
+
+    public static double getVicentyBearing(Point standPoint, Point forePoint) {
+        return getVicenty(standPoint, forePoint).initialBearing;
+    }
+
+    public static double getVicentyFinalBearing(Point standPoint, Point forePoint) {
+        return getVicenty(standPoint, forePoint).finalBearing;
     }
 
     /**
@@ -182,5 +217,20 @@ public class EarthCalc {
         Point southEast = pointRadialDistance(standPoint, 225, distance);
 
         return new BoundingArea(northWest, southEast);
+    }
+
+    private static class Vicenty {
+        /**
+         * distance is the distance in meter
+         * initialBearing is the initial bearing, or forward azimuth (in reference to North point), in degrees
+         * finalBearing is the final bearing (in direction p1→p2), in degrees
+         */
+        double distance, initialBearing, finalBearing;
+
+        public Vicenty(double distance, double initialBearing, double finalBearing) {
+            this.distance = distance;
+            this.initialBearing = initialBearing;
+            this.finalBearing = finalBearing;
+        }
     }
 }

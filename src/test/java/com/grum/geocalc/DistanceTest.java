@@ -264,4 +264,22 @@ public class DistanceTest {
         DMSCoordinate d = new DMSCoordinate(19, 13, 50);
         assertEquals(d.getDegreeCoordinate().getDecimalDegrees(), 19.230595055572852D, 10E-5);
     }
+
+    @Test
+    public void testVicentyBearing() {
+        //Kew
+        Coordinate lat = new DegreeCoordinate(51.4843774);
+        Coordinate lng = new DegreeCoordinate(-0.2912044);
+        Point kew = new Point(lat, lng);
+
+        //Richmond, London
+        lat = new DegreeCoordinate(51.4613418);
+        lng = new DegreeCoordinate(-0.3035466);
+        Point richmond = new Point(lat, lng);
+
+        System.out.println(EarthCalc.getBearing(kew, richmond));
+        System.out.println(EarthCalc.getVicentyBearing(kew, richmond));
+        System.out.println(EarthCalc.getVicentyFinalBearing(kew, richmond));
+
+    }
 }
