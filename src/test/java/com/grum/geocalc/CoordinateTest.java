@@ -154,4 +154,19 @@ public class CoordinateTest {
         Point point13 = new Point(new DegreeCoordinate(0), new DegreeCoordinate(-179));
         assertTrue(boundingArea.isContainedWithin(point13));
     }
+
+    @Test
+    public void testConvertingToSelf() {
+        GPSCoordinate gpsCoordinate = new GPSCoordinate(89, 60);
+        assertEquals(gpsCoordinate.getGPSCoordinate().decimalDegrees, gpsCoordinate.decimalDegrees, 10E-5);
+
+        DegreeCoordinate degreeCoordinate = new DegreeCoordinate(-46.5456);
+        assertEquals(degreeCoordinate.getDegreeCoordinate().decimalDegrees, degreeCoordinate.decimalDegrees, 10E-5);
+
+        DMSCoordinate dmsCoordinate = new DMSCoordinate(89, 59, 60.45);
+        assertEquals(dmsCoordinate.getDMSCoordinate().decimalDegrees, dmsCoordinate.decimalDegrees, 10E-5);
+
+        RadianCoordinate radianCoordinate = new RadianCoordinate(Math.PI / 2);
+        assertEquals(radianCoordinate.getRadianCoordinate().decimalDegrees, radianCoordinate.decimalDegrees, 10E-5);
+    }
 }

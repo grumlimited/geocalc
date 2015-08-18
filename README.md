@@ -14,9 +14,6 @@ This library is being used on [www.rentbarometer.com](http://www.rentbarometer.c
 
 This library implements in Java lots of ideas from [Movable-Type](http://www.movable-type.co.uk/scripts/latlong.html). Many thanks.
 
-How to use
--
-
 ## Installing
 
 ### Download
@@ -24,10 +21,10 @@ How to use
     git clone git@github.com:grumlimited/geocalc.git
     
 ### Compile
-
-You need a JDK 1.8 and maven.
     
     mvn clean install -DskipTests=true
+
+You will need a JDK 1.8 and maven.
     
 ### Embed
 
@@ -36,6 +33,8 @@ You need a JDK 1.8 and maven.
         <artifactId>geocalc</artifactId>
         <version>0.5</version>
     </dependency>
+
+*note: Geocalc is not available from Maven's public repo. You need to run the command above.* 
 
 ## Usage
 
@@ -62,7 +61,7 @@ Allows conversion of a coordinate between degrees, radians, D-M-s and GPS system
     
 back and forth
 
-    lat.getDMSCoordinate().getGPSCoordinate().getRadianCoordinate().decimalDegrees
+    new DegreeCoordinate(-46.5456).getDMSCoordinate().getGPSCoordinate().getRadianCoordinate().decimalDegrees // getGPSCoordinate() implies loss of precision
 
 ### Distance between 2 points
 
@@ -111,13 +110,15 @@ back and forth
     
 ### Finding a point at 'distance in meters away' from a standpoint, given a bearing
 
+`otherPoint` will be 1000m away from Kew
+
     //Kew
     Coordinate lat = new DegreeCoordinate(51.4843774);
     Coordinate lng = new DegreeCoordinate(-0.2912044);
     Point kew = new Point(lat, lng);
     
     //Distance away point, bearing is 45deg
-    Point otherPoint = EarthCalc.pointRadialDistance(kew, 45, 0);
+    Point otherPoint = EarthCalc.pointRadialDistance(kew, 45, 1000);
     
 ### BoundingArea
 
@@ -137,12 +138,14 @@ Now, given that rectangle delimited by 'nw' and 'se', you can determine which po
 
 #### Determining whether a Point is contained within a BoundingArea
 
-Now say you have a BoundingArea:
+Now say you have a BoundingArea,
 
       //somewhere in Europe, not sure where ;-)
       Point northEast = new Point(new DegreeCoordinate(70), new DegreeCoordinate(145));
       Point southWest = new Point(new DegreeCoordinate(50), new DegreeCoordinate(110));
       BoundingArea boundingArea = new BoundingArea(northEast, southWest);
+      
+you can determine whether a point is contained withing that area using:
       
       Point point1 = new Point(new DegreeCoordinate(60), new DegreeCoordinate(120));
       assertTrue(boundingArea.isContainedWithin(point1)); //true

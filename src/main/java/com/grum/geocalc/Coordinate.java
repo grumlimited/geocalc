@@ -36,6 +36,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import static java.lang.Math.*;
+
 /**
  * Represent a coordinate decimalDegrees, in degrees
  *
@@ -61,7 +63,7 @@ abstract public class Coordinate implements Serializable {
 
     DMSCoordinate getDMSCoordinate() {
         double _wholeDegrees = (int) decimalDegrees;
-        double remaining = Math.abs(decimalDegrees - _wholeDegrees);
+        double remaining = abs(decimalDegrees - _wholeDegrees);
         double _minutes = (int) (remaining * 60);
         remaining = remaining * 60 - _minutes;
         double _seconds = new BigDecimal(remaining * 60).setScale(4, RoundingMode.HALF_UP).doubleValue();
@@ -74,14 +76,14 @@ abstract public class Coordinate implements Serializable {
     }
 
     GPSCoordinate getGPSCoordinate() {
-        double _wholeDegrees = Math.floor(decimalDegrees);
+        double _wholeDegrees = floor(decimalDegrees);
         double remaining = decimalDegrees - _wholeDegrees;
-        double _minutes = Math.floor(remaining * 60);
+        double _minutes = floor(remaining * 60);
 
         return new GPSCoordinate(_wholeDegrees, _minutes);
     }
 
     RadianCoordinate getRadianCoordinate() {
-        return new RadianCoordinate(Math.toRadians(decimalDegrees));
+        return new RadianCoordinate(toRadians(decimalDegrees));
     }
 }
