@@ -42,13 +42,18 @@ import static java.lang.Math.*;
  */
 public class DMSCoordinate extends Coordinate {
 
-    private double wholeDegrees, minutes, seconds;
+    private double wholeDegrees, minutes, seconds, hundredth;
 
     public DMSCoordinate(double wholeDegrees, double minutes, double seconds) {
+     this(wholeDegrees, minutes, seconds, 0);
+    }
+
+    public DMSCoordinate(double wholeDegrees, double minutes, double seconds, double hundredth) {
         this.wholeDegrees = wholeDegrees;
         this.minutes = minutes;
         this.seconds = seconds;
-        this.decimalDegrees = abs(this.wholeDegrees) + minutes / 60 + seconds / 3600;
+        this.hundredth = hundredth;
+        this.decimalDegrees = abs(this.wholeDegrees) + minutes / 60 + seconds / 3600 + hundredth / 360000;
 
         if(wholeDegrees < 0) {
             this.decimalDegrees = -this.decimalDegrees;
@@ -65,5 +70,9 @@ public class DMSCoordinate extends Coordinate {
 
     public double getSeconds() {
         return seconds;
+    }
+
+    public double getHundredth() {
+        return hundredth;
     }
 }

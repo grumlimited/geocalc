@@ -60,20 +60,20 @@ public class CoordinateTest {
 
     @Test
     public void testDMSCoordinate() {
-        DMSCoordinate dmsCoordinate = new DMSCoordinate(89, 59, 60);
+        DMSCoordinate dmsCoordinate = new DMSCoordinate(89, 59, 60, 45);
         Coordinate coordinate = dmsCoordinate.getDegreeCoordinate();
-        assertEquals(dmsCoordinate.getDecimalDegrees(), coordinate.getDecimalDegrees(), 1E-4);
+        assertEquals(dmsCoordinate.getDecimalDegrees(), coordinate.getDecimalDegrees(), 1E-5);
 
-        dmsCoordinate = new DMSCoordinate(175, 8, 55);
-        DegreeCoordinate degreeCoordinate = new DegreeCoordinate(175.1487);
-        assertEquals(degreeCoordinate.getDecimalDegrees(), dmsCoordinate.getDecimalDegrees(), 1E-4);
+        dmsCoordinate = new DMSCoordinate(175, 8, 55, 45);
+        DegreeCoordinate degreeCoordinate = new DegreeCoordinate(175.14873);
+        assertEquals(degreeCoordinate.getDecimalDegrees(), dmsCoordinate.getDecimalDegrees(), 1E-5);
 
         DegreeCoordinate convertedBackDegreeCoordinate = dmsCoordinate.getDegreeCoordinate();
-        assertEquals(degreeCoordinate.getDecimalDegrees(), convertedBackDegreeCoordinate.getDecimalDegrees(), 1E-4);
+        assertEquals(degreeCoordinate.getDecimalDegrees(), convertedBackDegreeCoordinate.getDecimalDegrees(), 1E-5);
 
         RadianCoordinate radianCoordinate = new RadianCoordinate(Math.PI * 3 / 2);
-        dmsCoordinate = new DMSCoordinate(270, 0, 0);
-        assertEquals(radianCoordinate.getDMSCoordinate().getDecimalDegrees(), dmsCoordinate.getDecimalDegrees(), 1E-4);
+        dmsCoordinate = new DMSCoordinate(270, 0, 0, 0);
+        assertEquals(radianCoordinate.getDMSCoordinate().getDecimalDegrees(), dmsCoordinate.getDecimalDegrees(), 1E-5);
     }
 
     @Test
@@ -128,7 +128,7 @@ public class CoordinateTest {
         assertFalse(boundingArea.isContainedWithin(point5));
 
         Point point6 = new Point(new DegreeCoordinate(80), new DegreeCoordinate(150));
-        assertFalse(boundingArea.isContainedWithin(point5));
+        assertFalse(boundingArea.isContainedWithin(point6));
 
         Point point7 = new Point(new DegreeCoordinate(35), new DegreeCoordinate(100));
         assertFalse(boundingArea.isContainedWithin(point7));
