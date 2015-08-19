@@ -31,7 +31,7 @@ You will need a JDK 1.8 and maven.
     <dependency>
         <groupId>com.grum</groupId>
         <artifactId>geocalc</artifactId>
-        <version>0.5</version>
+        <version>0.5.1</version>
     </dependency>
 
 *note: Geocalc is not available from Maven's public repo. You need to run the command above.* 
@@ -93,7 +93,7 @@ back and forth
 
     double distance = EarthCalc.getHarvesineDistance(richmond, kew); //in meters
     
-#### Vicenty formula
+#### Vincenty formula
     
     //Kew, London
     Coordinate lat = new DegreeCoordinate(51.4843774);
@@ -105,7 +105,7 @@ back and forth
     lng = new DegreeCoordinate(-0.3035466);
     Point richmond = new Point(lat, lng);
 
-    double distance = EarthCalc.getVicentyDistance(richmond, kew); //in meters
+    double distance = EarthCalc.getVincentyDistance(richmond, kew); //in meters
     
     
 ### Finding a point at 'distance in meters away' from a standpoint, given a bearing
@@ -169,7 +169,7 @@ you can determine whether a point is contained withing that area using:
     
     double bearing = EarthCalc.getBearing(kew, richmond); //in decimal degrees
 
-#### Azimuth bearing - Vicenty formula
+#### Azimuth bearing - Vincenty formula
 
     //Kew
     Coordinate lat = new DegreeCoordinate(51.4843774);
@@ -181,9 +181,9 @@ you can determine whether a point is contained withing that area using:
     lng = new DegreeCoordinate(-0.3035466);
     Point richmond = new Point(lat, lng);
     
-    double bearing = EarthCalc.getVicentyBearing(kew, richmond); //in decimal degrees
+    double bearing = EarthCalc.getVincentyBearing(kew, richmond); //in decimal degrees
     
-#### Final bearing - Vicenty formula
+#### Final bearing - Vincenty formula
 
     //Kew
     Coordinate lat = new DegreeCoordinate(51.4843774);
@@ -195,4 +195,4 @@ you can determine whether a point is contained withing that area using:
     lng = new DegreeCoordinate(-0.3035466);
     Point richmond = new Point(lat, lng);
     
-    double bearing = EarthCalc.getVicentyFinalBearing(kew, richmond); //in decimal degrees
+    double bearing = EarthCalc.getVincentyFinalBearing(kew, richmond); //in decimal degrees

@@ -88,9 +88,9 @@ public class EarthCalc {
      *
      * @param standPoint The stand point
      * @param forePoint  The fore point
-     * @return Vicenty object which holds all 3 values
+     * @return Vincenty object which holds all 3 values
      */
-    private static Vicenty getVicenty(Point standPoint, Point forePoint) {
+    private static Vincenty getVincenty(Point standPoint, Point forePoint) {
         double λ1 = toRadians(standPoint.longitude);
         double λ2 = toRadians(forePoint.longitude);
 
@@ -111,7 +111,7 @@ public class EarthCalc {
             cosλ = cos(λ);
             double sinSqσ = (cosU2 * sinλ) * (cosU2 * sinλ) + (cosU1 * sinU2 - sinU1 * cosU2 * cosλ) * (cosU1 * sinU2 - sinU1 * cosU2 * cosλ);
             sinσ = sqrt(sinSqσ);
-            if (sinσ == 0) return new Vicenty(0, 0, 0);  // co-incident points
+            if (sinσ == 0) return new Vincenty(0, 0, 0);  // co-incident points
             cosσ = sinU1 * sinU2 + cosU1 * cosU2 * cosλ;
             σ = atan2(sinσ, cosσ);
             double sinα = cosU1 * cosU2 * sinλ / sinσ;
@@ -140,16 +140,16 @@ public class EarthCalc {
         double finalBearing = atan2(cosU1 * sinλ, -sinU1 * cosU2 + cosU1 * sinU2 * cosλ);
         finalBearing = (finalBearing + 2 * PI) % (2 * PI);  //turning value to trigonometric direction
 
-        return new Vicenty(distance, toDegrees(initialBearing), toDegrees(finalBearing));
+        return new Vincenty(distance, toDegrees(initialBearing), toDegrees(finalBearing));
 
     }
 
-    public static double getVicentyDistance(Point standPoint, Point forePoint) {
-        return getVicenty(standPoint, forePoint).distance;
+    public static double getVincentyDistance(Point standPoint, Point forePoint) {
+        return getVincenty(standPoint, forePoint).distance;
     }
 
     /**
-     * Returns (azimuth) bearing using Vicenty formula.
+     * Returns (azimuth) bearing using Vincenty formula.
      *
      * @param standPoint The stand point
      * @param forePoint  The fore point
@@ -157,12 +157,12 @@ public class EarthCalc {
      *
      * @link http://www.movable-type.co.uk/scripts/latlong.html
      */
-    public static double getVicentyBearing(Point standPoint, Point forePoint) {
-        return getVicenty(standPoint, forePoint).initialBearing;
+    public static double getVincentyBearing(Point standPoint, Point forePoint) {
+        return getVincenty(standPoint, forePoint).initialBearing;
     }
 
     /**
-     * Returns final bearing in direction of standPoint→forePoint using Vicenty formula.
+     * Returns final bearing in direction of standPoint→forePoint using Vincenty formula.
      *
      * @param standPoint The stand point
      * @param forePoint  The fore point
@@ -170,8 +170,8 @@ public class EarthCalc {
      *
      * @link http://www.movable-type.co.uk/scripts/latlong.html
      */
-    public static double getVicentyFinalBearing(Point standPoint, Point forePoint) {
-        return getVicenty(standPoint, forePoint).finalBearing;
+    public static double getVincentyFinalBearing(Point standPoint, Point forePoint) {
+        return getVincenty(standPoint, forePoint).finalBearing;
     }
 
     /**
@@ -245,7 +245,7 @@ public class EarthCalc {
         return new BoundingArea(northWest, southEast);
     }
 
-    private static class Vicenty {
+    private static class Vincenty {
         /**
          * distance is the distance in meter
          * initialBearing is the initial bearing, or forward azimuth (in reference to North point), in degrees
@@ -253,7 +253,7 @@ public class EarthCalc {
          */
         double distance, initialBearing, finalBearing;
 
-        public Vicenty(double distance, double initialBearing, double finalBearing) {
+        public Vincenty(double distance, double initialBearing, double finalBearing) {
             this.distance = distance;
             this.initialBearing = initialBearing;
             this.finalBearing = finalBearing;

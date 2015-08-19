@@ -87,7 +87,7 @@ public class DistanceTest {
     }
 
     @Test
-    public void testVicentyDistanceToBuenosAires() {
+    public void testVincentyDistanceToBuenosAires() {
         //Kew
         Coordinate lat = new DMSCoordinate(51, 29, 3.7572);
         Coordinate lng = new DMSCoordinate(0, 17, 28.3338);
@@ -100,7 +100,7 @@ public class DistanceTest {
 
         Point buenosAires = new Point(lat, lng);
 
-        assertEquals(11120, (int) (EarthCalc.getVicentyDistance(buenosAires, kew) / 1000)); //km
+        assertEquals(11120, (int) (EarthCalc.getVincentyDistance(buenosAires, kew) / 1000)); //km
     }
 
     @Test
@@ -280,7 +280,7 @@ public class DistanceTest {
     }
 
     @Test
-    public void testVicentyBearing() {
+    public void testVincentyBearing() {
         //Kew
         Coordinate lat = new DegreeCoordinate(51.4843774);
         Coordinate lng = new DegreeCoordinate(-0.2912044);
@@ -292,7 +292,7 @@ public class DistanceTest {
         Point richmond = new Point(lat, lng);
 
         //comparing to results from ttp://www.movable-type.co.uk/scripts/latlong.html
-        assertEquals(EarthCalc.getVicentyBearing(kew, richmond), new DMSCoordinate(198, 30, 19.58).decimalDegrees, 10E-5);
-        assertEquals(EarthCalc.getVicentyFinalBearing(kew, richmond), new DMSCoordinate(198, 29, 44.82).decimalDegrees, 10E-5);
+        assertEquals(EarthCalc.getVincentyBearing(kew, richmond), new DMSCoordinate(198, 30, 19.58).decimalDegrees, 10E-5);
+        assertEquals(EarthCalc.getVincentyFinalBearing(kew, richmond), new DMSCoordinate(198, 29, 44.82).decimalDegrees, 10E-5);
     }
 }
