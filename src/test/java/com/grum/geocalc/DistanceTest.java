@@ -190,6 +190,30 @@ public class DistanceTest {
         BoundingArea area = EarthCalc.getBoundingArea(northPole, 10000);
         logger.info("North East => " + area.getNorthEast());
         logger.info("South West => " + area.getSouthWest());
+
+        assertEquals(89.91006798056583d, area.getNorthEast().getLatitude(), 1);
+        assertEquals(90d, area.getNorthEast().getLongitude(), 1);
+
+        assertEquals(89.91006798056583d, area.getSouthEast().getLatitude(), 1);
+        assertEquals(90d, area.getSouthEast().getLongitude(), 1);
+    }
+
+    @Test
+    public void testBoundingAreaNextToLondon() {
+        //North Pole
+        Coordinate lat = new DegreeCoordinate(51.5085452);
+        Coordinate lng = new DegreeCoordinate(-0.1997387000000117);
+        Point northPole = new Point(lat, lng);
+
+        BoundingArea area = EarthCalc.getBoundingArea(northPole, 5);
+        logger.info("North East => " + area.getNorthEast());
+        logger.info("South West => " + area.getSouthWest());
+
+        assertEquals(51.508576995759306d, area.getNorthEast().getLatitude(), 1);
+        assertEquals(-0.19968761404347382d, area.getNorthEast().getLongitude(), 1);
+
+        assertEquals(51.50851340421851d, area.getSouthEast().getLatitude(), 1);
+        assertEquals(-0.19968761404347382d, area.getSouthEast().getLongitude(), 1);
     }
 
     @Test
