@@ -33,6 +33,7 @@
 package com.grum.geocalc;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Represent a point in spherical system
@@ -77,6 +78,20 @@ public class Point implements Serializable {
     public double getLatitude() {
         return latitude;
     }
+    
+    public Coordinate getLatitudeCoordinate() {
+        return DegreeCoordinate.build(latitude);
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+    
+    public void setLatitude(Coordinate latitude) {
+        if (Objects.nonNull(latitude)) {
+            setLongitude(latitude.getValue());
+        }
+    }
 
     /**
      * Returns longitude in decimal degrees
@@ -85,6 +100,20 @@ public class Point implements Serializable {
      */
     public double getLongitude() {
         return longitude;
+    }
+    
+    public Coordinate getLongitudeCoordinate() {
+        return DegreeCoordinate.build(longitude);
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+    
+    public void setLongitude(Coordinate longitude) {
+        if (Objects.nonNull(longitude)) {
+            setLongitude(longitude.getValue());
+        }
     }
 
     @Override

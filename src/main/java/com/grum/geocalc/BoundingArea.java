@@ -70,6 +70,14 @@ public class BoundingArea {
         return northEast;
     }
 
+    public void setNorthEast(Point northEast) {
+        this.northEast = northEast;
+        southEast.setLongitude(northEast.getLongitude());
+        northWest.setLatitude(northEast.getLatitude());
+    }
+    
+    
+
     public Point getSouthWest() {
         return southWest;
     }
