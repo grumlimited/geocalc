@@ -131,4 +131,36 @@ public class BoundingArea {
         hash = 13 * hash + (this.southWest != null ? this.southWest.hashCode() : 0);
         return hash;
     }
+    
+    public double getLowerLatitude() {
+        if (southWest.latitude > northEast.latitude) {
+            return northEast.latitude;
+        } else {
+            return southWest.latitude;
+        }
+    }
+    
+    public double getHigherLatitude() {
+        if (southWest.latitude > northEast.latitude) {
+            return southWest.latitude;
+        } else {
+            return northEast.latitude;
+        }
+    }
+    
+    public double getLowerLongitude() {
+        if (southWest.longitude > northEast.longitude) {
+            return northEast.longitude;
+        } else {
+            return southWest.longitude;
+        }
+    }
+    
+    public double getHigherLongitude() {
+        if (southWest.longitude > northEast.longitude) {
+            return southWest.longitude;
+        } else {
+            return northEast.longitude;
+        }
+    }
 }

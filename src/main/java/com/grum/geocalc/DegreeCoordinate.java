@@ -43,4 +43,13 @@ public class DegreeCoordinate extends Coordinate {
     public DegreeCoordinate(double decimalDegrees) {
         this.decimalDegrees = decimalDegrees;
     }
+    
+    /**
+     * Build new <code>DegreeCoordinate</code>
+     * @param decimalDegrees 
+     * @return <code>DegreeCoordinate</code>
+     */
+    public static DegreeCoordinate build(double decimalDegrees) {
+        return new DegreeCoordinate(decimalDegrees);
+    }
 }
