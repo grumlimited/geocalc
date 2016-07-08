@@ -44,6 +44,11 @@ public class Point implements Serializable {
     //decimal degrees
     double latitude, longitude;
 
+    /**
+     * Point constructor
+     * @param latitude <code>Coordinate</code> Latitude Coordinate
+     * @param longitude <code>Coordinate</code> Longitude Coordi
+     */
     public Point(Coordinate latitude, Coordinate longitude) {
         this.latitude = latitude.getValue();
         this.longitude = longitude.getValue();
@@ -51,20 +56,20 @@ public class Point implements Serializable {
     
     
     /**
-     * Build new point with latitude and longitude
-     * @param latitude
-     * @param longitude
-     * @return 
+     * Build new point with latitude coordinate and longitude coordinate
+     * @param latitude <code>Coordinate</code> Latitude Coordinate
+     * @param longitude <code>Coordinate</code> Longitude Coordinate
+     * @return <code>Point</code>
      */
     public static Point build(Coordinate latitude, Coordinate longitude) {
         return new Point(latitude, longitude);
     }
     
     /**
-     * Build new point with latitude and longitude
-     * @param latitude
-     * @param longitude
-     * @return Point
+     * Build new point with latitude value and longitude value
+     * @param latitude Degree double value
+     * @param longitude Degree double value
+     * @return <code>Point</code>
      */
     public static Point build(double latitude, double longitude) {
         return build(DegreeCoordinate.build(latitude), DegreeCoordinate.build(longitude));
@@ -79,18 +84,12 @@ public class Point implements Serializable {
         return latitude;
     }
     
+    /**
+     * Returns latitude coordinate
+     * @return <code>Coordinate</code>
+     */
     public Coordinate getLatitudeCoordinate() {
         return DegreeCoordinate.build(latitude);
-    }
-
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-    
-    public void setLatitude(Coordinate latitude) {
-        if (Objects.nonNull(latitude)) {
-            setLongitude(latitude.getValue());
-        }
     }
 
     /**
@@ -102,18 +101,12 @@ public class Point implements Serializable {
         return longitude;
     }
     
+    /**
+     * Returns longitude coordinate
+     * @return <code>Coordinate</code>
+     */
     public Coordinate getLongitudeCoordinate() {
         return DegreeCoordinate.build(longitude);
-    }
-
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
-    }
-    
-    public void setLongitude(Coordinate longitude) {
-        if (Objects.nonNull(longitude)) {
-            setLongitude(longitude.getValue());
-        }
     }
 
     @Override

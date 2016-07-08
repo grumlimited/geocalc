@@ -69,13 +69,6 @@ public class BoundingArea {
     public Point getNorthEast() {
         return northEast;
     }
-
-    public void setNorthEast(Point northEast) {
-        this.northEast = northEast;
-        southEast.setLongitude(northEast.getLongitude());
-        northWest.setLatitude(northEast.getLatitude());
-    }
-    
     
 
     public Point getSouthWest() {
@@ -142,10 +135,10 @@ public class BoundingArea {
     
     /**
      * Get North Latitude
-     * @return double latitude
+     * @return double north latitude
      */
     public double getNorthLatitude() {
-        return northEast.getLatitude();
+        return getNorthEast().getLatitude();
     }
 
     /**
@@ -153,27 +146,7 @@ public class BoundingArea {
      * @return double latitude
      */
     public double getSouthLatitude() {
-        return southWest.getLatitude();
-    }
-    
-    /**
-     * Get the lower latitude coordinate value
-     * @return
-     */
-    public double getLowerLatitudeValue() {
-        if (getSouthLatitude() > getNorthLatitude()) {
-            return getNorthLatitude();
-        } else {
-            return getSouthLatitude();
-        }
-    }
-    
-    public double getHigherLatitudeValue() {
-        if (getSouthLatitude() > getNorthLatitude()) {
-            return getSouthLatitude();
-        } else {
-            return getNorthLatitude();
-        }
+        return getSouthWest().getLatitude();
     }
     
     /**
@@ -181,7 +154,7 @@ public class BoundingArea {
      * @return double
      */
     public double getWestLongitude() {
-        return southWest.getLongitude();
+        return getSouthWest().getLongitude();
     }
     
     /**
@@ -189,22 +162,7 @@ public class BoundingArea {
      * @return double
      */
     public double getEastLongitude() {
-        return northEast.getLongitude();
+        return getNorthEast().getLongitude();
     }
     
-    public double getLowerLongitudeValue() {
-        if (getWestLongitude() > getEastLongitude()) {
-            return getEastLongitude();
-        } else {
-            return getWestLongitude();
-        }
-    }
-    
-    public double getHigherLongitudeValue() {
-        if (getWestLongitude() > getEastLongitude()) {
-            return getWestLongitude();
-        } else {
-            return getEastLongitude();
-        }
-    }
 }
