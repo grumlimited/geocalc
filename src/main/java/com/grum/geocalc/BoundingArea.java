@@ -69,6 +69,7 @@ public class BoundingArea {
     public Point getNorthEast() {
         return northEast;
     }
+    
 
     public Point getSouthWest() {
         return southWest;
@@ -131,4 +132,37 @@ public class BoundingArea {
         hash = 13 * hash + (this.southWest != null ? this.southWest.hashCode() : 0);
         return hash;
     }
+    
+    /**
+     * Get North Latitude
+     * @return double north latitude
+     */
+    public double getNorthLatitude() {
+        return getNorthEast().getLatitude();
+    }
+
+    /**
+     * Get South Latitude
+     * @return double latitude
+     */
+    public double getSouthLatitude() {
+        return getSouthWest().getLatitude();
+    }
+    
+    /**
+     * Get West Longitude
+     * @return double
+     */
+    public double getWestLongitude() {
+        return getSouthWest().getLongitude();
+    }
+    
+    /**
+     * Get East Longitude
+     * @return double
+     */
+    public double getEastLongitude() {
+        return getNorthEast().getLongitude();
+    }
+    
 }
