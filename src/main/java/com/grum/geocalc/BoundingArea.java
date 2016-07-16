@@ -131,4 +131,36 @@ public class BoundingArea {
         hash = 13 * hash + (this.southWest != null ? this.southWest.hashCode() : 0);
         return hash;
     }
+    
+    /**
+     * Get North Latitude
+     * @return double Degree value
+     */
+    public double getNorthLatitude() {
+        return getNorthEast().getLatitude();
+    }
+
+    /**
+     * Get South Latitude
+     * @return double Degree value
+     */
+    public double getSouthLatitude() {
+        return getSouthWest().getLatitude();
+    }
+    
+    /**
+     * Get West Longitude
+     * @return double Degree value
+     */
+    public double getWestLongitude() {
+        return getSouthWest().getLongitude();
+    }
+    
+    /**
+     * Get East Longitude
+     * @return double Degree value
+     */
+    public double getEastLongitude() {
+        return getNorthEast().getLongitude();
+    }
 }
