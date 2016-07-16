@@ -47,6 +47,16 @@ public class Point implements Serializable {
         this.latitude = latitude.getValue();
         this.longitude = longitude.getValue();
     }
+    
+    /**
+     * Create new {@link Point} with latitude coordinate and longitude coordinate
+     * @param latitude {@link Coordinate} Latitude Coordinate
+     * @param longitude {@link Coordinate} Longitude Coordinate
+     * @return {@link Point}
+     */
+    public static Point create(Coordinate latitude, Coordinate longitude) {
+        return new Point(latitude, longitude);
+    }
 
     /**
      * Returns latitude in decimal degrees
