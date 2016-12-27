@@ -30,10 +30,11 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.grum.geocalc;
+package es.blackleg.java.geocalc;
+
+import java.util.logging.Logger;
 
 
-import org.apache.log4j.Logger;
 
 /**
  * Represents an area, defined by its top left and bottom right
@@ -42,9 +43,11 @@ import org.apache.log4j.Logger;
  * @author rgallet
  */
 public class BoundingArea {
-    private Logger logger = Logger.getLogger(getClass());
-    private Point northEast, southWest;
-    private Point southEast, northWest;
+    
+    private final Point northEast;
+    private final Point southWest;
+    private final Point southEast;
+    private final Point northWest;
 
     public BoundingArea(Point northEast, Point southWest) {
         this.northEast = northEast;
@@ -52,18 +55,6 @@ public class BoundingArea {
 
         southEast = new Point(new DegreeCoordinate(southWest.getLatitude()), new DegreeCoordinate(northEast.getLongitude()));
         northWest = new Point(new DegreeCoordinate(northEast.getLatitude()), new DegreeCoordinate(southWest.getLongitude()));
-    }
-
-    @Deprecated
-    public Point getBottomRight() {
-        logger.debug("getBottomRight() is deprecated. Use getSouthWest() instead.");
-        return southWest;
-    }
-
-    @Deprecated
-    public Point getTopLeft() {
-        logger.debug("getTopLeft() is deprecated. Use getNorthEast() instead.");
-        return northEast;
     }
 
     public Point getNorthEast() {

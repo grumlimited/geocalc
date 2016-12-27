@@ -30,40 +30,60 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.grum.geocalc;
+package es.blackleg.java.geocalc;
 
-import static java.lang.Math.abs;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
+import static java.lang.Math.*;
 
 /**
- * Represents coordinates given in
- * Degrees Minutes decimal-seconds (D M s) format
+ * Represent a coordinate decimalDegrees, in degrees
  *
  * @author rgallet
  */
-public class DMSCoordinate extends Coordinate {
+abstract public class Coordinate implements Serializable {
 
-    private double wholeDegrees, minutes, seconds;
+    //degrees
+    double decimalDegrees;
 
-    public DMSCoordinate(double wholeDegrees, double minutes, double seconds) {
-        this.wholeDegrees = wholeDegrees;
-        this.minutes = minutes;
-        this.seconds = seconds;
-        this.decimalDegrees = abs(this.wholeDegrees) + minutes / 60 + seconds / 3600;
-
-        if(wholeDegrees < 0) {
-            this.decimalDegrees = -this.decimalDegrees;
-        }
+    public double getValue() {
+        return decimalDegrees;
     }
 
-    public double getMinutes() {
-        return minutes;
+    public double getDecimalDegrees() {
+        return decimalDegrees;
     }
 
-    public double getWholeDegrees() {
-        return wholeDegrees;
+    @Override
+    public String toString() {
+        return "DegreeCoordinate{" + "decimalDegrees=" + decimalDegrees + " degrees}";
     }
 
-    public double getSeconds() {
-        return seconds;
+    DMSCoordinate getDMSCoordinate() {
+        double _wholeDegrees = (int) decimalDegrees;
+        double remaining = abs(decimalDegrees - _wholeDegrees);
+        double _minutes = (int) (remaining * 60);
+        remaining = remaining * 60 - _minutes;
+        double _seconds = new BigDecimal(remaining * 60).setScale(4, RoundingMode.HALF_UP).doubleValue();
+
+        return new DMSCoordinate(_wholeDegrees, _minutes, _seconds);
+    }
+
+    DegreeCoordinate getDegreeCoordinate() {
+        return new DegreeCoordinate(decimalDegrees);
+    }
+
+    GPSCoordinate getGPSCoordinate() {
+        double _wholeDegrees = floor(decimalDegrees);
+        double remaining = decimalDegrees - _wholeDegrees;
+        double _minutes = floor(remaining * 60);
+
+        return new GPSCoordinate(_wholeDegrees, _minutes);
+    }
+
+    RadianCoordinate getRadianCoordinate() {
+        return new RadianCoordinate(toRadians(decimalDegrees));
     }
 }

@@ -30,60 +30,24 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.grum.geocalc;
-
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-
-import static java.lang.Math.*;
+package es.blackleg.java.geocalc;
 
 /**
- * Represent a coordinate decimalDegrees, in degrees
+ * Represents coordinates given in
+ * radian-degrees (r) format
  *
  * @author rgallet
  */
-abstract public class Coordinate implements Serializable {
+public class RadianCoordinate extends Coordinate {
 
-    //degrees
-    double decimalDegrees;
+    private double radians;
 
-    public double getValue() {
-        return decimalDegrees;
+    public RadianCoordinate(double radians) {
+        this.decimalDegrees = Math.toDegrees(radians);
+        this.radians = radians;
     }
 
-    public double getDecimalDegrees() {
-        return decimalDegrees;
-    }
-
-    @Override
-    public String toString() {
-        return "DegreeCoordinate{" + "decimalDegrees=" + decimalDegrees + " degrees}";
-    }
-
-    DMSCoordinate getDMSCoordinate() {
-        double _wholeDegrees = (int) decimalDegrees;
-        double remaining = abs(decimalDegrees - _wholeDegrees);
-        double _minutes = (int) (remaining * 60);
-        remaining = remaining * 60 - _minutes;
-        double _seconds = new BigDecimal(remaining * 60).setScale(4, RoundingMode.HALF_UP).doubleValue();
-
-        return new DMSCoordinate(_wholeDegrees, _minutes, _seconds);
-    }
-
-    DegreeCoordinate getDegreeCoordinate() {
-        return new DegreeCoordinate(decimalDegrees);
-    }
-
-    GPSCoordinate getGPSCoordinate() {
-        double _wholeDegrees = floor(decimalDegrees);
-        double remaining = decimalDegrees - _wholeDegrees;
-        double _minutes = floor(remaining * 60);
-
-        return new GPSCoordinate(_wholeDegrees, _minutes);
-    }
-
-    RadianCoordinate getRadianCoordinate() {
-        return new RadianCoordinate(toRadians(decimalDegrees));
+    public double getRadians() {
+        return radians;
     }
 }

@@ -30,17 +30,26 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.grum.geocalc;
+package es.blackleg.java.geocalc;
 
 /**
  * Represents coordinates given in
- * Degrees decimal-minutes (D m) format
+ * decimal-degrees (d) format
  *
  * @author rgallet
  */
-public class GPSCoordinate extends DMSCoordinate {
+public class DegreeCoordinate extends Coordinate {
 
-    public GPSCoordinate(double wholeDegrees, double minutes) {
-        super(wholeDegrees, minutes, 0);
+    public DegreeCoordinate(double decimalDegrees) {
+        this.decimalDegrees = decimalDegrees;
+    }
+    
+    /**
+     * Build new {@link DegreeCoordinate}
+     * @param decimalDegrees double decimal degrees
+     * @return {@link DegreeCoordinate}
+     */
+    public static DegreeCoordinate newCoordinate(double decimalDegrees) {
+        return new DegreeCoordinate(decimalDegrees);
     }
 }
