@@ -10,8 +10,15 @@
  * You should have received a copy of the GNU General Public License along with Geocalc. If not, see http://www.gnu.org/licenses/.
  */
 
-package com.grum.geocalc;
+package es.blackleg.java.geocalc;
 
+import es.blackleg.java.geocalc.Coordinate;
+import es.blackleg.java.geocalc.BoundingArea;
+import es.blackleg.java.geocalc.GPSCoordinate;
+import es.blackleg.java.geocalc.DMSCoordinate;
+import es.blackleg.java.geocalc.Point;
+import es.blackleg.java.geocalc.DegreeCoordinate;
+import es.blackleg.java.geocalc.RadianCoordinate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;

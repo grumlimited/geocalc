@@ -30,7 +30,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.grum.geocalc;
+package es.blackleg.java.geocalc;
 
 /**
  * Represents coordinates given in
@@ -42,5 +42,14 @@ public class DegreeCoordinate extends Coordinate {
 
     public DegreeCoordinate(double decimalDegrees) {
         this.decimalDegrees = decimalDegrees;
+    }
+    
+    /**
+     * Build new {@link DegreeCoordinate}
+     * @param decimalDegrees double decimal degrees
+     * @return {@link DegreeCoordinate}
+     */
+    public static DegreeCoordinate newCoordinate(double decimalDegrees) {
+        return new DegreeCoordinate(decimalDegrees);
     }
 }

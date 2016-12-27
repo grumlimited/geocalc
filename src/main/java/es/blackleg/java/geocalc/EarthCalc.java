@@ -30,7 +30,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.grum.geocalc;
+package es.blackleg.java.geocalc;
 
 import static java.lang.Math.*;
 
@@ -154,8 +154,7 @@ public class EarthCalc {
      * @param standPoint The stand point
      * @param forePoint  The fore point
      * @return (azimuth) bearing in degrees to the North
-     *
-     * @link http://www.movable-type.co.uk/scripts/latlong.html
+     * @see <a href="http://www.movable-type.co.uk/scripts/latlong.html"></a>
      */
     public static double getVincentyBearing(Point standPoint, Point forePoint) {
         return getVincenty(standPoint, forePoint).initialBearing;
@@ -167,8 +166,7 @@ public class EarthCalc {
      * @param standPoint The stand point
      * @param forePoint  The fore point
      * @return (azimuth) bearing in degrees to the North
-     *
-     * @link http://www.movable-type.co.uk/scripts/latlong.html
+     * @see <a href="http://www.movable-type.co.uk/scripts/latlong.html"></a>
      */
     public static double getVincentyFinalBearing(Point standPoint, Point forePoint) {
         return getVincenty(standPoint, forePoint).finalBearing;
@@ -184,8 +182,7 @@ public class EarthCalc {
      * @param bearing    Direction in degrees
      * @param distance   distance in meters
      * @return forePoint coordinates
-     *
-     * @link http://www.movable-type.co.uk/scripts/latlong.html
+     * @see <a href="http://www.movable-type.co.uk/scripts/latlong.html"></a>
      */
     public static Point pointRadialDistance(Point standPoint, double bearing, double distance) {
         /**
@@ -231,8 +228,7 @@ public class EarthCalc {
      * @param standPoint The centre of the area
      * @param distance   Distance around standPoint, im meters
      * @return The area
-     * 
-     * @link http://www.movable-type.co.uk/scripts/latlong.html
+     * @see <a href="http://www.movable-type.co.uk/scripts/latlong.html"></a>
      */
     public static BoundingArea getBoundingArea(Point standPoint, double distance) {
 
