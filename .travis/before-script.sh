@@ -2,7 +2,7 @@
 source .travis/utils.sh
 
 if isSignable; then
-  if ! openssl aes-256-cbc -K $encrypted_6c1b7104dade_key -iv $encrypted_6c1b7104dade_iv -in .travis/codesigning.asc.enc -out .travis/codesigning.asc -d; then
+  if ! openssl aes-256-cbc -K $encrypted_c2040841a5e3_key -iv $encrypted_c2040841a5e3_iv -in .travis/codesigning.asc.enc -out .travis/codesigning.asc -d; then
     echo "Fail extract gpg key"
     exit 1
   fi
