@@ -1,34 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>es.blackleg.java</groupId>
+    <groupId>com.peertopark.java</groupId>
     <artifactId>geocalc</artifactId>
     <packaging>jar</packaging>
     <version>1.0.2-SNAPSHOT</version>
     <name>${project.groupId}.${project.artifactId}</name>
-    <url>www.blackleg.es</url>
+    <url>https://www.peertopark.com/</url>
     <description>Simple Geocalc Library</description>
     <licenses>
         <license>
             <name>BSD 3-Clause License</name>
         </license>
     </licenses>
+    <organization>
+        <name>Peer to Park</name>
+        <url>https://www.peertopark.com</url>
+    </organization>
     <developers>
         <developer>
             <name>Blackleg</name>
-            <email>blackleg@openaliasbox.org</email>
+            <email>hectorespertpardo@gmail.com</email>
             <organization>Blackleg</organization>
             <organizationUrl>http://www.blackleg.es</organizationUrl>
         </developer>
     </developers>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
     </properties>
     <scm>
-        <connection>scm:git:git@github.com:blackleg/geocalc.git</connection>
-        <developerConnection>scm:git:git@github.com:blackleg/geocalc.git</developerConnection>
-        <url>https://github.com/blackleg/java-utilities</url>
-        <tag>HEAD</tag>
+        <connection>scm:git:git@github.com:peertopark/geocalc.git</connection>
+        <developerConnection>scm:git:git@github.com:peertopark/geocalc.git</developerConnection>
+        <url>https://github.com/peertopark/geocalc</url>
     </scm>
     <distributionManagement>
         <snapshotRepository>
@@ -40,45 +45,53 @@
             <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement> 
+    <profiles>
+        <profile>
+            <id>development</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.6</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>gpg</executable>
+                                    <keyname>${env.GPG_KEY_NAME}</keyname>
+                                    <passphrase>${env.GPG_PASSPHRASE}</passphrase>
+                                </configuration> 
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <version>1.6.7</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <serverId>ossrh</serverId>
+                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>1.6.7</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <serverId>ossrh</serverId>
-                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>2.5.3</version>
-            </plugin>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.5.1</version>
-                <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>3.0.1</version>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <goals>
-                            <goal>jar-no-fork</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
@@ -94,20 +107,26 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-gpg-plugin</artifactId>
-                <version>1.6</version>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.1</version>
                 <executions>
                     <execution>
-                        <id>sign-artifacts</id>
-                        <phase>verify</phase>
+                        <id>attach-sources</id>
                         <goals>
-                            <goal>sign</goal>
+                            <goal>jar-no-fork</goal>
                         </goals>
-                        <configuration>
-                            <executable>gpg2</executable>
-                        </configuration> 
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.amashchenko.maven.plugin</groupId>
+                <artifactId>gitflow-maven-plugin</artifactId>
+                <version>1.3.1</version>
+                <configuration>
+                    <gitFlowConfig>
+                        <developmentBranch>devel</developmentBranch>
+                    </gitFlowConfig>
+                </configuration>
             </plugin>
         </plugins>
     </build>
