@@ -4,7 +4,7 @@ Java Geocalc
 Geocalc is a simple java library aimed at doing arithmetics with Earth coordinates. 
 It is designed to be simple to embed in your existing applications and easy to use. Geocalc can:
 
-1. Calculate the distance between to coordinates
+1. Calculate the distance between two coordinates
 2. Find a point at X distance from a standpoint, given a bearing
 3. Calculate a rectangular area around a point
 4. Determine whether a Point is contained within that area
