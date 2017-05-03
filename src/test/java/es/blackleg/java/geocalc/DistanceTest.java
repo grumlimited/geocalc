@@ -10,9 +10,15 @@
  * You should have received a copy of the GNU General Public License along with Geocalc. If not, see http://www.gnu.org/licenses/.
  */
 
-package com.grum.geocalc;
+package es.blackleg.java.geocalc;
 
-import org.apache.log4j.Logger;
+import es.blackleg.java.geocalc.Coordinate;
+import es.blackleg.java.geocalc.BoundingArea;
+import es.blackleg.java.geocalc.DMSCoordinate;
+import es.blackleg.java.geocalc.EarthCalc;
+import es.blackleg.java.geocalc.Point;
+import es.blackleg.java.geocalc.DegreeCoordinate;
+import java.util.logging.Logger;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -22,7 +28,9 @@ import static org.junit.Assert.assertEquals;
  */
 public class DistanceTest {
 
-    final Logger logger = Logger.getLogger(getClass());
+    private static final Logger LOGGER = Logger.getLogger(DistanceTest.class.getName());
+
+    
 
     @Test
     public void testSphericalLawOfCosinesDistance() {
@@ -138,45 +146,45 @@ public class DistanceTest {
         BoundingArea area = EarthCalc.getBoundingArea(kew, 3000);
 
         double northEastDistance = EarthCalc.getDistance(kew, area.getNorthEast());
-        logger.info("North East => " + northEastDistance);
+        LOGGER.info("North East => " + northEastDistance);
         assertEquals(3000d, northEastDistance, 1E-3);
 
         double southWestDistance = EarthCalc.getDistance(kew, area.getSouthWest());
-        logger.info("South West => " + southWestDistance);
+        LOGGER.info("South West => " + southWestDistance);
         assertEquals(3000d, southWestDistance, 1E-3);
 
         Point northWest = area.getNorthWest();
         double northWestDistance = EarthCalc.getDistance(kew, northWest);
-        logger.info("North West => " + northWestDistance);
+        LOGGER.info("North West => " + northWestDistance);
         assertEquals(3000d, northWestDistance, 2);
 
         Point southEast = area.getSouthEast();
         double southEastDistance = EarthCalc.getDistance(kew, southEast);
-        logger.info("South East => " + southEastDistance);
+        LOGGER.info("South East => " + southEastDistance);
         assertEquals(3000d, southEastDistance, 2);
 
         Point middleNorth = new Point(new DegreeCoordinate(area.getNorthEast().latitude),
                 new DegreeCoordinate((area.getSouthWest().longitude + area.getNorthEast().longitude) / 2));
         double middleNorthDistance = EarthCalc.getDistance(kew, middleNorth);
-        logger.info("Middle North => " + middleNorthDistance);
+        LOGGER.info("Middle North => " + middleNorthDistance);
         assertEquals(2120d, middleNorthDistance, 1);
 
         Point middleSouth = new Point(new DegreeCoordinate(area.getSouthWest().latitude),
                 new DegreeCoordinate((area.getSouthWest().longitude + area.getNorthEast().longitude) / 2));
         double middleSouthDistance = EarthCalc.getDistance(kew, middleSouth);
-        logger.info("Middle South => " + middleSouthDistance);
+        LOGGER.info("Middle South => " + middleSouthDistance);
         assertEquals(2120d, middleSouthDistance, 2);
 
         Point middleWest = new Point(new DegreeCoordinate((area.getNorthEast().latitude + area.getSouthWest().latitude) / 2),
                 new DegreeCoordinate(area.getNorthEast().longitude));
         double middleWestDistance = EarthCalc.getDistance(kew, middleWest);
-        logger.info("Middle West => " + middleWestDistance);
+        LOGGER.info("Middle West => " + middleWestDistance);
         assertEquals(2120d, middleWestDistance, 3);
 
         Point middleEast = new Point(new DegreeCoordinate((area.getNorthEast().latitude + area.getSouthWest().latitude) / 2),
                 new DegreeCoordinate(area.getSouthWest().longitude));
         double middleEastDistance = EarthCalc.getDistance(kew, middleEast);
-        logger.info("Middle East => " + middleEastDistance);
+        LOGGER.info("Middle East => " + middleEastDistance);
         assertEquals(2120d, middleEastDistance, 1);
     }
 
@@ -188,8 +196,8 @@ public class DistanceTest {
         Point northPole = new Point(lat, lng);
 
         BoundingArea area = EarthCalc.getBoundingArea(northPole, 10000);
-        logger.info("North East => " + area.getNorthEast());
-        logger.info("South West => " + area.getSouthWest());
+        LOGGER.info("North East => " + area.getNorthEast());
+        LOGGER.info("South West => " + area.getSouthWest());
 
         assertEquals(89.91006798056583d, area.getNorthEast().getLatitude(), 1);
         assertEquals(90d, area.getNorthEast().getLongitude(), 1);
@@ -206,8 +214,8 @@ public class DistanceTest {
         Point northPole = new Point(lat, lng);
 
         BoundingArea area = EarthCalc.getBoundingArea(northPole, 5);
-        logger.info("North East => " + area.getNorthEast());
-        logger.info("South West => " + area.getSouthWest());
+        LOGGER.info("North East => " + area.getNorthEast());
+        LOGGER.info("South West => " + area.getSouthWest());
 
         assertEquals(51.508576995759306d, area.getNorthEast().getLatitude(), 1);
         assertEquals(-0.19968761404347382d, area.getNorthEast().getLongitude(), 1);

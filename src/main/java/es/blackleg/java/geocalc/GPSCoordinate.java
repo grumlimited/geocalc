@@ -30,24 +30,17 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.grum.geocalc;
+package es.blackleg.java.geocalc;
 
 /**
  * Represents coordinates given in
- * radian-degrees (r) format
+ * Degrees decimal-minutes (D m) format
  *
  * @author rgallet
  */
-public class RadianCoordinate extends Coordinate {
+public class GPSCoordinate extends DMSCoordinate {
 
-    private double radians;
-
-    public RadianCoordinate(double radians) {
-        this.decimalDegrees = Math.toDegrees(radians);
-        this.radians = radians;
-    }
-
-    public double getRadians() {
-        return radians;
+    public GPSCoordinate(double wholeDegrees, double minutes) {
+        super(wholeDegrees, minutes, 0);
     }
 }

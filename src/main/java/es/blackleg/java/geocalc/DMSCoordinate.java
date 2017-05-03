@@ -30,70 +30,40 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.grum.geocalc;
+package es.blackleg.java.geocalc;
 
-import java.io.Serializable;
+import static java.lang.Math.abs;
 
 /**
- * Represent a point in spherical system
+ * Represents coordinates given in
+ * Degrees Minutes decimal-seconds (D M s) format
  *
  * @author rgallet
  */
-public class Point implements Serializable {
-    //decimal degrees
-    double latitude, longitude;
+public class DMSCoordinate extends Coordinate {
 
-    public Point(Coordinate latitude, Coordinate longitude) {
-        this.latitude = latitude.getValue();
-        this.longitude = longitude.getValue();
-    }
+    private double wholeDegrees, minutes, seconds;
 
-    /**
-     * Returns latitude in decimal degrees
-     *
-     * @return latitude
-     */
-    public double getLatitude() {
-        return latitude;
-    }
+    public DMSCoordinate(double wholeDegrees, double minutes, double seconds) {
+        this.wholeDegrees = wholeDegrees;
+        this.minutes = minutes;
+        this.seconds = seconds;
+        this.decimalDegrees = abs(this.wholeDegrees) + minutes / 60 + seconds / 3600;
 
-    /**
-     * Returns longitude in decimal degrees
-     *
-     * @return longitude
-     */
-    public double getLongitude() {
-        return longitude;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
+        if(wholeDegrees < 0) {
+            this.decimalDegrees = -this.decimalDegrees;
         }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Point other = (Point) obj;
-        if (Double.doubleToLongBits(this.latitude) != Double.doubleToLongBits(other.latitude)) {
-            return false;
-        }
-        if (Double.doubleToLongBits(this.longitude) != Double.doubleToLongBits(other.longitude)) {
-            return false;
-        }
-        return true;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 31 * hash + (int) (Double.doubleToLongBits(this.latitude) ^ (Double.doubleToLongBits(this.latitude) >>> 32));
-        hash = 31 * hash + (int) (Double.doubleToLongBits(this.longitude) ^ (Double.doubleToLongBits(this.longitude) >>> 32));
-        return hash;
+    public double getMinutes() {
+        return minutes;
     }
 
-    @Override
-    public String toString() {
-        return "Point{" + "latitude=" + latitude + ", longitude=" + longitude + '}';
+    public double getWholeDegrees() {
+        return wholeDegrees;
+    }
+
+    public double getSeconds() {
+        return seconds;
     }
 }
