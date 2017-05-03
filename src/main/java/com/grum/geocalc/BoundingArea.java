@@ -32,8 +32,8 @@
 
 package com.grum.geocalc;
 
+import java.util.logging.Logger;
 
-import org.apache.log4j.Logger;
 
 /**
  * Represents an area, defined by its top left and bottom right
@@ -42,7 +42,9 @@ import org.apache.log4j.Logger;
  * @author rgallet
  */
 public class BoundingArea {
-    private Logger logger = Logger.getLogger(getClass());
+
+    private static final Logger LOGGER = Logger.getLogger(BoundingArea.class.getName());
+
     private Point northEast, southWest;
     private Point southEast, northWest;
 
@@ -56,13 +58,13 @@ public class BoundingArea {
 
     @Deprecated
     public Point getBottomRight() {
-        logger.debug("getBottomRight() is deprecated. Use getSouthWest() instead.");
+        LOGGER.warning("getBottomRight() is deprecated. Use getSouthWest() instead.");
         return southWest;
     }
 
     @Deprecated
     public Point getTopLeft() {
-        logger.debug("getTopLeft() is deprecated. Use getNorthEast() instead.");
+        LOGGER.warning("getTopLeft() is deprecated. Use getNorthEast() instead.");
         return northEast;
     }
 
