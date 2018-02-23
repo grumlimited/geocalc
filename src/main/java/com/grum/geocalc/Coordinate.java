@@ -45,25 +45,19 @@ import static java.lang.Math.*;
  */
 abstract public class Coordinate implements Serializable {
 
-    //degrees
-    double decimalDegrees;
+    public abstract double getDecimalDegrees();
 
+    /**
+     * @Deprecated use getDecimalDegrees()
+     */
+    @Deprecated
     public double getValue() {
-        return decimalDegrees;
-    }
-
-    public double getDecimalDegrees() {
-        return decimalDegrees;
-    }
-
-    @Override
-    public String toString() {
-        return "DegreeCoordinate{" + "decimalDegrees=" + decimalDegrees + " degrees}";
+        return getDecimalDegrees();
     }
 
     DMSCoordinate getDMSCoordinate() {
-        double _wholeDegrees = (int) decimalDegrees;
-        double remaining = abs(decimalDegrees - _wholeDegrees);
+        double _wholeDegrees = (int) getDecimalDegrees();
+        double remaining = abs(getDecimalDegrees() - _wholeDegrees);
         double _minutes = (int) (remaining * 60);
         remaining = remaining * 60 - _minutes;
         double _seconds = new BigDecimal(remaining * 60).setScale(4, RoundingMode.HALF_UP).doubleValue();
@@ -72,18 +66,18 @@ abstract public class Coordinate implements Serializable {
     }
 
     DegreeCoordinate getDegreeCoordinate() {
-        return new DegreeCoordinate(decimalDegrees);
+        return new DegreeCoordinate(getDecimalDegrees());
     }
 
     GPSCoordinate getGPSCoordinate() {
-        double _wholeDegrees = floor(decimalDegrees);
-        double remaining = decimalDegrees - _wholeDegrees;
+        double _wholeDegrees = floor(getDecimalDegrees());
+        double remaining = getDecimalDegrees() - _wholeDegrees;
         double _minutes = floor(remaining * 60);
 
         return new GPSCoordinate(_wholeDegrees, _minutes);
     }
 
     RadianCoordinate getRadianCoordinate() {
-        return new RadianCoordinate(toRadians(decimalDegrees));
+        return new RadianCoordinate(toRadians(getDecimalDegrees()));
     }
 }

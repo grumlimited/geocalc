@@ -40,13 +40,21 @@ package com.grum.geocalc;
  */
 public class RadianCoordinate extends Coordinate {
 
-    private double radians;
+    public final double radians;
 
     public RadianCoordinate(double radians) {
-        this.decimalDegrees = Math.toDegrees(radians);
         this.radians = radians;
     }
 
+    @Override
+    public double getDecimalDegrees() {
+        return Math.toDegrees(radians);
+    }
+
+    /**
+     * @Deprecated use radians
+     */
+    @Deprecated
     public double getRadians() {
         return radians;
     }

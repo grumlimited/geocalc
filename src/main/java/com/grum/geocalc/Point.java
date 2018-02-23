@@ -44,8 +44,8 @@ public class Point implements Serializable {
     double latitude, longitude;
 
     public Point(Coordinate latitude, Coordinate longitude) {
-        this.latitude = latitude.getValue();
-        this.longitude = longitude.getValue();
+        this.latitude = latitude.getDecimalDegrees();
+        this.longitude = longitude.getDecimalDegrees();
     }
 
     /**
@@ -78,10 +78,7 @@ public class Point implements Serializable {
         if (Double.doubleToLongBits(this.latitude) != Double.doubleToLongBits(other.latitude)) {
             return false;
         }
-        if (Double.doubleToLongBits(this.longitude) != Double.doubleToLongBits(other.longitude)) {
-            return false;
-        }
-        return true;
+        return Double.doubleToLongBits(this.longitude) == Double.doubleToLongBits(other.longitude);
     }
 
     @Override

@@ -224,16 +224,16 @@ public class DistanceTest {
         Point kew = new Point(lat, lng);
 
         Point sameKew = EarthCalc.pointRadialDistance(kew, 45, 0);
-        assertEquals(lat.getValue(), sameKew.latitude, 1E-10);
-        assertEquals(lng.getValue(), sameKew.longitude, 1E-10);
+        assertEquals(lat.getDecimalDegrees(), sameKew.latitude, 1E-10);
+        assertEquals(lng.getDecimalDegrees(), sameKew.longitude, 1E-10);
 
         sameKew = EarthCalc.pointRadialDistance(kew, 90, 0);
-        assertEquals(lat.getValue(), sameKew.latitude, 1E-10);
-        assertEquals(lng.getValue(), sameKew.longitude, 1E-10);
+        assertEquals(lat.getDecimalDegrees(), sameKew.latitude, 1E-10);
+        assertEquals(lng.getDecimalDegrees(), sameKew.longitude, 1E-10);
 
         sameKew = EarthCalc.pointRadialDistance(kew, 180, 0);
-        assertEquals(lat.getValue(), sameKew.latitude, 1E-10);
-        assertEquals(lng.getValue(), sameKew.longitude, 1E-10);
+        assertEquals(lat.getDecimalDegrees(), sameKew.latitude, 1E-10);
+        assertEquals(lng.getDecimalDegrees(), sameKew.longitude, 1E-10);
     }
 
     @Test
@@ -316,7 +316,7 @@ public class DistanceTest {
         Point richmond = new Point(lat, lng);
 
         //comparing to results from ttp://www.movable-type.co.uk/scripts/latlong.html
-        assertEquals(EarthCalc.getVincentyBearing(kew, richmond), new DMSCoordinate(198, 30, 19.58).decimalDegrees, 10E-5);
-        assertEquals(EarthCalc.getVincentyFinalBearing(kew, richmond), new DMSCoordinate(198, 29, 44.82).decimalDegrees, 10E-5);
+        assertEquals(EarthCalc.getVincentyBearing(kew, richmond), new DMSCoordinate(198, 30, 19.58).getDecimalDegrees(), 10E-5);
+        assertEquals(EarthCalc.getVincentyFinalBearing(kew, richmond), new DMSCoordinate(198, 29, 44.82).getDecimalDegrees(), 10E-5);
     }
 }

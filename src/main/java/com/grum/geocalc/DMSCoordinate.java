@@ -42,27 +42,46 @@ import static java.lang.Math.abs;
  */
 public class DMSCoordinate extends Coordinate {
 
-    private double wholeDegrees, minutes, seconds;
+    public final double wholeDegrees, minutes, seconds;
 
     public DMSCoordinate(double wholeDegrees, double minutes, double seconds) {
         this.wholeDegrees = wholeDegrees;
         this.minutes = minutes;
         this.seconds = seconds;
-        this.decimalDegrees = abs(this.wholeDegrees) + minutes / 60 + seconds / 3600;
 
-        if(wholeDegrees < 0) {
-            this.decimalDegrees = -this.decimalDegrees;
-        }
     }
 
+    @Override
+    public double getDecimalDegrees() {
+        double decimalDegrees = abs(this.wholeDegrees) + minutes / 60 + seconds / 3600;
+
+        if (wholeDegrees < 0) {
+            decimalDegrees = -decimalDegrees;
+        }
+
+        return decimalDegrees;
+    }
+
+    /**
+     * @Deprecated use minutes
+     */
+    @Deprecated
     public double getMinutes() {
         return minutes;
     }
 
+    /**
+     * @Deprecated use wholeDegrees
+     */
+    @Deprecated
     public double getWholeDegrees() {
         return wholeDegrees;
     }
 
+    /**
+     * @Deprecated use seconds
+     */
+    @Deprecated
     public double getSeconds() {
         return seconds;
     }
