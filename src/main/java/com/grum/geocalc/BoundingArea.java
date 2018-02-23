@@ -32,8 +32,8 @@
 
 package com.grum.geocalc;
 
-
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Represents an area, defined by its top left and bottom right
@@ -42,7 +42,7 @@ import org.apache.log4j.Logger;
  * @author rgallet
  */
 public class BoundingArea {
-    private Logger logger = Logger.getLogger(getClass());
+    private Logger logger = LoggerFactory.getLogger(getClass());
     private Point northEast, southWest;
     private Point southEast, northWest;
 
@@ -90,13 +90,13 @@ public class BoundingArea {
     public boolean isContainedWithin(Point point) {
         boolean predicate1 = point.latitude >= this.southWest.latitude && point.latitude <= this.northEast.latitude;
 
-        if(!predicate1) {
+        if (!predicate1) {
             return false;
         }
 
         boolean predicate2;
 
-        if(southWest.longitude > northEast.longitude) { //area is going across the max/min longitude boundaries (ie. sort of back of the Earth)
+        if (southWest.longitude > northEast.longitude) { //area is going across the max/min longitude boundaries (ie. sort of back of the Earth)
             //we "split" the area in 2, longitude-wise, point only needs to be in one or the other.
             boolean predicate3 = point.longitude <= northEast.longitude && point.longitude >= -180;
             boolean predicate4 = point.longitude >= southWest.longitude && point.longitude <= 180;

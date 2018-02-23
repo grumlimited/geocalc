@@ -7,7 +7,7 @@
     <groupId>com.grum</groupId>
     <artifactId>geocalc</artifactId>
     <packaging>jar</packaging>
-    <version>0.5.1</version>
+    <version>0.5.2-SNAPSHOT</version>
     <name>Geocalc</name>
     <url>http://www.grumlimited.co.uk</url>
 
@@ -41,9 +41,23 @@
     <!-- Project dependencies -->
     <dependencies>
         <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.25</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.25</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
