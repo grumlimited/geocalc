@@ -1,3 +1,5 @@
+[travis]: https://travis-ci.org/grumlimited/geocalc.svg?branch=master "build"
+
 Java Geocalc
 =======
 
