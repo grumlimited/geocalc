@@ -154,7 +154,7 @@ Now say you have a BoundingArea,
       Point southWest = new Point(new DegreeCoordinate(50), new DegreeCoordinate(110));
       BoundingArea boundingArea = new BoundingArea(northEast, southWest);
       
-you can determine whether a point is contained withing that area using:
+you can determine whether a point is contained within that area using:
       
       Point point1 = new Point(new DegreeCoordinate(60), new DegreeCoordinate(120));
       assertTrue(boundingArea.isContainedWithin(point1)); //true
