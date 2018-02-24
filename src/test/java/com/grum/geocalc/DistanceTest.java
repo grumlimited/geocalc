@@ -135,7 +135,7 @@ public class DistanceTest {
         Coordinate lng = Coordinate.fromDegrees(-0.2912044);
         Point kew = Point.at(lat, lng);
 
-        BoundingArea area = EarthCalc.boundingArea(kew, 3000);
+        BoundingArea area = EarthCalc.around(kew, 3000);
 
         double northEastDistance = EarthCalc.gcdDistance(kew, area.northEast);
         logger.info("North East => " + northEastDistance);
@@ -187,7 +187,7 @@ public class DistanceTest {
         Coordinate lng = Coordinate.fromDegrees(0);
         Point northPole = Point.at(lat, lng);
 
-        BoundingArea area = EarthCalc.boundingArea(northPole, 10000);
+        BoundingArea area = EarthCalc.around(northPole, 10000);
         logger.info("North East => " + area.northEast);
         logger.info("South West => " + area.southWest);
 
@@ -205,7 +205,7 @@ public class DistanceTest {
         Coordinate lng = Coordinate.fromDegrees(-0.1997387000000117);
         Point northPole = Point.at(lat, lng);
 
-        BoundingArea area = EarthCalc.boundingArea(northPole, 5);
+        BoundingArea area = EarthCalc.around(northPole, 5);
         logger.info("North East => " + area.northEast);
         logger.info("South West => " + area.southWest);
 
@@ -223,15 +223,15 @@ public class DistanceTest {
         Coordinate lng = Coordinate.fromDegrees(-0.2912044);
         Point kew = Point.at(lat, lng);
 
-        Point sameKew = EarthCalc.pointRadialDistance(kew, 45, 0);
+        Point sameKew = EarthCalc.pointAt(kew, 45, 0);
         assertEquals(lat.degrees(), sameKew.latitude, 1E-10);
         assertEquals(lng.degrees(), sameKew.longitude, 1E-10);
 
-        sameKew = EarthCalc.pointRadialDistance(kew, 90, 0);
+        sameKew = EarthCalc.pointAt(kew, 90, 0);
         assertEquals(lat.degrees(), sameKew.latitude, 1E-10);
         assertEquals(lng.degrees(), sameKew.longitude, 1E-10);
 
-        sameKew = EarthCalc.pointRadialDistance(kew, 180, 0);
+        sameKew = EarthCalc.pointAt(kew, 180, 0);
         assertEquals(lat.degrees(), sameKew.latitude, 1E-10);
         assertEquals(lng.degrees(), sameKew.longitude, 1E-10);
     }
@@ -251,7 +251,7 @@ public class DistanceTest {
         double distance = EarthCalc.gcdDistance(kew, richmond);
         double bearing = EarthCalc.bearing(kew, richmond);
 
-        Point allegedRichmond = EarthCalc.pointRadialDistance(kew, bearing, distance);
+        Point allegedRichmond = EarthCalc.pointAt(kew, bearing, distance);
 
         assertEquals(richmond.latitude, allegedRichmond.latitude, 10E-5);
         assertEquals(richmond.longitude, allegedRichmond.longitude, 10E-5);
@@ -315,8 +315,25 @@ public class DistanceTest {
         lng = Coordinate.fromDegrees(-0.3035466);
         Point richmond = Point.at(lat, lng);
 
-        //comparing to results from ttp://www.movable-type.co.uk/scripts/latlong.html
+        //comparing to results from http://www.movable-type.co.uk/scripts/latlong.html
         assertEquals(EarthCalc.vincentyBearing(kew, richmond), new DMSCoordinate(198, 30, 19.58).degrees(), 10E-5);
         assertEquals(EarthCalc.getVincentyFinalBearing(kew, richmond), new DMSCoordinate(198, 29, 44.82).degrees(), 10E-5);
     }
+
+    @Test
+    public void testMidPoint() {
+        //Kew
+        Coordinate lat = Coordinate.fromDegrees(51.4843774);
+        Coordinate lng = Coordinate.fromDegrees(-0.2912044);
+        Point kew = Point.at(lat, lng);
+
+        //Richmond, London
+        lat = Coordinate.fromDegrees(51.4613418);
+        lng = Coordinate.fromDegrees(-0.3035466);
+        Point richmond = Point.at(lat, lng);
+
+        //comparing to results from http://www.movable-type.co.uk/scripts/latlong.html
+        assertEquals(EarthCalc.midPoint(richmond, kew), Point.at(Coordinate.fromDegrees(51.47285976194266), Coordinate.fromDegrees(-0.2973770580524634)));
+    }
+
 }
