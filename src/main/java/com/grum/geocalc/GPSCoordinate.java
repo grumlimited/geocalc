@@ -40,7 +40,7 @@ package com.grum.geocalc;
  */
 public class GPSCoordinate extends DMSCoordinate {
 
-    public GPSCoordinate(double wholeDegrees, double minutes) {
+    GPSCoordinate(double wholeDegrees, double minutes) {
         super(wholeDegrees, minutes, 0);
     }
 }

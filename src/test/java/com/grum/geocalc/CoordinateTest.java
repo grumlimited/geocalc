@@ -26,58 +26,58 @@ public class CoordinateTest {
 
     @Test
     public void testDegreeCoordinate() {
-        DegreeCoordinate degreeCoordinate = new DegreeCoordinate(90);
-        Coordinate coordinate = degreeCoordinate.getDegreeCoordinate();
+        DegreeCoordinate degreeCoordinate = Coordinate.fromDegrees(90);
+        Coordinate coordinate = degreeCoordinate.toDegreeCoordinate();
         assertEquals(degreeCoordinate.getDecimalDegrees(), coordinate.getDecimalDegrees(), 1E-4);
 
-        DMSCoordinate dmsCoordinate = new DMSCoordinate(44, 37, 14);
-        degreeCoordinate = new DegreeCoordinate(44.620555555555555);
+        DMSCoordinate dmsCoordinate = Coordinate.fromDMS(44, 37, 14);
+        degreeCoordinate = Coordinate.fromDegrees(44.620555555555555);
         assertEquals(degreeCoordinate.getDecimalDegrees(), dmsCoordinate.getDecimalDegrees(), 1E-4);
     }
 
     @Test
     public void testRadianCoordinate() {
-        RadianCoordinate radianCoordinate = new RadianCoordinate(Math.PI / 2);
-        Coordinate coordinate = radianCoordinate.getDegreeCoordinate();
+        RadianCoordinate radianCoordinate = Coordinate.fromRadians(Math.PI / 2);
+        Coordinate coordinate = radianCoordinate.toDegreeCoordinate();
         assertEquals(radianCoordinate.getDecimalDegrees(), coordinate.getDecimalDegrees(), 1E-4);
 
-        radianCoordinate = new RadianCoordinate(Math.PI * .57);
-        DegreeCoordinate degreeCoordinate = new DegreeCoordinate(180 * .57);
+        radianCoordinate = Coordinate.fromRadians(Math.PI * .57);
+        DegreeCoordinate degreeCoordinate = Coordinate.fromDegrees(180 * .57);
         assertEquals(degreeCoordinate.getDecimalDegrees(), radianCoordinate.getDecimalDegrees(), 1E-4);
 
-        DegreeCoordinate convertedBackDegreeCoordinate = radianCoordinate.getDegreeCoordinate();
+        DegreeCoordinate convertedBackDegreeCoordinate = radianCoordinate.toDegreeCoordinate();
         assertEquals(degreeCoordinate.getDecimalDegrees(), convertedBackDegreeCoordinate.getDecimalDegrees(), 1E-4);
 
-        DMSCoordinate dmsCoordinate = new DMSCoordinate(44, 37, 14);
-        radianCoordinate = new RadianCoordinate(Math.toRadians(44.620555555555555));
+        DMSCoordinate dmsCoordinate = Coordinate.fromDMS(44, 37, 14);
+        radianCoordinate = Coordinate.fromRadians(Math.toRadians(44.620555555555555));
         assertEquals(radianCoordinate.getDecimalDegrees(), dmsCoordinate.getDecimalDegrees(), 1E-4);
     }
 
     @Test
     public void testDMSCoordinate() {
-        DMSCoordinate dmsCoordinate = new DMSCoordinate(89, 59, 60.45);
-        Coordinate coordinate = dmsCoordinate.getDegreeCoordinate();
+        DMSCoordinate dmsCoordinate = Coordinate.fromDMS(89, 59, 60.45);
+        Coordinate coordinate = dmsCoordinate.toDegreeCoordinate();
         assertEquals(dmsCoordinate.getDecimalDegrees(), coordinate.getDecimalDegrees(), 1E-5);
 
-        dmsCoordinate = new DMSCoordinate(175, 8, 55.45);
-        DegreeCoordinate degreeCoordinate = new DegreeCoordinate(175.14873);
+        dmsCoordinate = Coordinate.fromDMS(175, 8, 55.45);
+        DegreeCoordinate degreeCoordinate = Coordinate.fromDegrees(175.14873);
         assertEquals(degreeCoordinate.getDecimalDegrees(), dmsCoordinate.getDecimalDegrees(), 1E-5);
 
-        DegreeCoordinate convertedBackDegreeCoordinate = dmsCoordinate.getDegreeCoordinate();
+        DegreeCoordinate convertedBackDegreeCoordinate = dmsCoordinate.toDegreeCoordinate();
         assertEquals(degreeCoordinate.getDecimalDegrees(), convertedBackDegreeCoordinate.getDecimalDegrees(), 1E-5);
 
-        RadianCoordinate radianCoordinate = new RadianCoordinate(Math.PI * 3 / 2);
-        dmsCoordinate = new DMSCoordinate(270, 0, 0);
-        assertEquals(radianCoordinate.getDMSCoordinate().getDecimalDegrees(), dmsCoordinate.getDecimalDegrees(), 1E-5);
+        RadianCoordinate radianCoordinate = Coordinate.fromRadians(Math.PI * 3 / 2);
+        dmsCoordinate = Coordinate.fromDMS(270, 0, 0);
+        assertEquals(radianCoordinate.toDMSCoordinate().getDecimalDegrees(), dmsCoordinate.getDecimalDegrees(), 1E-5);
     }
 
     @Test
     public void testDMSCoordinateNegativeValue() {
-        DMSCoordinate dmsCoordinate = new DMSCoordinate(-46, 32, 44.16);
+        DMSCoordinate dmsCoordinate = Coordinate.fromDMS(-46, 32, 44.16);
         assertEquals(-46.5456, dmsCoordinate.getDecimalDegrees(), 0);
 
-        DegreeCoordinate degreeCoordinate = new DegreeCoordinate(-46.5456);
-        dmsCoordinate = degreeCoordinate.getDMSCoordinate();
+        DegreeCoordinate degreeCoordinate = Coordinate.fromDegrees(-46.5456);
+        dmsCoordinate = degreeCoordinate.toDMSCoordinate();
         assertEquals(-46, dmsCoordinate.wholeDegrees, 0);
         assertEquals(32, dmsCoordinate.minutes, 0);
         assertEquals(44.16, dmsCoordinate.seconds, 0);
@@ -85,88 +85,88 @@ public class CoordinateTest {
 
     @Test
     public void testGPSCoordinate() {
-        GPSCoordinate gpsCoordinate = new GPSCoordinate(89, 60);
-        Coordinate coordinate = gpsCoordinate.getDegreeCoordinate();
+        GPSCoordinate gpsCoordinate = Coordinate.fromGPS(89, 60);
+        Coordinate coordinate = gpsCoordinate.toDegreeCoordinate();
         assertEquals(gpsCoordinate.getDecimalDegrees(), coordinate.getDecimalDegrees(), 1E-4);
 
-        gpsCoordinate = new GPSCoordinate(175, 8.921999999999457);
-        DegreeCoordinate degreeCoordinate = new DegreeCoordinate(175.1487);
+        gpsCoordinate = Coordinate.fromGPS(175, 8.921999999999457);
+        DegreeCoordinate degreeCoordinate = Coordinate.fromDegrees(175.1487);
         assertEquals(degreeCoordinate.getDecimalDegrees(), gpsCoordinate.getDecimalDegrees(), 1E-4);
 
-        DegreeCoordinate convertedBackDegreeCoordinate = gpsCoordinate.getDegreeCoordinate();
+        DegreeCoordinate convertedBackDegreeCoordinate = gpsCoordinate.toDegreeCoordinate();
         assertEquals(degreeCoordinate.getDecimalDegrees(), convertedBackDegreeCoordinate.getDecimalDegrees(), 1E-4);
 
-        RadianCoordinate radianCoordinate = new RadianCoordinate(Math.PI * 3 / 2);
-        gpsCoordinate = new GPSCoordinate(270, 0);
-        assertEquals(radianCoordinate.getDMSCoordinate().getDecimalDegrees(), gpsCoordinate.getDecimalDegrees(), 1E-4);
+        RadianCoordinate radianCoordinate = Coordinate.fromRadians(Math.PI * 3 / 2);
+        gpsCoordinate = Coordinate.fromGPS(270, 0);
+        assertEquals(radianCoordinate.toDMSCoordinate().getDecimalDegrees(), gpsCoordinate.getDecimalDegrees(), 1E-4);
     }
 
     @Test
     public void testIsContainedWithin() {
-        Point northEast = new Point(new DegreeCoordinate(70), new DegreeCoordinate(145));
-        Point southWest = new Point(new DegreeCoordinate(50), new DegreeCoordinate(110));
+        Point northEast = Point.at(Coordinate.fromDegrees(70), Coordinate.fromDegrees(145));
+        Point southWest = Point.at(Coordinate.fromDegrees(50), Coordinate.fromDegrees(110));
         BoundingArea boundingArea = new BoundingArea(northEast, southWest);
 
-        Point point1 = new Point(new DegreeCoordinate(60), new DegreeCoordinate(120));
-        assertTrue(boundingArea.isContainedWithin(point1));
+        Point point1 = Point.at(Coordinate.fromDegrees(60), Coordinate.fromDegrees(120));
+        assertTrue(boundingArea.contains(point1));
 
-        Point point2 = new Point(new DegreeCoordinate(45), new DegreeCoordinate(120));
-        assertFalse(boundingArea.isContainedWithin(point2));
+        Point point2 = Point.at(Coordinate.fromDegrees(45), Coordinate.fromDegrees(120));
+        assertFalse(boundingArea.contains(point2));
 
-        Point point3 = new Point(new DegreeCoordinate(85), new DegreeCoordinate(120));
-        assertFalse(boundingArea.isContainedWithin(point3));
+        Point point3 = Point.at(Coordinate.fromDegrees(85), Coordinate.fromDegrees(120));
+        assertFalse(boundingArea.contains(point3));
 
-        Point point4 = new Point(new DegreeCoordinate(60), new DegreeCoordinate(100));
-        assertFalse(boundingArea.isContainedWithin(point4));
+        Point point4 = Point.at(Coordinate.fromDegrees(60), Coordinate.fromDegrees(100));
+        assertFalse(boundingArea.contains(point4));
 
-        Point point5 = new Point(new DegreeCoordinate(60), new DegreeCoordinate(150));
-        assertFalse(boundingArea.isContainedWithin(point5));
+        Point point5 = Point.at(Coordinate.fromDegrees(60), Coordinate.fromDegrees(150));
+        assertFalse(boundingArea.contains(point5));
 
-        Point point6 = new Point(new DegreeCoordinate(80), new DegreeCoordinate(150));
-        assertFalse(boundingArea.isContainedWithin(point6));
+        Point point6 = Point.at(Coordinate.fromDegrees(80), Coordinate.fromDegrees(150));
+        assertFalse(boundingArea.contains(point6));
 
-        Point point7 = new Point(new DegreeCoordinate(35), new DegreeCoordinate(100));
-        assertFalse(boundingArea.isContainedWithin(point7));
+        Point point7 = Point.at(Coordinate.fromDegrees(35), Coordinate.fromDegrees(100));
+        assertFalse(boundingArea.contains(point7));
 
-        northEast = new Point(new DegreeCoordinate(10), new DegreeCoordinate(45));
-        southWest = new Point(new DegreeCoordinate(-30), new DegreeCoordinate(-35));
+        northEast = Point.at(Coordinate.fromDegrees(10), Coordinate.fromDegrees(45));
+        southWest = Point.at(Coordinate.fromDegrees(-30), Coordinate.fromDegrees(-35));
         boundingArea = new BoundingArea(northEast, southWest);
 
-        Point point8 = new Point(new DegreeCoordinate(0), new DegreeCoordinate(0));
-        assertTrue(boundingArea.isContainedWithin(point8));
+        Point point8 = Point.at(Coordinate.fromDegrees(0), Coordinate.fromDegrees(0));
+        assertTrue(boundingArea.contains(point8));
 
-        Point point9 = new Point(new DegreeCoordinate(-5), new DegreeCoordinate(-30));
-        assertTrue(boundingArea.isContainedWithin(point9));
+        Point point9 = Point.at(Coordinate.fromDegrees(-5), Coordinate.fromDegrees(-30));
+        assertTrue(boundingArea.contains(point9));
 
-        Point point10 = new Point(new DegreeCoordinate(5), new DegreeCoordinate(30));
-        assertTrue(boundingArea.isContainedWithin(point10));
+        Point point10 = Point.at(Coordinate.fromDegrees(5), Coordinate.fromDegrees(30));
+        assertTrue(boundingArea.contains(point10));
 
-        Point point11 = new Point(new DegreeCoordinate(-35), new DegreeCoordinate(30));
-        assertFalse(boundingArea.isContainedWithin(point11));
+        Point point11 = Point.at(Coordinate.fromDegrees(-35), Coordinate.fromDegrees(30));
+        assertFalse(boundingArea.contains(point11));
 
-        northEast = new Point(new DegreeCoordinate(10), new DegreeCoordinate(-165));
-        southWest = new Point(new DegreeCoordinate(-30), new DegreeCoordinate(170));
+        northEast = Point.at(Coordinate.fromDegrees(10), Coordinate.fromDegrees(-165));
+        southWest = Point.at(Coordinate.fromDegrees(-30), Coordinate.fromDegrees(170));
         boundingArea = new BoundingArea(northEast, southWest);
 
-        Point point12 = new Point(new DegreeCoordinate(0), new DegreeCoordinate(180));
-        assertTrue(boundingArea.isContainedWithin(point12));
+        Point point12 = Point.at(Coordinate.fromDegrees(0), Coordinate.fromDegrees(180));
+        assertTrue(boundingArea.contains(point12));
 
-        Point point13 = new Point(new DegreeCoordinate(0), new DegreeCoordinate(-179));
-        assertTrue(boundingArea.isContainedWithin(point13));
+        Point point13 = Point.at(Coordinate.fromDegrees(0), Coordinate.fromDegrees(-179));
+        assertTrue(boundingArea.contains(point13));
     }
 
     @Test
     public void testConvertingToSelf() {
-        GPSCoordinate gpsCoordinate = new GPSCoordinate(89, 60);
-        assertEquals(gpsCoordinate.getGPSCoordinate().getDecimalDegrees(), gpsCoordinate.getDecimalDegrees(), 10E-5);
+        GPSCoordinate gpsCoordinate = Coordinate.fromGPS(89, 60);
+        assertEquals(gpsCoordinate.toGPSCoordinate().getDecimalDegrees(), gpsCoordinate.getDecimalDegrees(), 10E-5);
 
-        DegreeCoordinate degreeCoordinate = new DegreeCoordinate(-46.5456);
-        assertEquals(degreeCoordinate.getDegreeCoordinate().getDecimalDegrees(), degreeCoordinate.getDecimalDegrees(), 10E-5);
+        DegreeCoordinate degreeCoordinate = Coordinate.fromDegrees(-46.5456);
+        assertEquals(degreeCoordinate.toDegreeCoordinate().getDecimalDegrees(), degreeCoordinate.getDecimalDegrees(), 10E-5);
 
-        DMSCoordinate dmsCoordinate = new DMSCoordinate(89, 59, 60.45);
-        assertEquals(dmsCoordinate.getDMSCoordinate().getDecimalDegrees(), dmsCoordinate.getDecimalDegrees(), 10E-5);
+        DMSCoordinate dmsCoordinate = Coordinate.fromDMS(89, 59, 60.45);
+        assertEquals(dmsCoordinate.toDMSCoordinate().getDecimalDegrees(), dmsCoordinate.getDecimalDegrees(), 10E-5);
 
-        RadianCoordinate radianCoordinate = new RadianCoordinate(Math.PI / 2);
-        assertEquals(radianCoordinate.getRadianCoordinate().getDecimalDegrees(), radianCoordinate.getDecimalDegrees(), 10E-5);
+        RadianCoordinate radianCoordinate = Coordinate.fromRadians(Math.PI / 2);
+        assertEquals(radianCoordinate.toRadianCoordinate().getDecimalDegrees(), radianCoordinate.getDecimalDegrees(), 10E-5);
     }
 }

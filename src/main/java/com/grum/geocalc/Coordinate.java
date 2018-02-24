@@ -55,7 +55,23 @@ abstract public class Coordinate implements Serializable {
         return getDecimalDegrees();
     }
 
-    DMSCoordinate getDMSCoordinate() {
+    public static DegreeCoordinate fromDegrees(double decimalDegrees) {
+        return new DegreeCoordinate(decimalDegrees);
+    }
+
+    public static DMSCoordinate fromDMS(double wholeDegrees, double minutes, double seconds) {
+        return new DMSCoordinate(wholeDegrees, minutes, seconds);
+    }
+
+    public static GPSCoordinate fromGPS(double wholeDegrees, double minutes) {
+        return new GPSCoordinate(wholeDegrees, minutes);
+    }
+
+    public static RadianCoordinate fromRadians(double radians) {
+        return new RadianCoordinate(radians);
+    }
+
+    DMSCoordinate toDMSCoordinate() {
         double _wholeDegrees = (int) getDecimalDegrees();
         double remaining = abs(getDecimalDegrees() - _wholeDegrees);
         double _minutes = (int) (remaining * 60);
@@ -65,11 +81,11 @@ abstract public class Coordinate implements Serializable {
         return new DMSCoordinate(_wholeDegrees, _minutes, _seconds);
     }
 
-    DegreeCoordinate getDegreeCoordinate() {
+    DegreeCoordinate toDegreeCoordinate() {
         return new DegreeCoordinate(getDecimalDegrees());
     }
 
-    GPSCoordinate getGPSCoordinate() {
+    GPSCoordinate toGPSCoordinate() {
         double _wholeDegrees = floor(getDecimalDegrees());
         double remaining = getDecimalDegrees() - _wholeDegrees;
         double _minutes = floor(remaining * 60);
@@ -77,7 +93,7 @@ abstract public class Coordinate implements Serializable {
         return new GPSCoordinate(_wholeDegrees, _minutes);
     }
 
-    RadianCoordinate getRadianCoordinate() {
+    RadianCoordinate toRadianCoordinate() {
         return new RadianCoordinate(toRadians(getDecimalDegrees()));
     }
 }

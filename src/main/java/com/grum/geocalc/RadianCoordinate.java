@@ -42,7 +42,7 @@ public class RadianCoordinate extends Coordinate {
 
     public final double radians;
 
-    public RadianCoordinate(double radians) {
+    RadianCoordinate(double radians) {
         this.radians = radians;
     }
 

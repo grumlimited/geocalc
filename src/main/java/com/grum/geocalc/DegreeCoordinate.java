@@ -40,10 +40,9 @@ package com.grum.geocalc;
  */
 public class DegreeCoordinate extends Coordinate {
 
-    //degrees
     final double decimalDegrees;
 
-    public DegreeCoordinate(double decimalDegrees) {
+    DegreeCoordinate(double decimalDegrees) {
         this.decimalDegrees = decimalDegrees;
     }
 

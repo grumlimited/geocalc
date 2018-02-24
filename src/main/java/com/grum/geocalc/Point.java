@@ -43,9 +43,13 @@ public class Point implements Serializable {
     //decimal degrees
     double latitude, longitude;
 
-    public Point(Coordinate latitude, Coordinate longitude) {
+    private Point(Coordinate latitude, Coordinate longitude) {
         this.latitude = latitude.getDecimalDegrees();
         this.longitude = longitude.getDecimalDegrees();
+    }
+
+    public static Point at(Coordinate latitude, Coordinate longitude) {
+        return new Point(latitude, longitude);
     }
 
     /**
