@@ -87,7 +87,15 @@ public class BoundingArea {
         return "BoundingArea{" + "northEast=" + northEast + ", southWest=" + southWest + '}';
     }
 
+    /**
+     * @Deprecated use contains(Point point)
+     */
+    @Deprecated
     public boolean isContainedWithin(Point point) {
+        return contains(point);
+    }
+
+    public boolean contains(Point point) {
         boolean predicate1 = point.latitude >= this.southWest.latitude && point.latitude <= this.northEast.latitude;
 
         if (!predicate1) {
