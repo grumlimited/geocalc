@@ -43,7 +43,7 @@ You will need a JDK 1.8 and maven.
 	    <version>v0.5.2</version>
 	</dependency>
 	
-Please refer to [https://jitpack.io/#grumlimited/geocalc/0.5.2](jitpack.io/#grumlimited/geocalc/0.5.2) for more information
+Please refer to [jitpack.io/#grumlimited/geocalc/0.5.2](https://jitpack.io/#grumlimited/geocalc/0.5.2) for more information
 
 ## Usage
 
