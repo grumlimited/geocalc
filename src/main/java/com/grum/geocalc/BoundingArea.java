@@ -32,9 +32,6 @@
 
 package com.grum.geocalc;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Represents an area, defined by its top left and bottom right
  * coordinates
@@ -42,7 +39,6 @@ import org.slf4j.LoggerFactory;
  * @author rgallet
  */
 public class BoundingArea {
-    private Logger logger = LoggerFactory.getLogger(getClass());
     private Point northEast, southWest;
     private Point southEast, northWest;
 
@@ -50,20 +46,8 @@ public class BoundingArea {
         this.northEast = northEast;
         this.southWest = southWest;
 
-        southEast = new Point(new DegreeCoordinate(southWest.getLatitude()), new DegreeCoordinate(northEast.getLongitude()));
-        northWest = new Point(new DegreeCoordinate(northEast.getLatitude()), new DegreeCoordinate(southWest.getLongitude()));
-    }
-
-    @Deprecated
-    public Point getBottomRight() {
-        logger.debug("getBottomRight() is deprecated. Use getSouthWest() instead.");
-        return southWest;
-    }
-
-    @Deprecated
-    public Point getTopLeft() {
-        logger.debug("getTopLeft() is deprecated. Use getNorthEast() instead.");
-        return northEast;
+        southEast = Point.at(Coordinate.fromDegrees(southWest.getLatitude()), Coordinate.fromDegrees(northEast.getLongitude()));
+        northWest = Point.at(Coordinate.fromDegrees(northEast.getLatitude()), Coordinate.fromDegrees(southWest.getLongitude()));
     }
 
     public Point getNorthEast() {
@@ -87,7 +71,15 @@ public class BoundingArea {
         return "BoundingArea{" + "northEast=" + northEast + ", southWest=" + southWest + '}';
     }
 
+    /**
+     * @Deprecated use contains(Point point)
+     */
+    @Deprecated
     public boolean isContainedWithin(Point point) {
+        return contains(point);
+    }
+
+    public boolean contains(Point point) {
         boolean predicate1 = point.latitude >= this.southWest.latitude && point.latitude <= this.northEast.latitude;
 
         if (!predicate1) {
@@ -114,13 +106,16 @@ public class BoundingArea {
         if (obj == null) {
             return false;
         }
+
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final BoundingArea other = (BoundingArea) obj;
+
+        BoundingArea other = (BoundingArea) obj;
         if (this.northEast != other.northEast && (this.northEast == null || !this.northEast.equals(other.northEast))) {
             return false;
         }
+
         return !(this.southWest != other.southWest && (this.southWest == null || !this.southWest.equals(other.southWest)));
     }
 

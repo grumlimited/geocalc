@@ -44,13 +44,13 @@ public class EarthCalc {
     public static final double EARTH_DIAMETER = 6371.01 * 1000; //meters
 
     /**
-     * Returns the distance between two points using spherical law of cosines.
+     * Returns the distance between two points at spherical law of cosines.
      *
      * @param standPoint The stand point
      * @param forePoint  The fore point
      * @return The distance, in meters
      */
-    public static double getDistance(Point standPoint, Point forePoint) {
+    public static double gcdDistance(Point standPoint, Point forePoint) {
 
         double diffLongitudes = toRadians(abs(forePoint.longitude - standPoint.longitude));
         double slat = toRadians(standPoint.latitude);
@@ -63,13 +63,13 @@ public class EarthCalc {
     }
 
     /**
-     * Returns the distance between two points using Harvesine formula.
+     * Returns the distance between two points at Harvesine formula.
      *
      * @param standPoint The stand point
      * @param forePoint  The fore point
      * @return The distance, in meters
      */
-    public static double getHarvesineDistance(Point standPoint, Point forePoint) {
+    public static double harvesineDistance(Point standPoint, Point forePoint) {
 
         double diffLongitudes = toRadians(abs(forePoint.longitude - standPoint.longitude));
         double slat = toRadians(standPoint.latitude);
@@ -90,7 +90,7 @@ public class EarthCalc {
      * @param forePoint  The fore point
      * @return Vincenty object which holds all 3 values
      */
-    private static Vincenty getVincenty(Point standPoint, Point forePoint) {
+    private static Vincenty vincenty(Point standPoint, Point forePoint) {
         double λ1 = toRadians(standPoint.longitude);
         double λ2 = toRadians(forePoint.longitude);
 
@@ -144,12 +144,12 @@ public class EarthCalc {
 
     }
 
-    public static double getVincentyDistance(Point standPoint, Point forePoint) {
-        return getVincenty(standPoint, forePoint).distance;
+    public static double vincentyDistance(Point standPoint, Point forePoint) {
+        return vincenty(standPoint, forePoint).distance;
     }
 
     /**
-     * Returns (azimuth) bearing using Vincenty formula.
+     * Returns (azimuth) bearing at Vincenty formula.
      *
      * @param standPoint The stand point
      * @param forePoint  The fore point
@@ -157,12 +157,12 @@ public class EarthCalc {
      *
      * @link http://www.movable-type.co.uk/scripts/latlong.html
      */
-    public static double getVincentyBearing(Point standPoint, Point forePoint) {
-        return getVincenty(standPoint, forePoint).initialBearing;
+    public static double vincentyBearing(Point standPoint, Point forePoint) {
+        return vincenty(standPoint, forePoint).initialBearing;
     }
 
     /**
-     * Returns final bearing in direction of standPoint→forePoint using Vincenty formula.
+     * Returns final bearing in direction of standPoint→forePoint at Vincenty formula.
      *
      * @param standPoint The stand point
      * @param forePoint  The fore point
@@ -171,7 +171,7 @@ public class EarthCalc {
      * @link http://www.movable-type.co.uk/scripts/latlong.html
      */
     public static double getVincentyFinalBearing(Point standPoint, Point forePoint) {
-        return getVincenty(standPoint, forePoint).finalBearing;
+        return vincenty(standPoint, forePoint).finalBearing;
     }
 
     /**
@@ -201,7 +201,7 @@ public class EarthCalc {
         double lat2 = asin(sin(rlat1) * cos(rdistance) + cos(rlat1) * sin(rdistance) * cos(rbearing));
         double lon2 = rlon1 + atan2(sin(rbearing) * sin(rdistance) * cos(rlat1), cos(rdistance) - sin(rlat1) * sin(lat2));
 
-        return new Point(new RadianCoordinate(lat2), new RadianCoordinate(lon2));
+        return Point.at(new RadianCoordinate(lat2), new RadianCoordinate(lon2));
     }
 
     /**
@@ -211,7 +211,7 @@ public class EarthCalc {
      * @param forePoint  Destination point
      * @return (azimuth) bearing, in decimal degrees
      */
-    public static double getBearing(Point standPoint, Point forePoint) {
+    public static double bearing(Point standPoint, Point forePoint) {
         /**
          * Formula: θ = atan2( 	sin(Δlong).cos(lat2), cos(lat1).sin(lat2) − sin(lat1).cos(lat2).cos(Δlong) )
          */
@@ -234,7 +234,7 @@ public class EarthCalc {
      * 
      * @link http://www.movable-type.co.uk/scripts/latlong.html
      */
-    public static BoundingArea getBoundingArea(Point standPoint, double distance) {
+    public static BoundingArea boundingArea(Point standPoint, double distance) {
 
         //45 degrees going north-west
         Point northWest = pointRadialDistance(standPoint, 45, distance);

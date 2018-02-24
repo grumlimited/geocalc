@@ -44,11 +44,10 @@ public class DMSCoordinate extends Coordinate {
 
     public final double wholeDegrees, minutes, seconds;
 
-    public DMSCoordinate(double wholeDegrees, double minutes, double seconds) {
+    DMSCoordinate(double wholeDegrees, double minutes, double seconds) {
         this.wholeDegrees = wholeDegrees;
         this.minutes = minutes;
         this.seconds = seconds;
-
     }
 
     @Override
