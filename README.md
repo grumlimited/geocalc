@@ -14,7 +14,11 @@ This library is being used on [www.rentbarometer.com](http://www.rentbarometer.c
 
 This library implements in Java lots of ideas from [Movable-Type](http://www.movable-type.co.uk/scripts/latlong.html). Many thanks.
 
-## Versions
+## Changelog
+
+### 0.5.4
+* Removed `get...()` out of `Point` and `BoundingArea` 
+* Added maven javadoc plugin
 
 ### 0.5.3
 * Changed constructors to default and private visibility
@@ -22,18 +26,6 @@ This library implements in Java lots of ideas from [Movable-Type](http://www.mov
 * `EarthCalc.getDistance()` is now `EarthCalc.gcdDistance()`
 * Renamed `BoundingArea.isContainedWithin(...)` to `BoundingArea.contains(...)`
 
-## Installing
-
-### Download
-
-    git clone git@github.com:grumlimited/geocalc.git
-    
-### Compile
-    
-    mvn clean install -DskipTests=true
-
-You will need a JDK 1.8 and maven.
-    
 ### Embed
 
     <repositories>
@@ -43,15 +35,20 @@ You will need a JDK 1.8 and maven.
         </repository>
     </repositories>
 
-#
 
     <dependency>
 	    <groupId>com.github.grumlimited</groupId>
 	    <artifactId>geocalc</artifactId>
-	    <version>v0.5.2</version>
+	    <version>v0.5.4</version>
 	</dependency>
 	
-Please refer to [jitpack.io/#grumlimited/geocalc/0.5.3](https://jitpack.io/#grumlimited/geocalc/0.5.3) for more information
+Please refer to [jitpack.io/#grumlimited/geocalc/0.5.4](https://jitpack.io/#grumlimited/geocalc/0.5.4) for more information
+
+## API
+
+can be found here:
+
+[grumlimited.co.uk/geocalc/0.5.4](http://www.grumlimited.co.uk/geocalc/0.5.4)
 
 ## Usage
 
@@ -152,8 +149,8 @@ While this only gives an approximation, it is several order of magnitude faster
 than calculating the distances from each point in the set to the reference point.
 
       BoundingArea area = EarthCalc.boundingArea(kew, 3000);
-      Point nw = area.getNorthWest();
-      Point se = area.getSouthEast();
+      Point nw = area.northWest;
+      Point se = area.southEast;
       
 Now, given that rectangle delimited by 'nw' and 'se', you can determine which points in your set are within these boundaries.
 

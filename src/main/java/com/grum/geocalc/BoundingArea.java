@@ -33,37 +33,21 @@
 package com.grum.geocalc;
 
 /**
- * Represents an area, defined by its top left and bottom right
+ * Represents an area (viewed rectangular shaped projected onto Earth), defined by its top left and bottom right
  * coordinates
  *
  * @author rgallet
  */
 public class BoundingArea {
-    private Point northEast, southWest;
-    private Point southEast, northWest;
+    public final Point northEast, southWest;
+    public final Point southEast, northWest;
 
     public BoundingArea(Point northEast, Point southWest) {
         this.northEast = northEast;
         this.southWest = southWest;
 
-        southEast = Point.at(Coordinate.fromDegrees(southWest.getLatitude()), Coordinate.fromDegrees(northEast.getLongitude()));
-        northWest = Point.at(Coordinate.fromDegrees(northEast.getLatitude()), Coordinate.fromDegrees(southWest.getLongitude()));
-    }
-
-    public Point getNorthEast() {
-        return northEast;
-    }
-
-    public Point getSouthWest() {
-        return southWest;
-    }
-
-    public Point getSouthEast() {
-        return southEast;
-    }
-
-    public Point getNorthWest() {
-        return northWest;
+        southEast = Point.at(Coordinate.fromDegrees(southWest.latitude), Coordinate.fromDegrees(northEast.longitude));
+        northWest = Point.at(Coordinate.fromDegrees(northEast.latitude), Coordinate.fromDegrees(southWest.longitude));
     }
 
     @Override
@@ -72,13 +56,18 @@ public class BoundingArea {
     }
 
     /**
-     * @Deprecated use contains(Point point)
+     * @return true if Point point is contained withing this bounding area
+     * @deprecated use contains(Point point)
      */
     @Deprecated
     public boolean isContainedWithin(Point point) {
         return contains(point);
     }
 
+    /**
+     * @param point point to check
+     * @return true if Point point is contained withing this bounding area
+     */
     public boolean contains(Point point) {
         boolean predicate1 = point.latitude >= this.southWest.latitude && point.latitude <= this.northEast.latitude;
 

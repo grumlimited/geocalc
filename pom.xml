@@ -7,9 +7,34 @@
     <groupId>com.grum</groupId>
     <artifactId>geocalc</artifactId>
     <packaging>jar</packaging>
-    <version>0.5.3-SNAPSHOT</version>
-    <name>Geocalc</name>
+    <version>0.5.4</version>
+    <name>${project.groupId}.${project.artifactId}</name>
     <url>http://www.grumlimited.co.uk</url>
+
+    <description>Simple Geocalc Library</description>
+    <licenses>
+        <license>
+            <name>BSD 3-Clause License</name>
+        </license>
+    </licenses>
+    <organization>
+        <name>Grumlimited</name>
+        <url>http://www.grumlimited.co.uk</url>
+    </organization>
+    <developers>
+        <developer>
+            <name>GR211</name>
+            <email>romain.gallet__at__gmail.com</email>
+            <organization>Grum Limited</organization>
+            <organizationUrl>http://www.grumlimited.co.uk</organizationUrl>
+        </developer>
+        <developer>
+            <name>Blackleg</name>
+            <email>hectorespertpardo__at__gmail.com</email>
+            <organization>Blackleg</organization>
+            <organizationUrl>http://www.blackleg.es</organizationUrl>
+        </developer>
+    </developers>
 
     <prerequisites>
         <maven>3.0</maven>
@@ -17,13 +42,28 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.3</version>
+                <version>3.6.0</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -33,7 +73,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>
-                <version>2.1</version>
+                <version>2.3</version>
             </plugin>
         </plugins>
     </build>

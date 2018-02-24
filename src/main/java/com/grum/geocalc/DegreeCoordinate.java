@@ -47,7 +47,7 @@ public class DegreeCoordinate extends Coordinate {
     }
 
     @Override
-    public double getDecimalDegrees() {
+    double degrees() {
         return decimalDegrees;
     }
 

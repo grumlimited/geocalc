@@ -51,8 +51,8 @@ public class DMSCoordinate extends Coordinate {
     }
 
     @Override
-    public double getDecimalDegrees() {
-        double decimalDegrees = abs(this.wholeDegrees) + minutes / 60 + seconds / 3600;
+    double degrees() {
+        double decimalDegrees = abs(wholeDegrees) + minutes / 60 + seconds / 3600;
 
         if (wholeDegrees < 0) {
             decimalDegrees = -decimalDegrees;
@@ -62,7 +62,8 @@ public class DMSCoordinate extends Coordinate {
     }
 
     /**
-     * @Deprecated use minutes
+     * @return minutes
+     * @deprecated use minutes
      */
     @Deprecated
     public double getMinutes() {
@@ -70,7 +71,8 @@ public class DMSCoordinate extends Coordinate {
     }
 
     /**
-     * @Deprecated use wholeDegrees
+     * @return wholeDegrees
+     * @deprecated use wholeDegrees
      */
     @Deprecated
     public double getWholeDegrees() {
@@ -78,7 +80,8 @@ public class DMSCoordinate extends Coordinate {
     }
 
     /**
-     * @Deprecated use seconds
+     * @return seconds
+     * @deprecated use seconds
      */
     @Deprecated
     public double getSeconds() {
