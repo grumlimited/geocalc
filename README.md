@@ -28,13 +28,22 @@ You will need a JDK 1.8 and maven.
     
 ### Embed
 
-    <dependency>
-        <groupId>com.grum</groupId>
-        <artifactId>geocalc</artifactId>
-        <version>0.5.1</version>
-    </dependency>
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
 
-*note: Geocalc is not available from Maven's public repo. You need to run the command above.* 
+#
+
+    <dependency>
+	    <groupId>com.github.grumlimited</groupId>
+	    <artifactId>geocalc</artifactId>
+	    <version>v0.5.2</version>
+	</dependency>
+	
+Please refer to [https://jitpack.io/#grumlimited/geocalc/0.5.2](jitpack.io/#grumlimited/geocalc/0.5.2) for more information
 
 ## Usage
 
