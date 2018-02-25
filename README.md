@@ -2,38 +2,35 @@ Java Geocalc ![alt text](https://api.travis-ci.org/grumlimited/geocalc.svg?branc
 =======
 
 Geocalc is a simple java library aimed at doing arithmetics with Earth coordinates. 
-It is designed to be simple to embed in your existing applications and easy to use. Geocalc can:
+It is designed to be simple to embed in your existing applications and easy to use. 
 
-1. Calculate the distance between two coordinates
+Geocalc can:
+
+1. Calculate the distance between two coordinates (law of cosines, harvesine and vincenty)
 2. Find a point at X distance from a standpoint, given a bearing
-3. Calculate a rectangular area around a point
+3. Calculate coordinates of a rectangular area around a point
 4. Determine whether a Point is contained within that area
-5. Calculate the azimuth and final bearings between two points
+5. Calculate the azimuth, initial and final bearings between two points (vincenty)
 
 This library is being used on [www.rentbarometer.com](http://www.rentbarometer.com).
 
 This library implements in Java lots of ideas from [Movable-Type](http://www.movable-type.co.uk/scripts/latlong.html). Many thanks.
 
-## Versions
+## Changelog
+
+### 0.5.4
+* added `EarthCalc.midPoint(p1, p2)`
+* renamed `EarthCalc.boundingArea()` to `EarthCalc.pointAt(...)`
+* renamed `BoundingArea.boundingArea()` to `BoundingArea.around(...)`
+* Removed `get...()` out of `Point` and `BoundingArea` 
+* added maven javadoc plugin
 
 ### 0.5.3
-* Changed constructors to default and private visibility
-* Removed `get...()` keyword out of `EarthCalc` methods 
+* changed constructors to default and private visibility
+* removed `get...()` keyword out of `EarthCalc` methods 
 * `EarthCalc.getDistance()` is now `EarthCalc.gcdDistance()`
-* Renamed `BoundingArea.isContainedWithin(...)` to `BoundingArea.contains(...)`
+* renamed `BoundingArea.isContainedWithin(...)` to `BoundingArea.contains(...)`
 
-## Installing
-
-### Download
-
-    git clone git@github.com:grumlimited/geocalc.git
-    
-### Compile
-    
-    mvn clean install -DskipTests=true
-
-You will need a JDK 1.8 and maven.
-    
 ### Embed
 
     <repositories>
@@ -43,15 +40,20 @@ You will need a JDK 1.8 and maven.
         </repository>
     </repositories>
 
-#
 
     <dependency>
 	    <groupId>com.github.grumlimited</groupId>
 	    <artifactId>geocalc</artifactId>
-	    <version>v0.5.2</version>
+	    <version>v0.5.4</version>
 	</dependency>
 	
-Please refer to [jitpack.io/#grumlimited/geocalc/0.5.3](https://jitpack.io/#grumlimited/geocalc/0.5.3) for more information
+Please refer to [jitpack.io/#grumlimited/geocalc/0.5.4](https://jitpack.io/#grumlimited/geocalc/0.5.4) for more information
+
+## API
+
+can be found here:
+
+[grumlimited.co.uk/geocalc/0.5.4](http://www.grumlimited.co.uk/geocalc/0.5.4)
 
 ## Usage
 
@@ -152,8 +154,8 @@ While this only gives an approximation, it is several order of magnitude faster
 than calculating the distances from each point in the set to the reference point.
 
       BoundingArea area = EarthCalc.boundingArea(kew, 3000);
-      Point nw = area.getNorthWest();
-      Point se = area.getSouthEast();
+      Point nw = area.northWest;
+      Point se = area.southEast;
       
 Now, given that rectangle delimited by 'nw' and 'se', you can determine which points in your set are within these boundaries.
 

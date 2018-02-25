@@ -41,33 +41,21 @@ import java.io.Serializable;
  */
 public class Point implements Serializable {
     //decimal degrees
-    double latitude, longitude;
+    public final double latitude, longitude;
 
     private Point(Coordinate latitude, Coordinate longitude) {
-        this.latitude = latitude.getDecimalDegrees();
-        this.longitude = longitude.getDecimalDegrees();
+        this.latitude = latitude.degrees();
+        this.longitude = longitude.degrees();
     }
 
+    /**
+     * Create a new Point.
+     * @param latitude latitude
+     * @param longitude longitude
+     * @return the point
+     */
     public static Point at(Coordinate latitude, Coordinate longitude) {
         return new Point(latitude, longitude);
-    }
-
-    /**
-     * Returns latitude in decimal degrees
-     *
-     * @return latitude
-     */
-    public double getLatitude() {
-        return latitude;
-    }
-
-    /**
-     * Returns longitude in decimal degrees
-     *
-     * @return longitude
-     */
-    public double getLongitude() {
-        return longitude;
     }
 
     @Override

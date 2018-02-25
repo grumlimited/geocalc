@@ -39,20 +39,21 @@ import java.math.RoundingMode;
 import static java.lang.Math.*;
 
 /**
- * Represent a coordinate decimalDegrees, in degrees
+ * Abstraction of coordinate systems (degrees, radians, dms and gps)
  *
  * @author rgallet
  */
 abstract public class Coordinate implements Serializable {
 
-    public abstract double getDecimalDegrees();
+    abstract double degrees();
 
     /**
-     * @Deprecated use getDecimalDegrees()
+     * @return degree value
+     * @deprecated use degrees()
      */
     @Deprecated
     public double getValue() {
-        return getDecimalDegrees();
+        return degrees();
     }
 
     public static DegreeCoordinate fromDegrees(double decimalDegrees) {
@@ -72,8 +73,8 @@ abstract public class Coordinate implements Serializable {
     }
 
     DMSCoordinate toDMSCoordinate() {
-        double _wholeDegrees = (int) getDecimalDegrees();
-        double remaining = abs(getDecimalDegrees() - _wholeDegrees);
+        double _wholeDegrees = (int) degrees();
+        double remaining = abs(degrees() - _wholeDegrees);
         double _minutes = (int) (remaining * 60);
         remaining = remaining * 60 - _minutes;
         double _seconds = new BigDecimal(remaining * 60).setScale(4, RoundingMode.HALF_UP).doubleValue();
@@ -82,18 +83,18 @@ abstract public class Coordinate implements Serializable {
     }
 
     DegreeCoordinate toDegreeCoordinate() {
-        return new DegreeCoordinate(getDecimalDegrees());
+        return new DegreeCoordinate(degrees());
     }
 
     GPSCoordinate toGPSCoordinate() {
-        double _wholeDegrees = floor(getDecimalDegrees());
-        double remaining = getDecimalDegrees() - _wholeDegrees;
+        double _wholeDegrees = floor(degrees());
+        double remaining = degrees() - _wholeDegrees;
         double _minutes = floor(remaining * 60);
 
         return new GPSCoordinate(_wholeDegrees, _minutes);
     }
 
     RadianCoordinate toRadianCoordinate() {
-        return new RadianCoordinate(toRadians(getDecimalDegrees()));
+        return new RadianCoordinate(toRadians(degrees()));
     }
 }

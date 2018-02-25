@@ -47,12 +47,13 @@ public class RadianCoordinate extends Coordinate {
     }
 
     @Override
-    public double getDecimalDegrees() {
+    double degrees() {
         return Math.toDegrees(radians);
     }
 
     /**
-     * @Deprecated use radians
+     * @return angle value
+     * @deprecated use radians
      */
     @Deprecated
     public double getRadians() {

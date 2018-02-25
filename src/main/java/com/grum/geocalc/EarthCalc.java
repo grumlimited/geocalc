@@ -44,6 +44,30 @@ public class EarthCalc {
     public static final double EARTH_DIAMETER = 6371.01 * 1000; //meters
 
     /**
+     * This is the half-way point along a great circle path between the two points.
+     *
+     * @param standPoint standPoint
+     * @param forePoint standPoint
+     * @return mid point
+     * @see <a href="http://www.movable-type.co.uk/scripts/latlong.html"></a>
+     */
+    public static Point midPoint(Point standPoint, Point forePoint) {
+        double λ1 = toRadians(standPoint.longitude);
+        double λ2 = toRadians(forePoint.longitude);
+
+        double φ1 = toRadians(standPoint.latitude);
+        double φ2 = toRadians(forePoint.latitude);
+
+        double Bx = cos(φ2) * cos(λ2 - λ1);
+        double By = cos(φ2) * sin(λ2 - λ1);
+
+        double φ3 = atan2(sin(φ1) + sin(φ2), sqrt((cos(φ1) + Bx) * (cos(φ1) + Bx) + By * By));
+        double λ3 = λ1 + atan2(By, cos(φ1) + Bx);
+
+        return Point.at(Coordinate.fromRadians(φ3), Coordinate.fromRadians(λ3));
+    }
+
+    /**
      * Returns the distance between two points at spherical law of cosines.
      *
      * @param standPoint The stand point
@@ -154,8 +178,7 @@ public class EarthCalc {
      * @param standPoint The stand point
      * @param forePoint  The fore point
      * @return (azimuth) bearing in degrees to the North
-     *
-     * @link http://www.movable-type.co.uk/scripts/latlong.html
+     * @see <a href="http://www.movable-type.co.uk/scripts/latlong.html"></a>
      */
     public static double vincentyBearing(Point standPoint, Point forePoint) {
         return vincenty(standPoint, forePoint).initialBearing;
@@ -167,8 +190,7 @@ public class EarthCalc {
      * @param standPoint The stand point
      * @param forePoint  The fore point
      * @return (azimuth) bearing in degrees to the North
-     *
-     * @link http://www.movable-type.co.uk/scripts/latlong.html
+     * @see <a href="http://www.movable-type.co.uk/scripts/latlong.html"></a>
      */
     public static double getVincentyFinalBearing(Point standPoint, Point forePoint) {
         return vincenty(standPoint, forePoint).finalBearing;
@@ -184,10 +206,9 @@ public class EarthCalc {
      * @param bearing    Direction in degrees
      * @param distance   distance in meters
      * @return forePoint coordinates
-     *
-     * @link http://www.movable-type.co.uk/scripts/latlong.html
+     * @see <a href="http://www.movable-type.co.uk/scripts/latlong.html"></a>
      */
-    public static Point pointRadialDistance(Point standPoint, double bearing, double distance) {
+    public static Point pointAt(Point standPoint, double bearing, double distance) {
         /**
          var φ2 = asin( sin(φ1)*cos(d/R) + cos(φ1)*sin(d/R)*cos(brng) );
          var λ2 = λ1 + atan2(sin(brng)*sin(d/R)*cos(φ1), cos(d/R)-sin(φ1)*sin(φ2));
@@ -201,7 +222,7 @@ public class EarthCalc {
         double lat2 = asin(sin(rlat1) * cos(rdistance) + cos(rlat1) * sin(rdistance) * cos(rbearing));
         double lon2 = rlon1 + atan2(sin(rbearing) * sin(rdistance) * cos(rlat1), cos(rdistance) - sin(rlat1) * sin(lat2));
 
-        return Point.at(new RadianCoordinate(lat2), new RadianCoordinate(lon2));
+        return Point.at(Coordinate.fromRadians(lat2), Coordinate.fromRadians(lon2));
     }
 
     /**
@@ -231,16 +252,15 @@ public class EarthCalc {
      * @param standPoint The centre of the area
      * @param distance   Distance around standPoint, im meters
      * @return The area
-     * 
-     * @link http://www.movable-type.co.uk/scripts/latlong.html
+     * @see <a href="http://www.movable-type.co.uk/scripts/latlong.html"></a>
      */
-    public static BoundingArea boundingArea(Point standPoint, double distance) {
+    public static BoundingArea around(Point standPoint, double distance) {
 
         //45 degrees going north-west
-        Point northWest = pointRadialDistance(standPoint, 45, distance);
+        Point northWest = pointAt(standPoint, 45, distance);
 
         //225 degrees going south-east
-        Point southEast = pointRadialDistance(standPoint, 225, distance);
+        Point southEast = pointAt(standPoint, 225, distance);
 
         return new BoundingArea(northWest, southEast);
     }
@@ -251,7 +271,7 @@ public class EarthCalc {
          * initialBearing is the initial bearing, or forward azimuth (in reference to North point), in degrees
          * finalBearing is the final bearing (in direction p1→p2), in degrees
          */
-        double distance, initialBearing, finalBearing;
+        final double distance, initialBearing, finalBearing;
 
         public Vincenty(double distance, double initialBearing, double finalBearing) {
             this.distance = distance;
