@@ -254,7 +254,7 @@ public class EarthCalc {
      * @return The area
      * @see <a href="http://www.movable-type.co.uk/scripts/latlong.html"></a>
      */
-    public static BoundingArea around(Point standPoint, double distance) {
+    public static BoundedArea around(Point standPoint, double distance) {
 
         //45 degrees going north-west
         Point northWest = pointAt(standPoint, 45, distance);
@@ -262,7 +262,7 @@ public class EarthCalc {
         //225 degrees going south-east
         Point southEast = pointAt(standPoint, 225, distance);
 
-        return new BoundingArea(northWest, southEast);
+        return new BoundedArea(northWest, southEast);
     }
 
     private static class Vincenty {
