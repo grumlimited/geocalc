@@ -20,7 +20,7 @@ This library implements in Java lots of ideas from [Movable-Type](http://www.mov
 
 ### 0.5.4
 * added `EarthCalc.midPoint(p1, p2)`
-* renamed `EarthCalc.boundingArea()` to `EarthCalc.pointAt(...)`
+* renamed `EarthCalc.pointRadialDistance()` to `EarthCalc.pointAt(...)`
 * renamed `BoundingArea.boundingArea()` to `BoundingArea.around(...)`
 * Removed `get...()` out of `Point` and `BoundingArea` 
 * added maven javadoc plugin
@@ -219,3 +219,15 @@ you can determine whether a point is contained within that area using:
     Point richmond = Point.at(lat, lng);
     
     double bearing = EarthCalc.vincentyFinalBearing(kew, richmond); //in decimal degrees
+
+#### Mid point - This is the half-way point along a great circle path between the two points.
+
+    //Kew
+    Point kew = Point.at(Coordinate.fromDegrees(51.4843774), Coordinate.fromDegrees(-0.2912044));
+
+    //Richmond, London
+    Point richmond = Point.at(Coordinate.fromDegrees(51.4613418), Coordinate.fromDegrees(-0.3035466));
+    
+    Point midPoint = EarthCalc.midPoint(richmond, kew) // Point{latitude=51.47285976194266, longitude=-0.2973770580524634}
+    
+    
