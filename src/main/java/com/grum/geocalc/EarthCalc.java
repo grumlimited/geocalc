@@ -165,7 +165,6 @@ public class EarthCalc {
         finalBearing = (finalBearing + 2 * PI) % (2 * PI);  //turning value to trigonometric direction
 
         return new Vincenty(distance, toDegrees(initialBearing), toDegrees(finalBearing));
-
     }
 
     public static double vincentyDistance(Point standPoint, Point forePoint) {

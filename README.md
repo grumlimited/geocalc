@@ -1,4 +1,4 @@
-Java Geocalc ![alt text](https://api.travis-ci.org/grumlimited/geocalc.svg?branch=master "build")
+Java Geocalc ![travis](https://api.travis-ci.org/grumlimited/geocalc.svg?branch=master "build")
 =======
 
 Geocalc is a simple java library aimed at doing arithmetics with Earth coordinates. 
