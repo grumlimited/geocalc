@@ -135,7 +135,7 @@ public class DistanceTest {
         Coordinate lng = Coordinate.fromDegrees(-0.2912044);
         Point kew = Point.at(lat, lng);
 
-        BoundedArea area = EarthCalc.around(kew, 3000);
+        BoundingArea area = EarthCalc.around(kew, 3000);
 
         double northEastDistance = EarthCalc.gcdDistance(kew, area.northEast);
         logger.info("North East => " + northEastDistance);
@@ -187,7 +187,7 @@ public class DistanceTest {
         Coordinate lng = Coordinate.fromDegrees(0);
         Point northPole = Point.at(lat, lng);
 
-        BoundedArea area = EarthCalc.around(northPole, 10000);
+        BoundingArea area = EarthCalc.around(northPole, 10000);
         logger.info("North East => " + area.northEast);
         logger.info("South West => " + area.southWest);
 
@@ -205,7 +205,7 @@ public class DistanceTest {
         Coordinate lng = Coordinate.fromDegrees(-0.1997387000000117);
         Point northPole = Point.at(lat, lng);
 
-        BoundedArea area = EarthCalc.around(northPole, 5);
+        BoundingArea area = EarthCalc.around(northPole, 5);
         logger.info("North East => " + area.northEast);
         logger.info("South West => " + area.southWest);
 

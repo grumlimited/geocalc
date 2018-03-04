@@ -12,14 +12,13 @@ Geocalc can:
 4. Determine whether a Point is contained within that area
 5. Calculate the azimuth, initial and final bearings between two points (vincenty)
 
-This library is being used on [www.rentbarometer.com](http://www.rentbarometer.com).
+This library is being used on [rentbarometer.com](https://www.rentbarometer.com).
 
 This library implements in Java lots of ideas from [Movable-Type](http://www.movable-type.co.uk/scripts/latlong.html). Many thanks.
 
 ## Changelog
 
-### 0.5.5-SNAPSHOT
-* Deprecated `BoundingArea`. Use `BoundedArea`.
+### 0.5.5
 * Renamed `getVincentyFinalBearing` to `vincentyFinalBearing`
 * Updated copyright
 
@@ -52,13 +51,13 @@ This library implements in Java lots of ideas from [Movable-Type](http://www.mov
 	    <version>v.5.5-SNAPSHOT</version>
 	</dependency>
 	
-Please refer to [jitpack.io/#grumlimited/geocalc/.5.5-SNAPSHOT](https://jitpack.io/#grumlimited/geocalc/.5.5-SNAPSHOT) for more information
+Please refer to [jitpack.io/#grumlimited/geocalc/0.5.5](https://jitpack.io/#grumlimited/geocalc/0.5.5) for more information
 
 ## API
 
 can be found here:
 
-[grumlimited.co.uk/geocalc/0.5.4](http://www.grumlimited.co.uk/geocalc/0.5.4)
+[grumlimited.co.uk/geocalc/0.5.5](http://www.grumlimited.co.uk/geocalc/0.5.5)
 
 ## Usage
 

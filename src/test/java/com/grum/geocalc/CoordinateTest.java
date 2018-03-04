@@ -105,7 +105,7 @@ public class CoordinateTest {
     public void testIsContainedWithin() {
         Point northEast = Point.at(Coordinate.fromDegrees(70), Coordinate.fromDegrees(145));
         Point southWest = Point.at(Coordinate.fromDegrees(50), Coordinate.fromDegrees(110));
-        BoundedArea boundingArea = new BoundedArea(northEast, southWest);
+        BoundingArea boundingArea = new BoundingArea(northEast, southWest);
 
         Point point1 = Point.at(Coordinate.fromDegrees(60), Coordinate.fromDegrees(120));
         assertTrue(boundingArea.contains(point1));
@@ -130,7 +130,7 @@ public class CoordinateTest {
 
         northEast = Point.at(Coordinate.fromDegrees(10), Coordinate.fromDegrees(45));
         southWest = Point.at(Coordinate.fromDegrees(-30), Coordinate.fromDegrees(-35));
-        boundingArea = new BoundedArea(northEast, southWest);
+        boundingArea = new BoundingArea(northEast, southWest);
 
         Point point8 = Point.at(Coordinate.fromDegrees(0), Coordinate.fromDegrees(0));
         assertTrue(boundingArea.contains(point8));
@@ -146,7 +146,7 @@ public class CoordinateTest {
 
         northEast = Point.at(Coordinate.fromDegrees(10), Coordinate.fromDegrees(-165));
         southWest = Point.at(Coordinate.fromDegrees(-30), Coordinate.fromDegrees(170));
-        boundingArea = new BoundedArea(northEast, southWest);
+        boundingArea = new BoundingArea(northEast, southWest);
 
         Point point12 = Point.at(Coordinate.fromDegrees(0), Coordinate.fromDegrees(180));
         assertTrue(boundingArea.contains(point12));
