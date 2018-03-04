@@ -48,7 +48,7 @@ This library implements in Java lots of ideas from [Movable-Type](http://www.mov
     <dependency>
 	    <groupId>com.github.grumlimited</groupId>
 	    <artifactId>geocalc</artifactId>
-	    <version>v.5.5-SNAPSHOT</version>
+	    <version>0.5.5</version>
 	</dependency>
 	
 Please refer to [jitpack.io/#grumlimited/geocalc/0.5.5](https://jitpack.io/#grumlimited/geocalc/0.5.5) for more information
