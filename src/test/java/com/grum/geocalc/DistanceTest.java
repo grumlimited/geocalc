@@ -316,7 +316,7 @@ public class DistanceTest {
 
         //comparing to results from http://www.movable-type.co.uk/scripts/latlong.html
         assertEquals(EarthCalc.vincentyBearing(kew, richmond), Coordinate.fromDMS(198, 30, 19.58).degrees(), 10E-5);
-        assertEquals(EarthCalc.getVincentyFinalBearing(kew, richmond), Coordinate.fromDMS(198, 29, 44.82).degrees(), 10E-5);
+        assertEquals(EarthCalc.vincentyFinalBearing(kew, richmond), Coordinate.fromDMS(198, 29, 44.82).degrees(), 10E-5);
     }
 
     @Test

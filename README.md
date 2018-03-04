@@ -20,6 +20,8 @@ This library implements in Java lots of ideas from [Movable-Type](http://www.mov
 
 ### 0.5.5-SNAPSHOT
 * Deprecated `BoundingArea`. Use `BoundedArea`.
+* Renamed `getVincentyFinalBearing` to `vincentyFinalBearing`
+* Updated copyright
 
 ### 0.5.4
 * added `EarthCalc.midPoint(p1, p2)`
@@ -144,7 +146,7 @@ back and forth
     Point kew = Point.at(lat, lng);
     
     //Distance away point, bearing is 45deg
-    Point otherPoint = EarthCalc.pointRadialDistance(kew, 45, 1000);
+    Point otherPoint = EarthCalc.pointAt(kew, 45, 1000);
     
 ### BoundingArea
 

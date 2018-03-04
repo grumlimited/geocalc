@@ -11,7 +11,7 @@
     <name>${project.groupId}.${project.artifactId}</name>
     <url>http://www.grumlimited.co.uk</url>
 
-    <description>Simple Geocalc Library</description>
+    <description>Geocalc is a simple java library aimed at doing arithmetics with Earth coordinates.</description>
     <licenses>
         <license>
             <name>BSD 3-Clause License</name>
@@ -19,7 +19,7 @@
         </license>
     </licenses>
     <organization>
-        <name>Grumlimited</name>
+        <name>Grum Ltd</name>
         <url>http://www.grumlimited.co.uk</url>
     </organization>
     <developers>
