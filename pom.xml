@@ -7,18 +7,19 @@
     <groupId>com.grum</groupId>
     <artifactId>geocalc</artifactId>
     <packaging>jar</packaging>
-    <version>0.5.4</version>
+    <version>0.5.5</version>
     <name>${project.groupId}.${project.artifactId}</name>
     <url>http://www.grumlimited.co.uk</url>
 
-    <description>Simple Geocalc Library</description>
+    <description>Geocalc is a simple java library aimed at doing arithmetics with Earth coordinates.</description>
     <licenses>
         <license>
             <name>BSD 3-Clause License</name>
+            <url>https://opensource.org/licenses/BSD-3-Clause</url>
         </license>
     </licenses>
     <organization>
-        <name>Grumlimited</name>
+        <name>Grum Ltd</name>
         <url>http://www.grumlimited.co.uk</url>
     </organization>
     <developers>
@@ -36,9 +37,11 @@
         </developer>
     </developers>
 
-    <prerequisites>
-        <maven>3.0</maven>
-    </prerequisites>
+    <scm>
+        <connection>scm:git:https://github.com/grumlimited/geocalc.git</connection>
+        <developerConnection>scm:git:git@github.com:grumlimited/geocalc.git</developerConnection>
+        <url>https://github.com/grumlimited/geocalc</url>
+    </scm>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

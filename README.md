@@ -1,4 +1,4 @@
-Java Geocalc ![alt text](https://api.travis-ci.org/grumlimited/geocalc.svg?branch=master "build")
+Java Geocalc ![travis](https://api.travis-ci.org/grumlimited/geocalc.svg?branch=master "build")
 =======
 
 Geocalc is a simple java library aimed at doing arithmetics with Earth coordinates. 
@@ -12,11 +12,15 @@ Geocalc can:
 4. Determine whether a Point is contained within that area
 5. Calculate the azimuth, initial and final bearings between two points (vincenty)
 
-This library is being used on [www.rentbarometer.com](http://www.rentbarometer.com).
+This library is being used on [rentbarometer.com](https://www.rentbarometer.com).
 
 This library implements in Java lots of ideas from [Movable-Type](http://www.movable-type.co.uk/scripts/latlong.html). Many thanks.
 
 ## Changelog
+
+### 0.5.5
+* Renamed `getVincentyFinalBearing` to `vincentyFinalBearing`
+* Updated copyright
 
 ### 0.5.4
 * added `EarthCalc.midPoint(p1, p2)`
@@ -44,16 +48,16 @@ This library implements in Java lots of ideas from [Movable-Type](http://www.mov
     <dependency>
 	    <groupId>com.github.grumlimited</groupId>
 	    <artifactId>geocalc</artifactId>
-	    <version>v0.5.4</version>
+	    <version>v.5.5-SNAPSHOT</version>
 	</dependency>
 	
-Please refer to [jitpack.io/#grumlimited/geocalc/0.5.4](https://jitpack.io/#grumlimited/geocalc/0.5.4) for more information
+Please refer to [jitpack.io/#grumlimited/geocalc/0.5.5](https://jitpack.io/#grumlimited/geocalc/0.5.5) for more information
 
 ## API
 
 can be found here:
 
-[grumlimited.co.uk/geocalc/0.5.4](http://www.grumlimited.co.uk/geocalc/0.5.4)
+[grumlimited.co.uk/geocalc/0.5.5](http://www.grumlimited.co.uk/geocalc/0.5.5)
 
 ## Usage
 
@@ -141,7 +145,7 @@ back and forth
     Point kew = Point.at(lat, lng);
     
     //Distance away point, bearing is 45deg
-    Point otherPoint = EarthCalc.pointRadialDistance(kew, 45, 1000);
+    Point otherPoint = EarthCalc.pointAt(kew, 45, 1000);
     
 ### BoundingArea
 

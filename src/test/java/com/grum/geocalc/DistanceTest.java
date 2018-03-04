@@ -55,14 +55,14 @@ public class DistanceTest {
     @Test
     public void testDistanceToBuenosAires() {
         //Kew
-        Coordinate lat = new DMSCoordinate(51, 29, 3.7572);
-        Coordinate lng = new DMSCoordinate(0, 17, 28.3338);
+        Coordinate lat = Coordinate.fromDMS(51, 29, 3.7572);
+        Coordinate lng = Coordinate.fromDMS(0, 17, 28.3338);
 
         Point kew = Point.at(lat, lng);
 
         //Buenos Aires
-        lat = new DMSCoordinate(-34, 36, 35.9994);
-        lng = new DMSCoordinate(-58, 22, 11.9994);
+        lat = Coordinate.fromDMS(-34, 36, 35.9994);
+        lng = Coordinate.fromDMS(-58, 22, 11.9994);
 
         Point buenosAires = Point.at(lat, lng);
 
@@ -72,14 +72,14 @@ public class DistanceTest {
     @Test
     public void testHarvesineDistanceToBuenosAires() {
         //Kew
-        Coordinate lat = new DMSCoordinate(51, 29, 3.7572);
-        Coordinate lng = new DMSCoordinate(0, 17, 28.3338);
+        Coordinate lat = Coordinate.fromDMS(51, 29, 3.7572);
+        Coordinate lng = Coordinate.fromDMS(0, 17, 28.3338);
 
         Point kew = Point.at(lat, lng);
 
         //Buenos Aires
-        lat = new DMSCoordinate(-34, 36, 35.9994);
-        lng = new DMSCoordinate(-58, 22, 11.9994);
+        lat = Coordinate.fromDMS(-34, 36, 35.9994);
+        lng = Coordinate.fromDMS(-58, 22, 11.9994);
 
         Point buenosAires = Point.at(lat, lng);
 
@@ -89,14 +89,14 @@ public class DistanceTest {
     @Test
     public void testVincentyDistanceToBuenosAires() {
         //Kew
-        Coordinate lat = new DMSCoordinate(51, 29, 3.7572);
-        Coordinate lng = new DMSCoordinate(0, 17, 28.3338);
+        Coordinate lat = Coordinate.fromDMS(51, 29, 3.7572);
+        Coordinate lng = Coordinate.fromDMS(0, 17, 28.3338);
 
         Point kew = Point.at(lat, lng);
 
         //Buenos Aires
-        lat = new DMSCoordinate(-34, 36, 35.9994);
-        lng = new DMSCoordinate(-58, 22, 11.9994);
+        lat = Coordinate.fromDMS(-34, 36, 35.9994);
+        lng = Coordinate.fromDMS(-58, 22, 11.9994);
 
         Point buenosAires = Point.at(lat, lng);
 
@@ -299,8 +299,7 @@ public class DistanceTest {
          * returns a bearing of 019°13′50″
          * and not 19.213575108209017
          */
-        DMSCoordinate d = new DMSCoordinate(19, 13, 50);
-        assertEquals(EarthCalc.bearing(standpoint, forepoint), new DMSCoordinate(19, 13, 50).toDegreeCoordinate().degrees(), 10E-5);
+        assertEquals(EarthCalc.bearing(standpoint, forepoint), Coordinate.fromDMS(19, 13, 50).degrees(), 10E-5);
     }
 
     @Test
@@ -316,8 +315,8 @@ public class DistanceTest {
         Point richmond = Point.at(lat, lng);
 
         //comparing to results from http://www.movable-type.co.uk/scripts/latlong.html
-        assertEquals(EarthCalc.vincentyBearing(kew, richmond), new DMSCoordinate(198, 30, 19.58).degrees(), 10E-5);
-        assertEquals(EarthCalc.getVincentyFinalBearing(kew, richmond), new DMSCoordinate(198, 29, 44.82).degrees(), 10E-5);
+        assertEquals(EarthCalc.vincentyBearing(kew, richmond), Coordinate.fromDMS(198, 30, 19.58).degrees(), 10E-5);
+        assertEquals(EarthCalc.vincentyFinalBearing(kew, richmond), Coordinate.fromDMS(198, 29, 44.82).degrees(), 10E-5);
     }
 
     @Test
@@ -335,5 +334,4 @@ public class DistanceTest {
         //comparing to results from http://www.movable-type.co.uk/scripts/latlong.html
         assertEquals(EarthCalc.midPoint(richmond, kew), Point.at(Coordinate.fromDegrees(51.47285976194266), Coordinate.fromDegrees(-0.2973770580524634)));
     }
-
 }
