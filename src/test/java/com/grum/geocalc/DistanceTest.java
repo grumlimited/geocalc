@@ -138,33 +138,27 @@ public class DistanceTest {
         BoundingArea area = EarthCalc.around(kew, 3000);
 
         double northEastDistance = EarthCalc.gcdDistance(kew, area.northEast);
-        logger.info("North East => " + northEastDistance);
         assertEquals(3000d, northEastDistance, 1E-3);
 
         double southWestDistance = EarthCalc.gcdDistance(kew, area.southWest);
-        logger.info("South West => " + southWestDistance);
         assertEquals(3000d, southWestDistance, 1E-3);
 
         Point northWest = area.northWest;
         double northWestDistance = EarthCalc.gcdDistance(kew, northWest);
-        logger.info("North West => " + northWestDistance);
         assertEquals(3000d, northWestDistance, 2);
 
         Point southEast = area.southEast;
         double southEastDistance = EarthCalc.gcdDistance(kew, southEast);
-        logger.info("South East => " + southEastDistance);
         assertEquals(3000d, southEastDistance, 2);
 
         Point middleNorth = Point.at(Coordinate.fromDegrees(area.northEast.latitude),
                 Coordinate.fromDegrees((area.southWest.longitude + area.northEast.longitude) / 2));
         double middleNorthDistance = EarthCalc.gcdDistance(kew, middleNorth);
-        logger.info("Middle North => " + middleNorthDistance);
         assertEquals(2120d, middleNorthDistance, 1);
 
         Point middleSouth = Point.at(Coordinate.fromDegrees(area.southWest.latitude),
                 Coordinate.fromDegrees((area.southWest.longitude + area.northEast.longitude) / 2));
         double middleSouthDistance = EarthCalc.gcdDistance(kew, middleSouth);
-        logger.info("Middle South => " + middleSouthDistance);
         assertEquals(2120d, middleSouthDistance, 2);
 
         Point middleWest = Point.at(Coordinate.fromDegrees((area.northEast.latitude + area.southWest.latitude) / 2),

@@ -87,4 +87,13 @@ public class DMSCoordinate extends Coordinate {
     public double getSeconds() {
         return seconds;
     }
+
+    @Override
+    public String toString() {
+        return "DMSCoordinate{" +
+                "wholeDegrees=" + wholeDegrees +
+                ", minutes=" + minutes +
+                ", seconds=" + seconds +
+                '}';
+    }
 }

@@ -18,6 +18,10 @@ This library implements in Java lots of ideas from [Movable-Type](http://www.mov
 
 ## Changelog
 
+### 0.5.6
+* Replaced `new BoundingArea(...)` with `BoundingAread.at`
+* Bugfix in `EarthCalc.pointAt`. Normalising `λ2` so that bearing starts clockwise from north.
+
 ### 0.5.5
 * Renamed `getVincentyFinalBearing` to `vincentyFinalBearing`
 * Updated copyright
@@ -48,16 +52,16 @@ This library implements in Java lots of ideas from [Movable-Type](http://www.mov
     <dependency>
 	    <groupId>com.github.grumlimited</groupId>
 	    <artifactId>geocalc</artifactId>
-	    <version>0.5.5</version>
+	    <version>0.5.6</version>
 	</dependency>
 	
-Please refer to [jitpack.io/#grumlimited/geocalc/0.5.5](https://jitpack.io/#grumlimited/geocalc/0.5.5) for more information
+Please refer to [jitpack.io/#grumlimited/geocalc/0.5.6](https://jitpack.io/#grumlimited/geocalc/0.5.6) for more information
 
 ## API
 
 can be found here:
 
-[grumlimited.co.uk/geocalc/0.5.5](http://www.grumlimited.co.uk/geocalc/0.5.5)
+[grumlimited.co.uk/geocalc/0.5.6](http://www.grumlimited.co.uk/geocalc/0.5.6)
 
 ## Usage
 

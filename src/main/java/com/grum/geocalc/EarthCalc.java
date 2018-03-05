@@ -47,7 +47,7 @@ public class EarthCalc {
      * This is the half-way point along a great circle path between the two points.
      *
      * @param standPoint standPoint
-     * @param forePoint standPoint
+     * @param forePoint  standPoint
      * @return mid point
      * @see <a href="http://www.movable-type.co.uk/scripts/latlong.html"></a>
      */
@@ -202,26 +202,35 @@ public class EarthCalc {
      * Note: North is equal to 0 for bearing value
      *
      * @param standPoint Origin
-     * @param bearing    Direction in degrees
+     * @param bearing    Direction in degrees, clockwise from north
      * @param distance   distance in meters
      * @return forePoint coordinates
      * @see <a href="http://www.movable-type.co.uk/scripts/latlong.html"></a>
      */
     public static Point pointAt(Point standPoint, double bearing, double distance) {
         /**
-         var φ2 = asin( sin(φ1)*cos(d/R) + cos(φ1)*sin(d/R)*cos(brng) );
-         var λ2 = λ1 + atan2(sin(brng)*sin(d/R)*cos(φ1), cos(d/R)-sin(φ1)*sin(φ2));
+         φ2 = asin( sin φ1 ⋅ cos δ + cos φ1 ⋅ sin δ ⋅ cos θ )
+         λ2 = λ1 + atan2( sin θ ⋅ sin δ ⋅ cos φ1, cos δ − sin φ1 ⋅ sin φ2 )
+
+         where
+         φ is latitude,
+         λ is longitude,
+         θ is the bearing (clockwise from north),
+         δ is the angular distance d/R;
+         d being the distance travelled, R the earth’s radius
          */
 
-        double rlat1 = toRadians(standPoint.latitude);
-        double rlon1 = toRadians(standPoint.longitude);
-        double rbearing = toRadians(bearing);
-        double rdistance = distance / EARTH_DIAMETER; // normalize linear distance to radian angle
+        double φ1 = toRadians(standPoint.latitude);
+        double λ1 = toRadians(standPoint.longitude);
+        double θ = toRadians(bearing);
+        double δ = distance / EARTH_DIAMETER; // normalize linear distance to radian angle
 
-        double lat2 = asin(sin(rlat1) * cos(rdistance) + cos(rlat1) * sin(rdistance) * cos(rbearing));
-        double lon2 = rlon1 + atan2(sin(rbearing) * sin(rdistance) * cos(rlat1), cos(rdistance) - sin(rlat1) * sin(lat2));
+        double φ2 = asin(sin(φ1) * cos(δ) + cos(φ1) * sin(δ) * cos(θ));
+        double λ2 = λ1 + atan2(sin(θ) * sin(δ) * cos(φ1), cos(δ) - sin(φ1) * sin(φ2));
 
-        return Point.at(Coordinate.fromRadians(lat2), Coordinate.fromRadians(lon2));
+        double λ2_harmonised = (λ2 + 3 * PI) % (2 * PI) - PI; // normalise to −180..+180°
+
+        return Point.at(Coordinate.fromRadians(φ2), Coordinate.fromRadians(λ2_harmonised));
     }
 
     /**
@@ -255,13 +264,13 @@ public class EarthCalc {
      */
     public static BoundingArea around(Point standPoint, double distance) {
 
-        //45 degrees going north-west
-        Point northWest = pointAt(standPoint, 45, distance);
+        //45 degrees going north-east
+        Point northEast = pointAt(standPoint, 45, distance);
 
-        //225 degrees going south-east
-        Point southEast = pointAt(standPoint, 225, distance);
+        //225 degrees going south-west
+        Point southWest = pointAt(standPoint, 225, distance);
 
-        return new BoundingArea(northWest, southEast);
+        return BoundingArea.at(northEast, southWest);
     }
 
     private static class Vincenty {
