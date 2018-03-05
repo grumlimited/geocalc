@@ -42,12 +42,16 @@ public class BoundingArea {
     public final Point northEast, southWest;
     public final Point southEast, northWest;
 
-    public BoundingArea(Point northEast, Point southWest) {
+    private BoundingArea(Point northEast, Point southWest) {
         this.northEast = northEast;
         this.southWest = southWest;
 
         southEast = Point.at(Coordinate.fromDegrees(southWest.latitude), Coordinate.fromDegrees(northEast.longitude));
         northWest = Point.at(Coordinate.fromDegrees(northEast.latitude), Coordinate.fromDegrees(southWest.longitude));
+    }
+
+    public static BoundingArea at(Point northEast, Point southWest) {
+        return new BoundingArea(northEast, southWest);
     }
 
     @Override
