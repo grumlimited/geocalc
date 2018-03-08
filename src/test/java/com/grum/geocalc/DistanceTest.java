@@ -126,6 +126,8 @@ public class DistanceTest {
         Point kew = Point.at(lat, lng);
 
         assertEquals(0, EarthCalc.gcdDistance(kew, kew), 0);
+        assertEquals(0, EarthCalc.vincentyDistance(kew, kew), 0);
+        assertEquals(0, EarthCalc.harvesineDistance(kew, kew), 0);
     }
 
     @Test
@@ -136,6 +138,8 @@ public class DistanceTest {
     	Point waldshut = Point.at(lat, lng);
     	
     	assertEquals(0, EarthCalc.gcdDistance(waldshut, waldshut), 0);
+    	assertEquals(0, EarthCalc.vincentyDistance(waldshut, waldshut), 0);
+    	assertEquals(0, EarthCalc.harvesineDistance(waldshut, waldshut), 0);
     }
     
     @Test
