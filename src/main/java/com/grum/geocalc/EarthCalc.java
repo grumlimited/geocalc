@@ -83,10 +83,7 @@ public class EarthCalc {
         //spherical law of cosines
         
         double sphereCos = (sin(slat) * sin(flat)) + (cos(slat) * cos(flat) * cos(diffLongitudes));
-        if (Math.abs(sphereCos) > 1) {
-        	sphereCos = Math.round(sphereCos);
-        }
-        double c = acos(sphereCos);
+        double c = acos(max(min(sphereCos, 1d), -1d));
 
         return EARTH_DIAMETER * c;
     }
