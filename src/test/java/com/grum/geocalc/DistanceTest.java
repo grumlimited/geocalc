@@ -125,9 +125,19 @@ public class DistanceTest {
         Coordinate lng = Coordinate.fromDegrees(-0.2912044);
         Point kew = Point.at(lat, lng);
 
-        assertEquals(EarthCalc.gcdDistance(kew, kew), 0, 0);
+        assertEquals(0, EarthCalc.gcdDistance(kew, kew), 0);
     }
 
+    @Test
+    public void testZeroDistanceWaldshutGermany() {
+    	//Kew
+    	Coordinate lat = Coordinate.fromDegrees(47.62285);
+    	Coordinate lng = Coordinate.fromDegrees(8.20897);
+    	Point waldshut = Point.at(lat, lng);
+    	
+    	assertEquals(0, EarthCalc.gcdDistance(waldshut, waldshut), 0);
+    }
+    
     @Test
     public void testBoundingAreaDistance() {
         //Kew

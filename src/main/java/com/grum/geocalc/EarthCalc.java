@@ -81,7 +81,9 @@ public class EarthCalc {
         double flat = toRadians(forePoint.latitude);
 
         //spherical law of cosines
-        double c = acos((sin(slat) * sin(flat)) + (cos(slat) * cos(flat) * cos(diffLongitudes)));
+        
+        double sphereCos = (sin(slat) * sin(flat)) + (cos(slat) * cos(flat) * cos(diffLongitudes));
+        double c = acos(max(min(sphereCos, 1d), -1d));
 
         return EARTH_DIAMETER * c;
     }
