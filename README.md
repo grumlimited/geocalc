@@ -177,7 +177,7 @@ Now say you have a BoundingArea,
       //somewhere in Europe, not sure where ;-)
       Point northEast = Point.at(Coordinate.fromDegrees(70), Coordinate.fromDegrees(145));
       Point southWest = Point.at(Coordinate.fromDegrees(50), Coordinate.fromDegrees(110));
-      BoundingArea boundingArea = new BoundingArea(northEast, southWest);
+      BoundingArea boundingArea = BoundingArea.at(northEast, southWest);
       
 you can determine whether a point is contained within that area using:
       
