@@ -18,9 +18,12 @@ This library implements in Java lots of ideas from [Movable-Type](http://www.mov
 
 ## Changelog
 
+### 0.5.7
+* Bugfix in `EarthCalc.gcdDictance` [24](https://github.com/grumlimited/geocalc/issues/24). Thanks [dusiema](https://github.com/dusiema)
+
 ### 0.5.6
 * Replaced `new BoundingArea(...)` with `BoundingAread.at`
-* Bugfix in `EarthCalc.pointAt`. Normalising `λ2` so that bearing starts clockwise from north.
+* Bugfix in `EarthCalc.pointAt`. Normalising `λ2` so that bearing starts clockwise from north
 
 ### 0.5.5
 * Renamed `getVincentyFinalBearing` to `vincentyFinalBearing`
