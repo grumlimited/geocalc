@@ -33,7 +33,7 @@ This library implements in Java lots of ideas from [Movable-Type](http://www.mov
 * added `EarthCalc.midPoint(p1, p2)`
 * renamed `EarthCalc.pointRadialDistance()` to `EarthCalc.pointAt(...)`
 * renamed `BoundingArea.boundingArea()` to `BoundingArea.around(...)`
-* Removed `get...()` out of `Point` and `BoundingArea` 
+* removed `get...()` out of `Point` and `BoundingArea` 
 * added maven javadoc plugin
 
 ### 0.5.3
@@ -55,16 +55,16 @@ This library implements in Java lots of ideas from [Movable-Type](http://www.mov
     <dependency>
 	    <groupId>com.github.grumlimited</groupId>
 	    <artifactId>geocalc</artifactId>
-	    <version>0.5.6</version>
+	    <version>0.5.7</version>
 	</dependency>
 	
-Please refer to [jitpack.io/#grumlimited/geocalc/0.5.6](https://jitpack.io/#grumlimited/geocalc/0.5.6) for more information
+Please refer to [jitpack.io/#grumlimited/geocalc/0.5.7](https://jitpack.io/#grumlimited/geocalc/0.5.7) for more information
 
 ## API
 
 can be found here:
 
-[grumlimited.co.uk/geocalc/0.5.6](http://www.grumlimited.co.uk/geocalc/0.5.6)
+[grumlimited.co.uk/geocalc/0.5.7](http://www.grumlimited.co.uk/geocalc/0.5.7)
 
 ## Usage
 
