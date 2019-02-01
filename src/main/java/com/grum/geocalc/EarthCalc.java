@@ -41,7 +41,7 @@ import static java.lang.Math.*;
  */
 public class EarthCalc {
 
-    public static final double EARTH_DIAMETER = 6371.01 * 1000; //meters
+    private static final double EARTH_RADIUS = 6371.01 * 1000; //meters
 
     /**
      * This is the half-way point along a great circle path between the two points.
@@ -81,11 +81,11 @@ public class EarthCalc {
         double flat = toRadians(forePoint.latitude);
 
         //spherical law of cosines
-        
+
         double sphereCos = (sin(slat) * sin(flat)) + (cos(slat) * cos(flat) * cos(diffLongitudes));
         double c = acos(max(min(sphereCos, 1d), -1d));
 
-        return EARTH_DIAMETER * c;
+        return EARTH_RADIUS * c;
     }
 
     /**
@@ -106,7 +106,7 @@ public class EarthCalc {
         double a = sin(diffLatitudes / 2) * sin(diffLatitudes / 2) + cos(slat) * cos(flat) * sin(diffLongitudes / 2) * sin(diffLongitudes / 2);
         double c = 2 * atan2(sqrt(a), sqrt(1 - a)); //angular distance in radians
 
-        return EARTH_DIAMETER * c;
+        return EARTH_RADIUS * c;
     }
 
     /**
@@ -210,7 +210,7 @@ public class EarthCalc {
      * @see <a href="http://www.movable-type.co.uk/scripts/latlong.html"></a>
      */
     public static Point pointAt(Point standPoint, double bearing, double distance) {
-        /**
+        /*
          φ2 = asin( sin φ1 ⋅ cos δ + cos φ1 ⋅ sin δ ⋅ cos θ )
          λ2 = λ1 + atan2( sin θ ⋅ sin δ ⋅ cos φ1, cos δ − sin φ1 ⋅ sin φ2 )
 
@@ -225,7 +225,7 @@ public class EarthCalc {
         double φ1 = toRadians(standPoint.latitude);
         double λ1 = toRadians(standPoint.longitude);
         double θ = toRadians(bearing);
-        double δ = distance / EARTH_DIAMETER; // normalize linear distance to radian angle
+        double δ = distance / EARTH_RADIUS; // normalize linear distance to radian angle
 
         double φ2 = asin(sin(φ1) * cos(δ) + cos(φ1) * sin(δ) * cos(θ));
         double λ2 = λ1 + atan2(sin(θ) * sin(δ) * cos(φ1), cos(δ) - sin(φ1) * sin(φ2));
@@ -243,13 +243,14 @@ public class EarthCalc {
      * @return (azimuth) bearing, in decimal degrees
      */
     public static double bearing(Point standPoint, Point forePoint) {
-        /**
+        /*
          * Formula: θ = atan2( 	sin(Δlong).cos(lat2), cos(lat1).sin(lat2) − sin(lat1).cos(lat2).cos(Δlong) )
          */
 
-        double y = sin(toRadians(forePoint.longitude - standPoint.longitude)) * cos(toRadians(forePoint.latitude));
+        double Δlong = toRadians(forePoint.longitude - standPoint.longitude);
+        double y = sin(Δlong) * cos(toRadians(forePoint.latitude));
         double x = cos(toRadians(standPoint.latitude)) * sin(toRadians(forePoint.latitude))
-                - sin(toRadians(standPoint.latitude)) * cos(toRadians(forePoint.latitude)) * cos(toRadians(forePoint.longitude - standPoint.longitude));
+                - sin(toRadians(standPoint.latitude)) * cos(toRadians(forePoint.latitude)) * cos(Δlong);
 
         double bearing = (atan2(y, x) + 2 * PI) % (2 * PI);
 
@@ -283,7 +284,7 @@ public class EarthCalc {
          */
         final double distance, initialBearing, finalBearing;
 
-        public Vincenty(double distance, double initialBearing, double finalBearing) {
+        Vincenty(double distance, double initialBearing, double finalBearing) {
             this.distance = distance;
             this.initialBearing = initialBearing;
             this.finalBearing = finalBearing;

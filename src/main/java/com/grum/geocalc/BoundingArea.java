@@ -32,6 +32,8 @@
 
 package com.grum.geocalc;
 
+import java.util.Objects;
+
 /**
  * Represents an area (viewed rectangular shaped projected onto Earth), defined by its top left and bottom right
  * coordinates
@@ -105,11 +107,9 @@ public class BoundingArea {
         }
 
         BoundingArea other = (BoundingArea) obj;
-        if (this.northEast != other.northEast && (this.northEast == null || !this.northEast.equals(other.northEast))) {
-            return false;
-        }
 
-        return !(this.southWest != other.southWest && (this.southWest == null || !this.southWest.equals(other.southWest)));
+        return Objects.equals(this.northEast, other.northEast) &&
+                Objects.equals(this.southWest, other.southWest);
     }
 
     @Override

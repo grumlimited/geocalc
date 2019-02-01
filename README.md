@@ -18,11 +18,15 @@ This library implements in Java lots of ideas from [Movable-Type](http://www.mov
 
 ## Changelog
 
+### 0.5.8
+* Renamed in `EarthCalc.EARTH_DIAMETER` to `EarthCalc.EARTH_RADIUS`. Thanks [pradeepmurugesan](https://github.com/pradeepmurugesan)
+
+
 ### 0.5.7
 * Bugfix in `EarthCalc.gcdDictance` [24](https://github.com/grumlimited/geocalc/issues/24). Thanks [dusiema](https://github.com/dusiema)
 
 ### 0.5.6
-* Replaced `new BoundingArea(...)` with `BoundingAread.at`
+* Replaced `new BoundingArea(...)` with `BoundingArea.at`
 * Bugfix in `EarthCalc.pointAt`. Normalising `λ2` so that bearing starts clockwise from north
 
 ### 0.5.5
