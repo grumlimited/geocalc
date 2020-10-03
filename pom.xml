@@ -7,9 +7,9 @@
     <groupId>com.grum</groupId>
     <artifactId>geocalc</artifactId>
     <packaging>jar</packaging>
-    <version>0.5.8</version>
+    <version>0.6</version>
     <name>${project.groupId}.${project.artifactId}</name>
-    <url>http://www.grumlimited.co.uk</url>
+    <url>httpd://www.grumlimited.co.uk</url>
 
     <prerequisites>
         <maven>3.1.0</maven>
@@ -24,12 +24,12 @@
     </licenses>
     <organization>
         <name>Grum Ltd</name>
-        <url>http://www.grumlimited.co.uk</url>
+        <url>httpd://www.grumlimited.co.uk</url>
     </organization>
     <developers>
         <developer>
             <name>GR211</name>
-            <email>romain.gallet__at__gmail.com</email>
+            <email>rgallet_at_grumlimited_co_uk</email>
             <organization>Grum Limited</organization>
             <organizationUrl>http://www.grumlimited.co.uk</organizationUrl>
         </developer>
