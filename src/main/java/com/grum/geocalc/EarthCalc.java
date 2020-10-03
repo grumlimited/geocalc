@@ -89,13 +89,13 @@ public class EarthCalc {
     }
 
     /**
-     * Returns the distance between two points at Harvesine formula.
+     * Returns the distance between two points at Haversine formula.
      *
      * @param standPoint The stand point
      * @param forePoint  The fore point
      * @return The distance, in meters
      */
-    public static double harvesineDistance(Point standPoint, Point forePoint) {
+    public static double haversineDistance(Point standPoint, Point forePoint) {
 
         double diffLongitudes = toRadians(abs(forePoint.longitude - standPoint.longitude));
         double slat = toRadians(standPoint.latitude);

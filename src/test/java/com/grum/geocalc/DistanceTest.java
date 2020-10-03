@@ -70,7 +70,7 @@ public class DistanceTest {
     }
 
     @Test
-    public void testHarvesineDistanceToBuenosAires() {
+    public void testHaversineDistanceToBuenosAires() {
         //Kew
         Coordinate lat = Coordinate.fromDMS(51, 29, 3.7572);
         Coordinate lng = Coordinate.fromDMS(0, 17, 28.3338);
@@ -83,7 +83,7 @@ public class DistanceTest {
 
         Point buenosAires = Point.at(lat, lng);
 
-        assertEquals(11146, (int) (EarthCalc.harvesineDistance(buenosAires, kew) / 1000)); //km
+        assertEquals(11146, (int) (EarthCalc.haversineDistance(buenosAires, kew) / 1000)); //km
     }
 
     @Test
@@ -127,7 +127,7 @@ public class DistanceTest {
 
         assertEquals(0, EarthCalc.gcdDistance(kew, kew), 0);
         assertEquals(0, EarthCalc.vincentyDistance(kew, kew), 0);
-        assertEquals(0, EarthCalc.harvesineDistance(kew, kew), 0);
+        assertEquals(0, EarthCalc.haversineDistance(kew, kew), 0);
     }
 
     @Test
@@ -139,7 +139,7 @@ public class DistanceTest {
     	
     	assertEquals(0, EarthCalc.gcdDistance(waldshut, waldshut), 0);
     	assertEquals(0, EarthCalc.vincentyDistance(waldshut, waldshut), 0);
-    	assertEquals(0, EarthCalc.harvesineDistance(waldshut, waldshut), 0);
+    	assertEquals(0, EarthCalc.haversineDistance(waldshut, waldshut), 0);
     }
     
     @Test
