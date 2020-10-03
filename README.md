@@ -29,16 +29,16 @@ This library implements in Java lots of ideas from [Movable-Type](http://www.mov
     <dependency>
 	    <groupId>com.github.grumlimited</groupId>
 	    <artifactId>geocalc</artifactId>
-	    <version>0.5.8</version>
+	    <version>0.6</version>
 	</dependency>
 	
-Please refer to [jitpack.io/#grumlimited/geocalc/0.5.8](https://jitpack.io/#grumlimited/geocalc/0.5.8) for more information
+Please refer to [jitpack.io/#grumlimited/geocalc/0.6](https://jitpack.io/#grumlimited/geocalc/0.6) for more information
 
 ## API
 
 can be found here:
 
-[grumlimited.co.uk/geocalc/0.5.8](http://www.grumlimited.co.uk/geocalc/0.5.8)
+[grumlimited.co.uk/geocalc/0.6](https://www.grumlimited.co.uk/geocalc/0.6)
 
 ## Usage
 
