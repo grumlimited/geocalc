@@ -16,36 +16,6 @@ This library is being used on [rentbarometer.com](https://www.rentbarometer.com)
 
 This library implements in Java lots of ideas from [Movable-Type](http://www.movable-type.co.uk/scripts/latlong.html). Many thanks.
 
-## Changelog
-
-### 0.5.8
-* Renamed in `EarthCalc.EARTH_DIAMETER` to `EarthCalc.EARTH_RADIUS`. Thanks [pradeepmurugesan](https://github.com/pradeepmurugesan)
-
-
-### 0.5.7
-* Bugfix in `EarthCalc.gcdDictance` [24](https://github.com/grumlimited/geocalc/issues/24). Thanks [dusiema](https://github.com/dusiema)
-
-### 0.5.6
-* Replaced `new BoundingArea(...)` with `BoundingArea.at`
-* Bugfix in `EarthCalc.pointAt`. Normalising `λ2` so that bearing starts clockwise from north
-
-### 0.5.5
-* Renamed `getVincentyFinalBearing` to `vincentyFinalBearing`
-* Updated copyright
-
-### 0.5.4
-* added `EarthCalc.midPoint(p1, p2)`
-* renamed `EarthCalc.pointRadialDistance()` to `EarthCalc.pointAt(...)`
-* renamed `BoundingArea.boundingArea()` to `BoundingArea.around(...)`
-* removed `get...()` out of `Point` and `BoundingArea` 
-* added maven javadoc plugin
-
-### 0.5.3
-* changed constructors to default and private visibility
-* removed `get...()` keyword out of `EarthCalc` methods 
-* `EarthCalc.getDistance()` is now `EarthCalc.gcdDistance()`
-* renamed `BoundingArea.isContainedWithin(...)` to `BoundingArea.contains(...)`
-
 ### Embed
 
     <repositories>
