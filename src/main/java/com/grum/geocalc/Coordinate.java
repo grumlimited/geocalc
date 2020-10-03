@@ -40,21 +40,10 @@ import static java.lang.Math.*;
 
 /**
  * Abstraction of coordinate systems (degrees, radians, dms and gps)
- *
- * @author rgallet
  */
 abstract public class Coordinate implements Serializable {
 
     abstract double degrees();
-
-    /**
-     * @return degree value
-     * @deprecated use degrees()
-     */
-    @Deprecated
-    public double getValue() {
-        return degrees();
-    }
 
     public static DegreeCoordinate fromDegrees(double decimalDegrees) {
         return new DegreeCoordinate(decimalDegrees);

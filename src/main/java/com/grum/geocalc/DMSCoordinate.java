@@ -37,8 +37,6 @@ import static java.lang.Math.abs;
 /**
  * Represents coordinates given in
  * Degrees Minutes decimal-seconds (D M s) format
- *
- * @author rgallet
  */
 public class DMSCoordinate extends Coordinate {
 
@@ -59,33 +57,6 @@ public class DMSCoordinate extends Coordinate {
         }
 
         return decimalDegrees;
-    }
-
-    /**
-     * @return minutes
-     * @deprecated use minutes
-     */
-    @Deprecated
-    public double getMinutes() {
-        return minutes;
-    }
-
-    /**
-     * @return wholeDegrees
-     * @deprecated use wholeDegrees
-     */
-    @Deprecated
-    public double getWholeDegrees() {
-        return wholeDegrees;
-    }
-
-    /**
-     * @return seconds
-     * @deprecated use seconds
-     */
-    @Deprecated
-    public double getSeconds() {
-        return seconds;
     }
 
     @Override

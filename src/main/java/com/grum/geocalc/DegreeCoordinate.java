@@ -35,12 +35,10 @@ package com.grum.geocalc;
 /**
  * Represents coordinates given in
  * decimal-degrees (d) format
- *
- * @author rgallet
  */
 public class DegreeCoordinate extends Coordinate {
 
-    final double decimalDegrees;
+    public final double decimalDegrees;
 
     DegreeCoordinate(double decimalDegrees) {
         this.decimalDegrees = decimalDegrees;

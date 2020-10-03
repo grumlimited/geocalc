@@ -36,8 +36,6 @@ import java.io.Serializable;
 
 /**
  * Represent a point in spherical system
- *
- * @author rgallet
  */
 public class Point implements Serializable {
     //decimal degrees

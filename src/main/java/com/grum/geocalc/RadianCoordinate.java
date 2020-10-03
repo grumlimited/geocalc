@@ -35,8 +35,6 @@ package com.grum.geocalc;
 /**
  * Represents coordinates given in
  * radian-degrees (r) format
- *
- * @author rgallet
  */
 public class RadianCoordinate extends Coordinate {
 
@@ -49,14 +47,5 @@ public class RadianCoordinate extends Coordinate {
     @Override
     double degrees() {
         return Math.toDegrees(radians);
-    }
-
-    /**
-     * @return angle value
-     * @deprecated use radians
-     */
-    @Deprecated
-    public double getRadians() {
-        return radians;
     }
 }

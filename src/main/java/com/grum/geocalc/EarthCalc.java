@@ -36,12 +36,10 @@ import static java.lang.Math.*;
 
 /**
  * Earth related calculations.
- *
- * @author rgallet
  */
 public class EarthCalc {
 
-    private static final double EARTH_RADIUS = 6371.01 * 1000; //meters
+    public static final double EARTH_RADIUS = 6371.01 * 1000; //meters
 
     /**
      * This is the half-way point along a great circle path between the two points.
