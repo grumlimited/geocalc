@@ -32,19 +32,17 @@
 
 package com.grum.geocalc;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+
 /**
  * Represents coordinates given in
  * decimal-degrees (d) format
- *
- * @author rgallet
  */
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
 public class DegreeCoordinate extends Coordinate {
 
-    final double decimalDegrees;
-
-    DegreeCoordinate(double decimalDegrees) {
-        this.decimalDegrees = decimalDegrees;
-    }
+    public final double decimalDegrees;
 
     @Override
     double degrees() {

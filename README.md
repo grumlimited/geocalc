@@ -16,36 +16,6 @@ This library is being used on [rentbarometer.com](https://www.rentbarometer.com)
 
 This library implements in Java lots of ideas from [Movable-Type](http://www.movable-type.co.uk/scripts/latlong.html). Many thanks.
 
-## Changelog
-
-### 0.5.8
-* Renamed in `EarthCalc.EARTH_DIAMETER` to `EarthCalc.EARTH_RADIUS`. Thanks [pradeepmurugesan](https://github.com/pradeepmurugesan)
-
-
-### 0.5.7
-* Bugfix in `EarthCalc.gcdDictance` [24](https://github.com/grumlimited/geocalc/issues/24). Thanks [dusiema](https://github.com/dusiema)
-
-### 0.5.6
-* Replaced `new BoundingArea(...)` with `BoundingArea.at`
-* Bugfix in `EarthCalc.pointAt`. Normalising `λ2` so that bearing starts clockwise from north
-
-### 0.5.5
-* Renamed `getVincentyFinalBearing` to `vincentyFinalBearing`
-* Updated copyright
-
-### 0.5.4
-* added `EarthCalc.midPoint(p1, p2)`
-* renamed `EarthCalc.pointRadialDistance()` to `EarthCalc.pointAt(...)`
-* renamed `BoundingArea.boundingArea()` to `BoundingArea.around(...)`
-* removed `get...()` out of `Point` and `BoundingArea` 
-* added maven javadoc plugin
-
-### 0.5.3
-* changed constructors to default and private visibility
-* removed `get...()` keyword out of `EarthCalc` methods 
-* `EarthCalc.getDistance()` is now `EarthCalc.gcdDistance()`
-* renamed `BoundingArea.isContainedWithin(...)` to `BoundingArea.contains(...)`
-
 ### Embed
 
     <repositories>
@@ -115,7 +85,7 @@ back and forth
     lng = Coordinate.fromDegrees(-0.3035466);
     Point richmond = Point.at(lat, lng);
 
-    double distance = EarthCalc.gcdDistance(richmond, kew); //in meters
+    double distance = EarthCalc.gcd.distance(richmond, kew); //in meters
     
 #### Harvesine formula
 
@@ -129,7 +99,7 @@ back and forth
     lng = Coordinate.fromDegrees(-0.3035466);
     Point richmond = Point.at(lat, lng);
 
-    double distance = EarthCalc.harvesineDistance(richmond, kew); //in meters
+    double distance = EarthCalc.harvesine.distance(richmond, kew); //in meters
     
 #### Vincenty formula
     
@@ -143,7 +113,7 @@ back and forth
     lng = Coordinate.fromDegrees(-0.3035466);
     Point richmond = Point.at(lat, lng);
 
-    double distance = EarthCalc.vincentyDistance(richmond, kew); //in meters
+    double distance = EarthCalc.vincenty.distance(richmond, kew); //in meters
     
     
 ### Finding a point at 'distance in meters away' from a standpoint, given a bearing
@@ -156,7 +126,7 @@ back and forth
     Point kew = Point.at(lat, lng);
     
     //Distance away point, bearing is 45deg
-    Point otherPoint = EarthCalc.pointAt(kew, 45, 1000);
+    Point otherPoint = EarthCalc.gcd.pointAt(kew, 45, 1000);
     
 ### BoundingArea
 
@@ -168,7 +138,7 @@ other points, you need to figure out which ones are at most, say, 3000 meters aw
 While this only gives an approximation, it is several order of magnitude faster
 than calculating the distances from each point in the set to the reference point.
 
-      BoundingArea area = EarthCalc.boundingArea(kew, 3000);
+      BoundingArea area = EarthCalc.gcd.boundingArea(kew, 3000);
       Point nw = area.northWest;
       Point se = area.southEast;
       
@@ -205,7 +175,7 @@ you can determine whether a point is contained within that area using:
     lng = Coordinate.fromDegrees(-0.3035466);
     Point richmond = Point.at(lat, lng);
     
-    double bearing = EarthCalc.bearing(kew, richmond); //in decimal degrees
+    double bearing = EarthCalc.gcd.bearing(kew, richmond); //in decimal degrees
 
 #### Azimuth bearing - Vincenty formula
 
@@ -219,7 +189,7 @@ you can determine whether a point is contained within that area using:
     lng = Coordinate.fromDegrees(-0.3035466);
     Point richmond = Point.at(lat, lng);
     
-    double bearing = EarthCalc.vincentyBearing(kew, richmond); //in decimal degrees
+    double bearing = EarthCalc.vincenty.bearing(kew, richmond); //in decimal degrees
     
 #### Final bearing - Vincenty formula
 
@@ -233,7 +203,7 @@ you can determine whether a point is contained within that area using:
     lng = Coordinate.fromDegrees(-0.3035466);
     Point richmond = Point.at(lat, lng);
     
-    double bearing = EarthCalc.vincentyFinalBearing(kew, richmond); //in decimal degrees
+    double bearing = EarthCalc.vincenty.finalBearing(kew, richmond); //in decimal degrees
 
 #### Mid point - This is the half-way point along a great circle path between the two points.
 
@@ -243,6 +213,4 @@ you can determine whether a point is contained within that area using:
     //Richmond, London
     Point richmond = Point.at(Coordinate.fromDegrees(51.4613418), Coordinate.fromDegrees(-0.3035466));
     
-    Point midPoint = EarthCalc.midPoint(richmond, kew) // Point{latitude=51.47285976194266, longitude=-0.2973770580524634}
-    
-    
+    Point midPoint = EarthCalc.gcd.midPoint(richmond, kew) // Point{latitude=51.47285976194266, longitude=-0.2973770580524634}
