@@ -32,6 +32,10 @@
 
 package com.grum.geocalc;
 
+import lombok.AllArgsConstructor;
+import lombok.val;
+import lombok.var;
+
 import static java.lang.Math.*;
 
 /**
@@ -39,7 +43,7 @@ import static java.lang.Math.*;
  */
 public class EarthCalc {
 
-    public static final double EARTH_RADIUS = 6371.01 * 1000; //meters
+    public static final double EARTH_RADIUS = 6_356_752.314245D; // radius at the poles, meters
 
     /**
      * This is the half-way point along a great circle path between the two points.
@@ -50,17 +54,17 @@ public class EarthCalc {
      * @see <a href="http://www.movable-type.co.uk/scripts/latlong.html"></a>
      */
     public static Point midPoint(Point standPoint, Point forePoint) {
-        double λ1 = toRadians(standPoint.longitude);
-        double λ2 = toRadians(forePoint.longitude);
+        val λ1 = toRadians(standPoint.longitude);
+        val λ2 = toRadians(forePoint.longitude);
 
-        double φ1 = toRadians(standPoint.latitude);
-        double φ2 = toRadians(forePoint.latitude);
+        val φ1 = toRadians(standPoint.latitude);
+        val φ2 = toRadians(forePoint.latitude);
 
-        double Bx = cos(φ2) * cos(λ2 - λ1);
-        double By = cos(φ2) * sin(λ2 - λ1);
+        val Bx = cos(φ2) * cos(λ2 - λ1);
+        val By = cos(φ2) * sin(λ2 - λ1);
 
-        double φ3 = atan2(sin(φ1) + sin(φ2), sqrt((cos(φ1) + Bx) * (cos(φ1) + Bx) + By * By));
-        double λ3 = λ1 + atan2(By, cos(φ1) + Bx);
+        val φ3 = atan2(sin(φ1) + sin(φ2), sqrt((cos(φ1) + Bx) * (cos(φ1) + Bx) + By * By));
+        val λ3 = λ1 + atan2(By, cos(φ1) + Bx);
 
         return Point.at(Coordinate.fromRadians(φ3), Coordinate.fromRadians(λ3));
     }
@@ -74,14 +78,13 @@ public class EarthCalc {
      */
     public static double gcdDistance(Point standPoint, Point forePoint) {
 
-        double diffLongitudes = toRadians(abs(forePoint.longitude - standPoint.longitude));
-        double slat = toRadians(standPoint.latitude);
-        double flat = toRadians(forePoint.latitude);
+        val Δλ = toRadians(abs(forePoint.longitude - standPoint.longitude));
+        val φ1 = toRadians(standPoint.latitude);
+        val φ2 = toRadians(forePoint.latitude);
 
         //spherical law of cosines
-
-        double sphereCos = (sin(slat) * sin(flat)) + (cos(slat) * cos(flat) * cos(diffLongitudes));
-        double c = acos(max(min(sphereCos, 1d), -1d));
+        val sphereCos = (sin(φ1) * sin(φ2)) + (cos(φ1) * cos(φ2) * cos(Δλ));
+        val c = acos(max(min(sphereCos, 1d), -1d));
 
         return EARTH_RADIUS * c;
     }
@@ -95,14 +98,14 @@ public class EarthCalc {
      */
     public static double haversineDistance(Point standPoint, Point forePoint) {
 
-        double diffLongitudes = toRadians(abs(forePoint.longitude - standPoint.longitude));
-        double slat = toRadians(standPoint.latitude);
-        double flat = toRadians(forePoint.latitude);
+        val Δλ = toRadians(abs(forePoint.longitude - standPoint.longitude));
+        val φ1 = toRadians(standPoint.latitude);
+        val φ2 = toRadians(forePoint.latitude);
 
         // haversine formula
-        double diffLatitudes = toRadians(abs(forePoint.latitude - standPoint.latitude));
-        double a = sin(diffLatitudes / 2) * sin(diffLatitudes / 2) + cos(slat) * cos(flat) * sin(diffLongitudes / 2) * sin(diffLongitudes / 2);
-        double c = 2 * atan2(sqrt(a), sqrt(1 - a)); //angular distance in radians
+        val Δφ = toRadians(abs(forePoint.latitude - standPoint.latitude));
+        val a = sin(Δφ / 2) * sin(Δφ / 2) + cos(φ1) * cos(φ2) * sin(Δλ / 2) * sin(Δλ / 2);
+        val c = 2 * atan2(sqrt(a), sqrt(1 - a)); //angular distance in radians
 
         return EARTH_RADIUS * c;
     }
@@ -115,53 +118,58 @@ public class EarthCalc {
      * @return Vincenty object which holds all 3 values
      */
     private static Vincenty vincenty(Point standPoint, Point forePoint) {
-        double λ1 = toRadians(standPoint.longitude);
-        double λ2 = toRadians(forePoint.longitude);
+        val λ1 = toRadians(standPoint.longitude);
+        val λ2 = toRadians(forePoint.longitude);
 
-        double φ1 = toRadians(standPoint.latitude);
-        double φ2 = toRadians(forePoint.latitude);
+        val φ1 = toRadians(standPoint.latitude);
+        val φ2 = toRadians(forePoint.latitude);
 
-        double a = 6_378_137;
-        double b = 6_356_752.314245;
-        double f = 1 / 298.257223563;
+        val a = 6_378_137D; // radius at equator
+        val b = EARTH_RADIUS; // Using b to keep close to academic formula.
+        val f = 1 / 298.257223563D; // flattening of the ellipsoid
 
-        double L = λ2 - λ1;
-        double tanU1 = (1 - f) * tan(φ1), cosU1 = 1 / sqrt((1 + tanU1 * tanU1)), sinU1 = tanU1 * cosU1;
-        double tanU2 = (1 - f) * tan(φ2), cosU2 = 1 / sqrt((1 + tanU2 * tanU2)), sinU2 = tanU2 * cosU2;
+        val L = λ2 - λ1;
+        val tanU1 = (1 - f) * tan(φ1);
+        val cosU1 = 1 / sqrt((1 + tanU1 * tanU1));
+        val sinU1 = tanU1 * cosU1;
+
+        val tanU2 = (1 - f) * tan(φ2);
+        val cosU2 = 1 / sqrt((1 + tanU2 * tanU2));
+        val sinU2 = tanU2 * cosU2;
 
         double λ = L, λʹ, iterationLimit = 100, cosSqα, σ, cos2σM, cosσ, sinσ, sinλ, cosλ;
         do {
             sinλ = sin(λ);
             cosλ = cos(λ);
-            double sinSqσ = (cosU2 * sinλ) * (cosU2 * sinλ) + (cosU1 * sinU2 - sinU1 * cosU2 * cosλ) * (cosU1 * sinU2 - sinU1 * cosU2 * cosλ);
+            val sinSqσ = (cosU2 * sinλ) * (cosU2 * sinλ) + (cosU1 * sinU2 - sinU1 * cosU2 * cosλ) * (cosU1 * sinU2 - sinU1 * cosU2 * cosλ);
             sinσ = sqrt(sinSqσ);
-            if (sinσ == 0) return new Vincenty(0, 0, 0);  // co-incident points
+            if (sinσ == 0) return Vincenty.CO_INCIDENT_POINTS;  // co-incident points
             cosσ = sinU1 * sinU2 + cosU1 * cosU2 * cosλ;
             σ = atan2(sinσ, cosσ);
-            double sinα = cosU1 * cosU2 * sinλ / sinσ;
+            val sinα = cosU1 * cosU2 * sinλ / sinσ;
             cosSqα = 1 - sinα * sinα;
             cos2σM = cosσ - 2 * sinU1 * sinU2 / cosSqα;
 
-            if (Double.isNaN(cos2σM)) cos2σM = 0;  // equatorial line: cosSqα=0 (§6)
-            double C = f / 16 * cosSqα * (4 + f * (4 - 3 * cosSqα));
+            if (Double.isNaN(cos2σM)) cos2σM = 0;  // equatorial line: cosSqα=0
+            val C = f / 16 * cosSqα * (4 + f * (4 - 3 * cosSqα));
             λʹ = λ;
             λ = L + (1 - C) * f * sinα * (σ + C * sinσ * (cos2σM + C * cosσ * (-1 + 2 * cos2σM * cos2σM)));
         } while (abs(λ - λʹ) > 1e-12 && --iterationLimit > 0);
 
         if (iterationLimit == 0) throw new IllegalStateException("Formula failed to converge");
 
-        double uSq = cosSqα * (a * a - b * b) / (b * b);
-        double A = 1 + uSq / 16384 * (4096 + uSq * (-768 + uSq * (320 - 175 * uSq)));
-        double B = uSq / 1024 * (256 + uSq * (-128 + uSq * (74 - 47 * uSq)));
-        double Δσ = B * sinσ * (cos2σM + B / 4 * (cosσ * (-1 + 2 * cos2σM * cos2σM) -
+        val uSq = cosSqα * (a * a - b * b) / (b * b);
+        val A = 1 + uSq / 16384 * (4096 + uSq * (-768 + uSq * (320 - 175 * uSq)));
+        val B = uSq / 1024 * (256 + uSq * (-128 + uSq * (74 - 47 * uSq)));
+        val Δσ = B * sinσ * (cos2σM + B / 4 * (cosσ * (-1 + 2 * cos2σM * cos2σM) -
                 B / 6 * cos2σM * (-3 + 4 * sinσ * sinσ) * (-3 + 4 * cos2σM * cos2σM)));
 
-        double distance = b * A * (σ - Δσ);
+        val distance = b * A * (σ - Δσ);
 
-        double initialBearing = atan2(cosU2 * sinλ, cosU1 * sinU2 - sinU1 * cosU2 * cosλ);
+        var initialBearing = atan2(cosU2 * sinλ, cosU1 * sinU2 - sinU1 * cosU2 * cosλ);
         initialBearing = (initialBearing + 2 * PI) % (2 * PI); //turning value to trigonometric direction
 
-        double finalBearing = atan2(cosU1 * sinλ, -sinU1 * cosU2 + cosU1 * sinU2 * cosλ);
+        var finalBearing = atan2(cosU1 * sinλ, -sinU1 * cosU2 + cosU1 * sinU2 * cosλ);
         finalBearing = (finalBearing + 2 * PI) % (2 * PI);  //turning value to trigonometric direction
 
         return new Vincenty(distance, toDegrees(initialBearing), toDegrees(finalBearing));
@@ -220,15 +228,15 @@ public class EarthCalc {
          d being the distance travelled, R the earth’s radius
          */
 
-        double φ1 = toRadians(standPoint.latitude);
-        double λ1 = toRadians(standPoint.longitude);
-        double θ = toRadians(bearing);
-        double δ = distance / EARTH_RADIUS; // normalize linear distance to radian angle
+        val φ1 = toRadians(standPoint.latitude);
+        val λ1 = toRadians(standPoint.longitude);
+        val θ = toRadians(bearing);
+        val δ = distance / EARTH_RADIUS; // normalize linear distance to radian angle
 
-        double φ2 = asin(sin(φ1) * cos(δ) + cos(φ1) * sin(δ) * cos(θ));
-        double λ2 = λ1 + atan2(sin(θ) * sin(δ) * cos(φ1), cos(δ) - sin(φ1) * sin(φ2));
+        val φ2 = asin(sin(φ1) * cos(δ) + cos(φ1) * sin(δ) * cos(θ));
+        val λ2 = λ1 + atan2(sin(θ) * sin(δ) * cos(φ1), cos(δ) - sin(φ1) * sin(φ2));
 
-        double λ2_harmonised = (λ2 + 3 * PI) % (2 * PI) - PI; // normalise to −180..+180°
+        val λ2_harmonised = (λ2 + 3 * PI) % (2 * PI) - PI; // normalise to −180..+180°
 
         return Point.at(Coordinate.fromRadians(φ2), Coordinate.fromRadians(λ2_harmonised));
     }
@@ -245,12 +253,12 @@ public class EarthCalc {
          * Formula: θ = atan2( 	sin(Δlong).cos(lat2), cos(lat1).sin(lat2) − sin(lat1).cos(lat2).cos(Δlong) )
          */
 
-        double Δlong = toRadians(forePoint.longitude - standPoint.longitude);
-        double y = sin(Δlong) * cos(toRadians(forePoint.latitude));
-        double x = cos(toRadians(standPoint.latitude)) * sin(toRadians(forePoint.latitude))
+        val Δlong = toRadians(forePoint.longitude - standPoint.longitude);
+        val y = sin(Δlong) * cos(toRadians(forePoint.latitude));
+        val x = cos(toRadians(standPoint.latitude)) * sin(toRadians(forePoint.latitude))
                 - sin(toRadians(standPoint.latitude)) * cos(toRadians(forePoint.latitude)) * cos(Δlong);
 
-        double bearing = (atan2(y, x) + 2 * PI) % (2 * PI);
+        val bearing = (atan2(y, x) + 2 * PI) % (2 * PI);
 
         return toDegrees(bearing);
     }
@@ -266,26 +274,23 @@ public class EarthCalc {
     public static BoundingArea around(Point standPoint, double distance) {
 
         //45 degrees going north-east
-        Point northEast = pointAt(standPoint, 45, distance);
+        val northEast = pointAt(standPoint, 45, distance);
 
         //225 degrees going south-west
-        Point southWest = pointAt(standPoint, 225, distance);
+        val southWest = pointAt(standPoint, 225, distance);
 
         return BoundingArea.at(northEast, southWest);
     }
 
+    @AllArgsConstructor
     private static class Vincenty {
+        final static Vincenty CO_INCIDENT_POINTS = new Vincenty(0, 0, 0);
+
         /**
          * distance is the distance in meter
          * initialBearing is the initial bearing, or forward azimuth (in reference to North point), in degrees
          * finalBearing is the final bearing (in direction p1→p2), in degrees
          */
         final double distance, initialBearing, finalBearing;
-
-        Vincenty(double distance, double initialBearing, double finalBearing) {
-            this.distance = distance;
-            this.initialBearing = initialBearing;
-            this.finalBearing = finalBearing;
-        }
     }
 }

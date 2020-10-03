@@ -31,6 +31,8 @@
  */
 
 package com.grum.geocalc;
+import lombok.val;
+import lombok.var;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -62,13 +64,13 @@ abstract public class Coordinate implements Serializable {
     }
 
     DMSCoordinate toDMSCoordinate() {
-        double _wholeDegrees = (int) degrees();
-        double remaining = abs(degrees() - _wholeDegrees);
-        double _minutes = (int) (remaining * 60);
-        remaining = remaining * 60 - _minutes;
-        double _seconds = new BigDecimal(remaining * 60).setScale(4, RoundingMode.HALF_UP).doubleValue();
+        val wholeDegrees = (int) degrees();
+        var remaining = abs(degrees() - wholeDegrees);
+        val minutes = (int) (remaining * 60);
+        remaining = remaining * 60 - minutes;
+        val seconds = new BigDecimal(remaining * 60).setScale(4, RoundingMode.HALF_UP).doubleValue();
 
-        return new DMSCoordinate(_wholeDegrees, _minutes, _seconds);
+        return new DMSCoordinate(wholeDegrees, minutes, seconds);
     }
 
     DegreeCoordinate toDegreeCoordinate() {
@@ -76,9 +78,9 @@ abstract public class Coordinate implements Serializable {
     }
 
     GPSCoordinate toGPSCoordinate() {
-        double _wholeDegrees = floor(degrees());
-        double remaining = degrees() - _wholeDegrees;
-        double _minutes = floor(remaining * 60);
+        val _wholeDegrees = floor(degrees());
+        val remaining = degrees() - _wholeDegrees;
+        val _minutes = floor(remaining * 60);
 
         return new GPSCoordinate(_wholeDegrees, _minutes);
     }
