@@ -78,11 +78,11 @@ abstract public class Coordinate implements Serializable {
     }
 
     GPSCoordinate toGPSCoordinate() {
-        val _wholeDegrees = floor(degrees());
-        val remaining = degrees() - _wholeDegrees;
-        val _minutes = floor(remaining * 60);
+        val wholeDegrees = floor(degrees());
+        val remaining = degrees() - wholeDegrees;
+        val minutes = floor(remaining * 60);
 
-        return new GPSCoordinate(_wholeDegrees, _minutes);
+        return new GPSCoordinate(wholeDegrees, minutes);
     }
 
     RadianCoordinate toRadianCoordinate() {
