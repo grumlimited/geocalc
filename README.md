@@ -6,7 +6,7 @@ It is designed to be simple to embed in your existing applications and easy to u
 
 Geocalc can:
 
-1. Calculate the distance between two coordinates (law of cosines, harvesine and vincenty)
+1. Calculate the distance between two coordinates (law of cosines, haversine and vincenty)
 2. Find a point at X distance from a standpoint, given a bearing
 3. Calculate coordinates of a rectangular area around a point
 4. Determine whether a Point is contained within that area
@@ -87,7 +87,7 @@ back and forth
 
     double distance = EarthCalc.gcd.distance(richmond, kew); //in meters
     
-#### Harvesine formula
+#### Haversine formula
 
     //Kew, London
     Coordinate lat = Coordinate.fromDegrees(51.4843774);
@@ -99,7 +99,7 @@ back and forth
     lng = Coordinate.fromDegrees(-0.3035466);
     Point richmond = Point.at(lat, lng);
 
-    double distance = EarthCalc.harvesine.distance(richmond, kew); //in meters
+    double distance = EarthCalc.haversine.distance(richmond, kew); //in meters
     
 #### Vincenty formula
     
